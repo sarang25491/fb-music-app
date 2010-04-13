@@ -18,7 +18,6 @@
 
 <?php explanation('3. What is new?','Something could have gone wrong, check out what the developers are doing!'); ?>
 <div style="padding: 10px; margin-left: 10px; margin-right: 10px; border: 1px solid #d4dae8;">
-<?php include 'statics/redmine.txt'; ?><br />
 <?php include 'statics/twitter.txt'; ?>
 </div>
 
