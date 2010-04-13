@@ -11,8 +11,6 @@
  *
  */
 
-error('In Development','1/22/2010 - Fixed a database bug, previews should be the next part.');
-
 if(isset($_GET['search'])) {
 	/*
 	 * Loading the Zend GDATA API.
@@ -30,14 +28,8 @@ if(isset($_GET['search'])) {
     
 	$feed = $youTubeService->getVideoFeed($query);
 	
-	echo '	<fb:dialog id="embed_player">
-			<fb:dialog-title>Preview</fb:dialog-title>
-			<fb:dialog-content>
-				<form id="dummy_form"></form>
-				<div id="player" style="padding-bottom: 0px;" align="center"></div>
-			</fb:dialog-content>
-			<fb:dialog-button type="button" value="Close" close_dialog=1 />
-			</fb:dialog>	';
+	echo '	<form id="dummy_form"></form>
+			<div id="player" style="padding-bottom: 0px;" align="center"></div>';
 	
 	echo '<fb:editor action="?tab=index&display=add&method=youtube&confirm" labelwidth="0">';
 		echo '<fb:editor-custom label="Selection">';
@@ -51,7 +43,7 @@ if(isset($_GET['search'])) {
 			echo '</td><td width="60%" valign="top">';
 			echo '' . $entry->getVideoTitle() . '';
 			echo '</td><td width="35%" valign="top">';
-			echo '(<a clicktoshowdialog="embed_player" clickrewriteurl="' . $config['fb']['appcallbackurl'] . 'player.php?youtube=' . $entry->getVideoId() . '" clickrewriteid="player" clickrewriteform="dummy_form" clicktoshow="spinner">preview</a>) (view on Youtube)';
+			echo '(<a href="http://www.youtube.com/watch?v=' . $entry->getVideoId() . '" target="_blank">preview</a>)';
 			echo '</td></tr>';
 			
 			$count++;
