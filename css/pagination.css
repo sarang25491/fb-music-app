@@ -1,0 +1,15 @@
+/* Facebook Tab Style */
+.pagination
+{
+    font-size: 14px;
+    background-color: #d8dfea;
+    color: #3b5998;
+    font-weight: bold;
+    text-decoration: none;
+}
+.pagination:hover
+{
+    background-color: #3b5998;
+    color: #ffffff;
+    cursor: hand;
+}
