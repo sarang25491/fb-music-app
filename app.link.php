@@ -64,8 +64,7 @@
 		//need to get a STATIC XID from id
 		$id = $db->Raw("SELECT `id` FROM `userdb_uploads` WHERE `user`='$user' ORDER BY `id` DESC LIMIT 1");
 		$id = $id[0]['id'];
-		$xid = md5($id);
-		$db->Raw("UPDATE `userdb_uploads` SET `xid`='$xid' WHERE `id`='$id'");
+		$db->Raw("UPDATE `userdb_uploads` SET `xid`=`id` WHERE `id`='$id'");
 		?>
 
 		<?php // if(!isset($_GET['fb_page_id'])) { include 'fb.feed.php'; } ?>
