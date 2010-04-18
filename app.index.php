@@ -74,7 +74,7 @@ Below the editor is a button where a user can add a song.
 </div>
 
 <?php if ($_GET['display'] == NULL) { ?>
-	<div style="margin: 10px">
+	<div style="margin: 10px;">
 	<table border="0" width="100%" cellspacing="5px">
 		<tr>
 			<td valign="top">
@@ -103,24 +103,19 @@ Below the editor is a button where a user can add a song.
 								else
 									$commentBoxStatus = $db->Raw("SELECT `comment_box` FROM `userdb_users` WHERE `user`='$user'");
 								?>
-								<div style="float: left;"><img src="<?php echo $config['fb']['appcallbackurl']; ?>images/edit_playlist.gif" align="top" border="0"></div>
-								<div style="float: right; margin-top: 10px; margin-right: 5px;"><?php if ($commentBoxStatus[0]['comment_box'] == 1) { ?><a href="<?php echo $config['fb']['fburl']; ?>?tab=index&hide_box<?php pages($_GET['fb_page_id']); ?>">Hide Comment Box</a><?php } else { ?><a href="<?php echo $config['fb']['fburl']; ?>?tab=index&show_box<?php pages($_GET['fb_page_id']); ?>">Show Comment Box</a><?php } ?> - <?php if (isset($_GET['update'])) { ?>Updated<?php } else { ?><a href="<?php echo $config['fb']['fburl']; ?>?tab=index&update<?php pages($_GET['fb_page_id']); ?>">Update Player to <?php if(isset($_GET['fb_page_id'])) echo 'Page'; else echo 'Profile'; ?></a><?php } ?></div>
+
 							</div>
 						</td>
 					</tr>
 					<tr>
 						<td valign="top">
-							<?php include 'app.edit.php'; ?>
-							<?php if (isset($_GET['update'])) {
-								include 'fb.profile.php';
-							} elseif (isset($_GET['publish'])) { 
+							
+							<center><fb:iframe src="<?php echo $config['fb']['appcallbackurl']; ?>app.index-playlist.php?<?php pages($_GET['fb_page_id']); ?>" width="500" frameborder="0" scrolling="no" name="editor" resizeable="true" /></center>
+							<?php if (isset($_GET['publish'])) { 
 								include 'fb.publish.php';
 							}
 							?>
 							<br />
-							<?php if ($_GET['action'] !== 'edit') { ?>
-								<div style="margin-left: 5px; float: left;"><table border="0" width="525px"><tr><td width="50%"><fb:add-section-button section="profile" /></td><td width="50%"><div align="right"><a href="<?php echo $config['fb']['fburl']; ?>?tab=index&display=add<?php pages($_GET['fb_page_id']); ?>"><img src="<?php echo $config['fb']['appcallbackurl']; ?>images/add_song.png" border="0"></a></div></td></tr></table></div>
-							<?php } ?>
 						<td>	
 					</tr>
 				</table>
@@ -132,22 +127,21 @@ Below the editor is a button where a user can add a song.
 				<center><b>EDITOR KEY</b></center>
 				<table border="0">
 					<tr>
-						<td style="border: 1px solid #cccccc; padding: 2px;"><img src="<?php echo $config['fb']['appcallbackurl']; ?>images/arrow_up.png" align="top" border="0"></td><td style="padding-left: 5px;"><fb:intl>move song up</fb:intl></td>
+						<td></td><td style="padding-left: 5px;">move songs by drag-and-drop grey areas</td>
 					</tr>
-					<tr>	
-						<td style="border: 1px solid #cccccc; padding: 2px;"><img src="<?php echo $config['fb']['appcallbackurl']; ?>images/arrow_down.png" align="top" border="0"></td><td style="padding-left: 5px;"><fb:intl>move song down</fb:intl></td>
-					</tr>
+					
 					<tr>
-						<td style="border: 1px solid #cccccc; padding: 2px;"><img src="<?php echo $config['fb']['appcallbackurl']; ?>images/link.png" align="top" border="0"></td><td style="padding-left: 5px;"><fb:intl>get share link</fb:intl></td>
+						<td style="border: 1px solid #cccccc; padding: 2px;"><img src="<?php echo $config['fb']['appcallbackurl']; ?>images/track.gif" align="top" border="0"></td><td style="padding-left: 5px;"><fb:intl>play song</fb:intl></td>
 					</tr>
+					
 					<tr>
-						<td style="border: 1px solid #cccccc; padding: 2px;"><img src="<?php echo $config['fb']['appcallbackurl']; ?>images/embed.png" align="top" border="0"></td><td style="padding-left: 5px;"><fb:intl>get embed code</fb:intl></td>
+						<td style="border: 1px solid #cccccc; padding: 2px;"><img src="<?php echo $config['fb']['appcallbackurl']; ?>images/key.png" align="top" border="0"></td><td style="padding-left: 5px;"><fb:intl>get api key</fb:intl></td>
 					</tr>
 					<tr>	
 						<td style="border: 1px solid #cccccc; padding: 2px;"><img src="<?php echo $config['fb']['appcallbackurl']; ?>images/tag_blue_edit.png" align="top" border="0"></td><td style="padding-left: 5px;"><fb:intl>edit settings</fb:intl></td>
 					</tr>
 					<tr>	
-						<td style="border: 1px solid #cccccc; padding: 2px;"><img src="<?php echo $config['fb']['appcallbackurl']; ?>images/delete.png" align="top" border="0"></td><td style="padding-left: 5px;"><fb:intl>delete song from player</fb:intl></td>
+						<td style="border: 1px solid #cccccc; padding: 2px;"><img src="<?php echo $config['fb']['appcallbackurl']; ?>images/delete.png" align="top" border="0"></td><td style="padding-left: 5px;"><fb:intl>delete song</fb:intl></td>
 					</tr>
 				</table>
 			</td>

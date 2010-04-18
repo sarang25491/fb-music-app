@@ -1,4 +1,5 @@
-<?php $pre = 'skip_fbapi'; include 'include/config.php'; ?>
+<?php include_once 'include/facebook/facebook.php'; ?>
+<?php $pre = 'skip_login'; include 'include/config.php'; ?>
 
 <?php
 if (isset($_GET['updateList'])) {
@@ -24,11 +25,18 @@ if (isset($_GET['updateList'])) {
 		$db->Raw("UPDATE `userdb_uploads` SET `order`='$key' WHERE `xid`='$song'");
 	}
 	
-	echo "<b>Playlist has been saved!<b>";
+	$user = $_GET['id'];
+	include 'fb.profile.php';
+	echo "<b>Playlist saved! -- Updated to Profile!<b>";
 }
 
 if (isset($_GET['grabSongData'])) {
 	$songData = $db->Raw("SELECT `title`,`artist` FROM `userdb_uploads` WHERE `xid`='$_GET[id]'");
 	echo '<b>Now Playing</b>: ' . $songData[0]['title'] . ' by ' . $songData[0]['artist'] . '';
+}
+
+if (isset($_GET['grabApiKey'])) {
+	$md5 = md5($_GET['id']);
+	echo '<b>API HASH KEY</b>: ' . $_GET['id'] . '-' . $md5 . '';
 }
 ?>

@@ -1,7 +1,19 @@
 <?php
+
+$orderedList = $db->Raw("SELECT * FROM `userdb_uploads` WHERE `user` = '$user'");
+$orderedList = $orderedList[0]['COUNT(*)'];
+
+if ($orderedList > 1) {
+	$result = $mysqli->query("SELECT `id`,`title`,`artist`,`link` FROM `userdb_uploads` WHERE `user` = '$user' ORDER BY `id` DESC");
+} else {
+	$result = $mysqli->query("SELECT `id`,`title`,`artist`,`link` FROM `userdb_uploads` WHERE `user` = '$user' ORDER BY `order` ASC");
+}
+
+while ($row = $result->fetch_assoc()) {
+	$uploads[] = $row;
+}
+
 $i=0;
-$db->Raw("SET NAMES utf8");
-$uploads = $db->Raw("SELECT `id`,`title`,`artist`,`link` FROM `userdb_uploads` WHERE `user`='$user' ORDER BY `id` LIMIT 0,10");
 $uploads_count = count($uploads);
 $total_count = $uploads_count;
 ?>

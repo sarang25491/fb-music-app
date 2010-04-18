@@ -1,9 +1,12 @@
 <?php $pre = 'skip_fbapi'; include 'include/config.php'; ?>
 
 <?php
-if(!isset($_GET['id']))
-	$id = $_GET['fb_sig_user'];
-else
+if(!isset($_GET['id'])) {
+	if (isset($_GET['fb_page_id']))
+		$id = $_GET['fb_page_id'];
+	else
+		$id = $_GET['fb_sig_user'];
+} else
 	$id = $_GET['id'];
 ?>
 
@@ -36,14 +39,14 @@ A:hover {text-decoration: underline; color: red;}
 	
 		<table border="0" cellspacing="0" cellpadding="0" width="100%">
 			<tr>
-				<td width="4%" valign="center">
-					<img src="<?php echo $config['fb']['appcallbackurl']; ?>images/track.gif" align="top" border="0">
+				<td width="5%" valign="center">
+					<div style="padding-left: 2px;padding-right: 4px;"><a href="#player" onclick="openPlayer(<?php echo $song['xid']; ?>)" ><img src="<?php echo $config['fb']['appcallbackurl']; ?>images/track.gif" align="top" border="0"></a></div>
 				</td>
 				<td width="55%" valign="center">
-					<div style="font-size:0.8em;"><a href="#" onclick="openPlayer(<?php echo $song['xid']; ?>)" ><?php echo $song['title']; ?> by <?php echo $song['artist']; ?></a></div>
+					<div style="font-size:1em;"><a href="#player" onclick="openPlayer(<?php echo $song['xid']; ?>)" ><?php echo $song['title']; ?> by <?php echo $song['artist']; ?></a></div>
 				</td>
 				<td width="40%">
-					<div align="right"><img src="<?php echo $config['fb']['appcallbackurl']; ?>images/delete.png" align="top" border="0" onclick="removeSong(<?php echo $song['xid']; ?>)" ></div>
+					<div align="right"><img src="images/key.png" border="0" onclick="showApiKey(<?php echo $song['xid']; ?>)" style="padding-right:2px;"><img src="images/info.png" border="0" onclick="showInfo(<?php echo $song['xid']; ?>)" style="padding-right:2px;"><img src="images/tag_blue_edit.png" border="0" onclick="editTag(<?php echo $song['xid']; ?>)" style="padding-right:2px;"><img src="images/delete.png" border="0" onclick="removeSong(<?php echo $song['xid']; ?>)"></div>
 				</td>
 			</tr>
 		</table>

@@ -13,12 +13,27 @@ include_once 'include/functions.php';
 	
 	<center>
 	<?php 
+	
+	$orderedList = $db->Raw("SELECT * FROM `userdb_uploads` WHERE `user` = '$user'");
+	$orderedList = $orderedList[0]['COUNT(*)'];
+	
+	if ($orderedList > 1) {
+		$result = $mysqli->query("SELECT `id`,`title`,`artist`,`count`,`link`,`buy_link`,`dl` FROM `userdb_uploads` WHERE `user` = '$user' ORDER BY `id` DESC");
+	} else {
+		$result = $mysqli->query("SELECT `id`,`title`,`artist`,`count`,`link`,`buy_link`,`dl` FROM `userdb_uploads` WHERE `user` = '$user' ORDER BY `order` ASC");
+	}
+	
+	while ($row = $result->fetch_assoc()) {
+		$uploads[] = $row;
+	}
+
+	
+	
 	$i=0;
-	$db->Raw("SET NAMES utf8");
-	$uploads = $db->Raw("SELECT `id`,`title`,`artist`,`count`,`link`,`buy_link`,`dl` FROM `userdb_uploads` WHERE `user`='$user' ORDER BY `id`");
 	$uploads_count = count($uploads);
 	$total_count = $uploads_count;
 	?>
+	
 	<?php if($total_count == 0) { ?>
 		error('This user does not have any songs!','');
 	<?php } else { ?>
