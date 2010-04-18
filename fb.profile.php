@@ -29,10 +29,12 @@ $total_count = $uploads_count;
 	<form id="dummy_form"></form>
 	<div id="player">
 	<img src="' . $config['fb']['appcallbackurl'] . '/images/spinner.gif" id="spinner" style="display:none; padding-bottom: 5px;"/>
-	</div>
+	</div>';
 	
-	<table border="0" cellpadding="0" cellspacing="0" width="100%">
-	'; 
+	if ($total_count > 6)
+		$fbml = '' . $fbml . '<div style="overflow: auto; height: 200px; padding: 0px; margin: 0px">';
+	
+	$fbml = '' . $fbml . '<table border="0" cellpadding="0" cellspacing="0" width="100%">';
 	?>
 
 	<?php foreach($uploads as $display) { ?>
@@ -74,8 +76,10 @@ $total_count = $uploads_count;
 	<?php 
 	$fbml='' . $fbml . '
 	</table>
-	</center>
-	';?>
+	</center>';
+	if ($total_count > 6)
+		$fbml = '' . $fbml . '<div style="overflow: auto; height: 200px; padding: 0px; margin: 0px">';
+	?>
 <?php } ?>
 
 <?php $facebook->api_client->profile_setFBML(NULL,$user,$fbml,NULL,NULL,$fbml); ?>
