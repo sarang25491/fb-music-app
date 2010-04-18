@@ -33,6 +33,10 @@ A:active {text-decoration: none; color: #3b5998;}
 A:hover {text-decoration: underline; color: red;}
 </style>
 
+<?php if (count($playlist) == 0) { ?>
+	<div align="center" style="border: 1px solid #dd3c10; background-color: #ffebe8; padding: 10px; font-size: 2em; font-weight: bold;">whaa?? no music?! go <a target="_parent" href="<?php echo $config['fb']['fburl']; ?>?tab=index&display=add<?php if(isset($_GET['fb_page_id'])) echo '&fb_page_id=' . $id . ''; ?>">add</a> some!</div>
+<?php } ?>
+
 <?php foreach ($playlist as $song) { ?>
 	
 	<div style="border: 1px solid #cccccc; margin-bottom:-1px; padding: 3px; background-color: #f7f7f7;" id="playlist_<?php echo $song['xid']; ?>">
