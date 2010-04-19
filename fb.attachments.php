@@ -93,7 +93,7 @@ if ($_POST['method'] == 'publisher_getInterface') {
 	      'properties' => $properties,
 	      'media' => array(array('type' => 'flash',
 	                             'swfsrc' => '' . $config['fb']['appcallbackurl'] . 'flash/player/player.swf?file=http://wdc01.web.burst-dev.com/music/player.php?from_feed=' . $pubData[0]['xid'] . '&skin=' . $config['fb']['appcallbackurl'] . 'flash/skin/stylish.swf&backcolor=#3b5998&lightcolor=#ffffff&frontcolor=#f7f7f7&autostart=true',
-	                             'imgsrc' => '' . $config['fb']['appcallbackurl'] . 'images/play.jpeg',
+	                             'imgsrc' => '' . $config['fb']['appcallbackurl'] . 'images/play.jpg',
 	                             'width' => '100', 
 	                             'height' => '80', 
 	                             'expanded_width' => '330', 
