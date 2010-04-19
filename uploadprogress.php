@@ -10,36 +10,8 @@ http://redmine.lighttpd.net/wiki/1/Docs:ModUploadProgress
 ?>
 
 <?php if(!isset($_GET['update'])) { ?>
-<script type="text/javascript" src="js/prototype.js"></script>
-<script type="text/javascript" src="js/scriptaculous.js"></script>
-
-<style>
-.progressBar{
-	width:216px;
-	height:41px;
-	background:url(images/bg_bar.gif) no-repeat 0 0;
-	position:relative;
-}
-.progressBar span{
-	position:absolute;
-	display:block;
-	width:200px;
-	height:25px;
-	background:url(images/bar.gif) no-repeat 0 0;
-	top:8px;
-	left:8px;
-	overflow:hidden;
-	text-indent:-8000px;
-}
-.progressBar em{
-	position:absolute;
-	display:block;
-	width:200px;
-	height:25px;
-	background:url(images/bg_cover.gif) repeat-x 0 0;
-	top:0;
-}
-</style>
+<script type="text/javascript" src="javascript/prototype.js"></script>
+<script type="text/javascript" src="javascript/scriptaculous.js"></script>
 
 <div id="status">
 <?php } ?>
@@ -71,11 +43,7 @@ $received = $lighttpd->{'received'}; // how much we got of the file.
 	$receivedM = round($receivedM/1000000, 2);
 	?>
 	
-	<div style="font-family: 'lucida grande', tahoma, verdana, arial, sans-serif; font-size: 11px; margin-top: -10px;">
-	<p class="progressBar">
-		<span><em style="left:<?php echo round($percent*2); ?>px"></em></span>
-	</p>
-	</div>
+	<?php echo 'Sent <b>' . $percent . '%</b> of <b>' . $sizeM . 'MB</b>...'; ?> 
 <?php } ?>
 
 <?php if(!isset($_GET['update'])) { ?>
