@@ -68,7 +68,6 @@ if(!isset($_GET['tab'])) {
 
 <fb:tabs>
 	<fb:tab-item href='<?php echo $config['fb']['fburl']; ?>?tab=index<?php pages($_GET['fb_page_id']); ?>' title='My Music' <?php if($_GET['tab'] == 'index') { echo "selected='true'"; } ?> />
-	<fb:tab-item href='<?php echo $config['fb']['fburl']; ?>?tab=explore_music' title='Explore Music' <?php if($_GET['tab'] == 'explore_music') { echo "selected='true'"; } ?> />
 	<fb:tab-item href='<?php echo $config['fb']['fburl']; ?>?tab=music_friends' title="Friend's Music" <?php if($_GET['tab'] == 'music_friends') { echo "selected='true'"; } ?> />
 	<fb:tab-item href='<?php echo $config['fb']['fburl']; ?>?tab=offers' title='Earn Slots' align='right' <?php if($_GET['tab'] == 'offers') { echo "selected='true'"; } ?> />
 	<fb:tab-item href='<?php echo $config['fb']['fburl']; ?>?tab=help' title='Get Help' align='right' <?php if($_GET['tab'] == 'help') { echo "selected='true'"; } ?> />
@@ -78,9 +77,6 @@ if(!isset($_GET['tab'])) {
 switch($_GET['tab']) {
 	case "index":
 		include "app.index.php";
-		break;
-	case "explore_music":
-		include "app.explore.php";
 		break;
 	case "music_friends":
 		include "app.friends.php";
