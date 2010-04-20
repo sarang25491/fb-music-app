@@ -110,7 +110,7 @@ Below the editor is a button where a user can add a song.
 					<tr>
 						<td valign="top">
 							
-							<center><fb:iframe src="<?php echo $config['fb']['appcallbackurl']; ?>app.index-playlist.php?<?php pages($_GET['fb_page_id']); ?>" width="500" frameborder="0" scrolling="no" name="editor" resizeable="true" /></center>
+							<center><fb:iframe src="<?php echo $config['fb']['appcallbackurl']; ?>app.index-playlist.php?<?php pages($_GET['fb_page_id']); ?>" width="500" height="1000" frameborder="0" scrolling="no" name="editor" resizeable="true" /></center>
 							<?php if (isset($_GET['publish'])) { 
 								include 'fb.publish.php';
 							}

@@ -39,4 +39,9 @@ if (isset($_GET['grabApiKey'])) {
 	$md5 = md5($_GET['id']);
 	echo '<b>API HASH KEY</b>: ' . $_GET['id'] . '-' . $md5 . '';
 }
+
+if (isset($_GET['grabInfo'])) {
+	$songData = $db->Raw("SELECT `type`,`count` FROM `userdb_uploads` WHERE `xid`='$_GET[id]'");
+	echo '<b>Type</b>: ' . $songData[0]['type'] . ' | <b>Plays</b>: ' . $songData[0]['count'] . '';
+}
 ?>

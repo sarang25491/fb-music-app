@@ -24,7 +24,7 @@
 					<tr>
 						<td width="85%">
 						
-						<div style="padding-left: 15px;"><a clickrewriteurl="<?php echo $config['fb']['appcallbackurl']; ?>player.php?id=<?php echo $display['id']; ?>&from_edit=1" clickrewriteid="player" clickrewriteform="dummy_form" clicktoshow="spinner"><?php echo htmlspecialchars_decode(utf8_decode($display['title']), ENT_QUOTES); ?> by <?php echo htmlspecialchars_decode(utf8_decode($display['artist']), ENT_QUOTES); ?></a></div>
+						<div style="padding-left: 15px;"><?php echo htmlspecialchars_decode(utf8_decode($display['title']), ENT_QUOTES); ?> by <?php echo htmlspecialchars_decode(utf8_decode($display['artist']), ENT_QUOTES); ?></div>
 												
 						</td>
 					

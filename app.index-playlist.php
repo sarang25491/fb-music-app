@@ -152,6 +152,16 @@ function showEditor() {
 	$("#editor").delay(1000).slideDown(500);
 }
 
+function showInfo(xid) {
+	$("#status").slideUp(50);
+	$.post("app.index-playlist-callback.php?grabInfo&id=" +xid,
+		function (response) {
+			$("#status").delay(500).html(response);
+		}
+	)
+	$("#status").delay(500).slideDown(250);
+}
+
 function showApiKey(xid) {
 	$("#status").slideUp(50);
 	$.post("app.index-playlist-callback.php?grabApiKey&id=" +xid,
@@ -191,6 +201,6 @@ function showApiKey(xid) {
 	</div>
 </div>
 
-<div style="padding: 100px;>
+<div style="padding: 10px;">
 </div>
 	
