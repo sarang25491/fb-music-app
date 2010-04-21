@@ -16,9 +16,9 @@ print_r($room_data);
 
 $file = fopen('../statics/campfire.txt','w');
 if ($room_data['room']['open-to-guests']['value'] == 'true') {
-	fwrite($file,'<?php success(\'Support Chat Room Open: <a href="http://burst.campfirenow.com/' . $room_data['room']['active-token-value']['value'] . '">http://burst.campfirenow.com/' . $room_data['room']['active-token-value']['value'] . '</a>\',\'Looks like there is someone available to help! Feel free to drop by if you need any help!\'); ?>');
+	fwrite($file,'<?php success(\'Support Chat Room Open: <a href="http://burst.campfirenow.com/' . $room_data['room']['active-token-value']['value'] . '">http://burst.campfirenow.com/' . $room_data['room']['active-token-value']['value'] . '</a>\',\'Looks like there is someone available to help! Feel free to drop by, leave a message on the <a href="http://www.facebook.com/board.php?uid=2436915755">boards</a>, or message the developer <a href="http://www.facebook.com/?compose=1&id=1340490250&__a=4&sk=messages">directly</a>.\'); ?>');
 } else {
-	fwrite($file,'<?php error(\'Support Chat Room Closed\',\'Sorry about this, but no one is around to help out at the moment. Please try the other methods below.\'); ?>');
+	fwrite($file,'<?php error(\'Support Chat Room Closed\',\'Sorry about that, but no one is around... You leave a message on the <a href="http://www.facebook.com/board.php?uid=2436915755">boards</a>, or message the developer <a href="http://www.facebook.com/?compose=1&id=1340490250&__a=4&sk=messages">directly</a>.\'); ?>');
 }
 
 fclose($file);
