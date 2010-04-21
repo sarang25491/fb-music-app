@@ -42,15 +42,17 @@ A:hover {text-decoration: underline; color: red;}
 		
 			<table border="0" cellspacing="0" cellpadding="0" width="100%">
 				<tr>
-					<td width="5%" valign="center">
-						<div style="padding-left: 2px;padding-right: 4px;"><a href="#player" onclick="openPlayer(<?php echo $song['xid']; ?>)" ><img src="<?php echo $config['fb']['appcallbackurl']; ?>images/track.gif" align="top" border="0"></a></div>
+					
+					<td width="80%" valign="center">
+						<div style="font-size:9pt;"><a style="padding-left: 2px; padding-right: 6px; vertical-align: middle;" href="#player" onclick="openPlayer(<?php echo $song['xid']; ?>)" ><img src="<?php echo $config['fb']['appcallbackurl']; ?>images/track.gif" align="top" border="0"></a><a href="#player" onclick="openPlayer(<?php echo $song['xid']; ?>)" ><?php echo $song['title']; ?> by <?php echo $song['artist']; ?></a></div>
 					</td>
-					<td width="55%" valign="center">
-						<div style="font-size:1em;"><a href="#player" onclick="openPlayer(<?php echo $song['xid']; ?>)" ><?php echo $song['title']; ?> by <?php echo $song['artist']; ?></a></div>
+					
+					<?php if (!isset($userId)) { ?> 
+					<td width="20%">
+						<div align="right"><img src="images/key.png" border="0" onclick="showApiKey(<?php echo $song['xid']; ?>)" style="padding-right:2px;"><img src="images/info.png" border="0" onclick="showInfo(<?php echo $song['xid']; ?>)" style="padding-right:2px;"><img src="images/tag_blue_edit.png" border="0" onclick="editTag(<?php echo $song['xid']; ?>)" style="padding-right:2px;"><img src="images/delete.png" border="0" onclick="removeSong(<?php echo $song['xid']; ?>)"></div>
 					</td>
-					<td width="40%">
-						<?php if (!isset($userId)) { ?> <div align="right"><img src="images/key.png" border="0" onclick="showApiKey(<?php echo $song['xid']; ?>)" style="padding-right:2px;"><img src="images/info.png" border="0" onclick="showInfo(<?php echo $song['xid']; ?>)" style="padding-right:2px;"><img src="images/tag_blue_edit.png" border="0" onclick="editTag(<?php echo $song['xid']; ?>)" style="padding-right:2px;"><img src="images/delete.png" border="0" onclick="removeSong(<?php echo $song['xid']; ?>)"></div><?php } ?>
-					</td>
+					<?php } ?>
+					
 				</tr>
 			</table>
 		</div><!-- end playlistArray-XID -->
