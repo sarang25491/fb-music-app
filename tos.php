@@ -1,6 +1,7 @@
 	<div style="padding: 10px;">
+	<h1>MUSIC APPLICATION</h1>
 	<h2>ACCEPTABLE USE & PRIVACY POLICY</h2>
-	<b>UPDATED ON WEDNESDAY, APRIL 21, 2010</b>
+	<h3>UPDATED ON WEDNESDAY, APRIL 21, 2010</h3>
 	<br /><br />
 	<h4>1. OVERVIEW</h4>
 	<p>This artist agreement is accepted by you upon your use of the Website and is further affirmed by you becoming a member of the Burst Development website, Music (Facebook). The failure of Burst Development to exercise or enforce any right or provision of this agreement shall not operate as a waiver of such right or provision.</p>
