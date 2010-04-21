@@ -4,8 +4,6 @@ include_once 'include/config.php';
 include_once 'include/functions.php';
 ?>
 
-<?php execution_start(); ?>
-
 <?php 
 if(isset($_GET['fb_page_id']) AND $_POST['fb_sig_is_admin'] == '1')
 {
@@ -97,12 +95,9 @@ switch($_GET['tab']) {
 
 <?php if($is_pro == 0) include 'include/advertisement.php'; ?>
 
-<?php execution_stop(); ?>
-<?php $GLOBALS['calc_exec'] = $GLOBALS['end_exec'] - $GLOBALS['start_exec']; ?>
-
 <div style="margin-top: 10px; border-top: 1px solid #d8dfea; padding: 3px 16px; height: 14px; color: #3b5998;">
-	<div style="float: left;"><a href="http://www.facebook.com/apps/application.php?id=2436915755" target="_blank">Music</a> v2.3 created by <a href="http://stevenlu.com">Steven Lu</a></div>
-	<div style="float: right;">A <a href="http://burst-dev.com/" target="_blank">Burst Development</a> Project (e.<?php echo round($GLOBALS['calc_exec'], 4); ?>s)</div>
+	<div style="float: left;"><a href="http://www.facebook.com/apps/application.php?id=2436915755" target="_blank">Music</a> v2.3.1 [<a href="<?php echo $config['fb']['callbackurl']; ?>">Acceptable Use & Privacy Policy</a>]</div>
+	<div style="float: right;">A <a href="http://burst-dev.com/" target="_blank">Burst Development</a> Project by <a href="http://stevenlu.com">Steven J. Lu</a></div>
 </div>
 
 <fb:google-analytics uacct="UA-2250290-1" />
