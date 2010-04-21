@@ -1,13 +1,12 @@
 <?php $pre = 'skip_fbapi'; include 'include/config.php'; ?>
 
 <?php
-if(!isset($_GET['id'])) {
-	if (isset($_GET['fb_page_id']))
-		$id = $_GET['fb_page_id'];
-	else
-		$id = $_GET['fb_sig_user'];
-} else
-	$id = $_GET['id'];
+if (isset($userId)) //called from the external playlist (playlist.php)
+	$id = $userId;
+elseif (isset($_GET['fb_sig_user']))
+	$id = $_GET['fb_sig_user'];
+elseif (isset($_GET['fb_page_id']))
+	$id = $_GET['fb_page_id'];
 ?>
 
 <?php 
@@ -50,7 +49,7 @@ A:hover {text-decoration: underline; color: red;}
 						<div style="font-size:1em;"><a href="#player" onclick="openPlayer(<?php echo $song['xid']; ?>)" ><?php echo $song['title']; ?> by <?php echo $song['artist']; ?></a></div>
 					</td>
 					<td width="40%">
-						<div align="right"><img src="images/key.png" border="0" onclick="showApiKey(<?php echo $song['xid']; ?>)" style="padding-right:2px;"><img src="images/info.png" border="0" onclick="showInfo(<?php echo $song['xid']; ?>)" style="padding-right:2px;"><img src="images/tag_blue_edit.png" border="0" onclick="editTag(<?php echo $song['xid']; ?>)" style="padding-right:2px;"><img src="images/delete.png" border="0" onclick="removeSong(<?php echo $song['xid']; ?>)"></div>
+						<?php if (!isset($userId)) { ?> <div align="right"><img src="images/key.png" border="0" onclick="showApiKey(<?php echo $song['xid']; ?>)" style="padding-right:2px;"><img src="images/info.png" border="0" onclick="showInfo(<?php echo $song['xid']; ?>)" style="padding-right:2px;"><img src="images/tag_blue_edit.png" border="0" onclick="editTag(<?php echo $song['xid']; ?>)" style="padding-right:2px;"><img src="images/delete.png" border="0" onclick="removeSong(<?php echo $song['xid']; ?>)"></div><?php } ?>
 					</td>
 				</tr>
 			</table>

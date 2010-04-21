@@ -30,6 +30,12 @@ if (isset($_GET['updateList'])) {
 	echo "<b>Playlist saved! -- Updated to Profile!<b>";
 }
 
+if (isset($_GET['updateGlobal'])) {
+	$user = $_GET['id'];
+	include 'fb.profile.php';
+	echo "<b>Updated to Profile!</b>";
+}
+
 if (isset($_GET['grabSongData'])) {
 	$songData = $db->Raw("SELECT `title`,`artist` FROM `userdb_uploads` WHERE `xid`='$_GET[id]'");
 	echo '<b>Now Playing</b>: ' . $songData[0]['title'] . ' by ' . $songData[0]['artist'] . '';
@@ -43,5 +49,10 @@ if (isset($_GET['grabApiKey'])) {
 if (isset($_GET['grabInfo'])) {
 	$songData = $db->Raw("SELECT `type`,`count` FROM `userdb_uploads` WHERE `xid`='$_GET[id]'");
 	echo '<b>Type</b>: ' . $songData[0]['type'] . ' | <b>Plays</b>: ' . $songData[0]['count'] . '';
+}
+
+if (isset($_GET['grabPlayerUrl'])) {
+	$encodedId = base64_encode("" . $_GET['id'] . "-" . time() . "");
+	echo '<a style="font-size: 10pt;" target="_parent" href="' . $config['fb']['appcallbackurl'] . 'playlist.php?id=' . $encodedId . '">' . $config['fb']['appcallbackurl'] . 'playlist.php?id=' . $encodedId . '</a>'; 
 }
 ?>
