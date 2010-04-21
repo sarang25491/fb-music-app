@@ -3,10 +3,10 @@
 <?php
 if (isset($userId)) //called from the external playlist (playlist.php)
 	$id = $userId;
-elseif (isset($_GET['fb_sig_user']))
-	$id = $_GET['fb_sig_user'];
 elseif (isset($_GET['fb_page_id']))
 	$id = $_GET['fb_page_id'];
+elseif (isset($_GET['fb_sig_user']))
+	$id = $_GET['fb_sig_user'];
 ?>
 
 <?php 

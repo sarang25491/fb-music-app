@@ -8,6 +8,7 @@
 // $_GET['fb_sig_user] gets the current user ID.
 ?>
 
+
 <script src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php" type="text/javascript"></script>
 <script type="text/javascript">
     FB_RequireFeatures(["CanvasUtil"], function()
@@ -113,7 +114,7 @@ function savePlaylist() {
 function revertPlaylist() {
 	$("#playlist").slideUp(500);
 	$("#saveBar").fadeOut(250, function () {
-		$.post("app.index-playlist-list.php?id=<?php echo $id; ?>", 
+		$.post("app.index-playlist-list.php?<?php if (isset($_GET['fb_page_id'])) echo 'fb_page_id=' . $_GET['fb_page_id'] . ''; else echo 'fb_sig_user=' . $_GET['fb_sig_user '] . ''; ?>", 
 			function(response) {
 				$("#playlist").html(response);
 			}
@@ -142,7 +143,6 @@ function openPlayer(xid) {
 	$("#playerData").delay(500).slideDown(250);
 	$("#playerBar").delay(500).fadeIn(250);
 	$("#player").delay(1250).slideDown(500);
-
 }
 
 function showEditor() {
@@ -165,6 +165,27 @@ function showInfo(xid) {
 function showApiKey(xid) {
 	$("#status").slideUp(50);
 	$.post("app.index-playlist-callback.php?grabApiKey&id=" +xid,
+		function (response) {
+			$("#status").delay(500).html(response);
+		}
+	);
+	$("#status").delay(500).slideDown(250);
+}
+
+function updateGlobal() {
+	$("#status").slideUp(50);
+	$.post("app.index-playlist-callback.php?updateGlobal&id=<?php echo $id; ?>",
+		function (response) {
+			$("#status").delay(500).html(response);
+		}
+	);
+	$("#status").delay(500).slideDown(250);
+	$("#status").delay(1500).slideUp(250);
+}
+
+function grabPlayerUrl() {
+	$("#status").slideUp(50);
+	$.post("app.index-playlist-callback.php?grabPlayerUrl&id=<?php echo $id; ?>",
 		function (response) {
 			$("#status").delay(500).html(response);
 		}
@@ -196,7 +217,9 @@ function showApiKey(xid) {
 	
 	<div style="margin-top: 5px; width: 500px; font-size: 14px;" id="menuBar">
 		<div align="right">
-		<a target="_parent" href="<?php echo $config['fb']['fburl']; ?>?tab=index&display=add<?php if(isset($_GET['fb_page_id'])) echo '&fb_page_id=' . $id . ''; ?>" class="buttonBlue" style="margin-left: 10px; padding: 2px 5px 2px 5px;">Add a Song</a>
+		<a class="buttonBlue" style="margin-left: 10px; padding: 2px 5px 2px 5px;" onclick="grabPlayerUrl()">Grab Player URL</a>
+		<a class="buttonBlue" style="padding: 2px 5px 2px 5px;" onclick="updateGlobal()">Update Player Globally</a>
+		<a target="_parent" href="<?php echo $config['fb']['fburl']; ?>?tab=index&display=add<?php if(isset($_GET['fb_page_id'])) echo '&fb_page_id=' . $_GET['fb_page_id'] . ''; ?>" class="buttonBlue" style="padding: 2px 5px 2px 5px;">Add a Song</a>
 		</div>
 	</div>
 </div>
