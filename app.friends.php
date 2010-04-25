@@ -29,7 +29,7 @@ if (count($user_friends_info) == 0) {
 	
 	$user_friends_ids = substr_replace($user_friends_ids,"",-1);
 	
-	$user_friends_uploads = $db->Raw("SELECT * FROM `userdb_uploads` WHERE `user` IN ($user_friends_ids) ORDER BY `user`,`id` ASC");
+	$user_friends_uploads = $db->Raw("SELECT * FROM `userdb_uploads` WHERE `user` IN ($user_friends_ids) ORDER BY `user`,`order`,`id` ASC");
 	
 	/*
 	Puts the data from SQL format to more user-friendly format.
