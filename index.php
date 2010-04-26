@@ -59,9 +59,10 @@ if(!isset($_GET['tab'])) {
 }
 ?>
 
+<div align="center" style="border-bottom: 1px solid #e2c822; background-color: #fff9d7; padding: 5px; font-weight: bold;"><?php include_once 'inc.tips.php'; ?></div>
+
 <div id="header" style="padding-top: 15px; padding-right: 25px; padding-left: 20px; padding-bottom: 50px;">
 	<div style="float: left;"><img src="<?php echo $config['fb']['appcallbackurl']; ?>images/music.png" /></div>
-	<div style="float: right;"><?php include 'inc.tips.php'; ?></div>
 </div>
 
 <fb:tabs>
