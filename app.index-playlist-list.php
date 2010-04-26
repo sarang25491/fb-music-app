@@ -9,17 +9,8 @@ elseif (isset($_GET['fb_sig_user']))
 	$id = $_GET['fb_sig_user'];
 ?>
 
-<?php 
-$orderedList = $db->Raw("SELECT * FROM `userdb_uploads` WHERE `user` = '$id'"); 
-//$orderedList = $db->Raw("SELECT COUNT(*) FROM `userdb_uploads` WHERE `user` = '1340490250' AND `order`='0'");
-$orderedList = $orderedList[0]['COUNT(*)'];
-
-if ($orderedList > 1) {
-	$result = $mysqli->query("SELECT `title`,`artist`,`xid` FROM `userdb_uploads` WHERE `user` = '$id' ORDER BY `id` DESC");
-} else {
-	$result = $mysqli->query("SELECT `title`,`artist`,`xid` FROM `userdb_uploads` WHERE `user` = '$id' ORDER BY `order` ASC");
-}
-
+<?php
+$result = $mysqli->query("SELECT `title`,`artist`,`xid` FROM `userdb_uploads` WHERE `user` = '$id' ORDER BY `order`,`id` DESC");
 while ($row = $result->fetch_assoc()) {
 	$playlist[] = $row;
 }
