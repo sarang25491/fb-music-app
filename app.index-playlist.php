@@ -8,7 +8,6 @@
 // $_GET['fb_sig_user] gets the current user ID.
 ?>
 
-
 <script src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php" type="text/javascript"></script>
 <script type="text/javascript">
     FB_RequireFeatures(["CanvasUtil"], function()
@@ -114,7 +113,7 @@ function savePlaylist() {
 function revertPlaylist() {
 	$("#playlist").slideUp(500);
 	$("#saveBar").fadeOut(250, function () {
-		$.post("app.index-playlist-list.php?<?php if (isset($_GET['fb_page_id'])) echo 'fb_page_id=' . $_GET['fb_page_id'] . ''; else echo 'fb_sig_user=' . $_GET['fb_sig_user '] . ''; ?>", 
+		$.post("app.index-playlist-list.php?<?php if (isset($_GET['fb_page_id'])) echo 'fb_page_id=' . $_GET['fb_page_id'] . ''; else echo 'fb_sig_user=' . $_GET['fb_sig_user'] . ''; ?>", 
 			function(response) {
 				$("#playlist").html(response);
 			}
