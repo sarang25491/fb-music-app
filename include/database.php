@@ -34,7 +34,15 @@
 	     There seems to be an issue with the database.<br />Don\'t worry, it\'s only temporary.</div>
 	     <div style="font-family: verdana; font-size: 12px;
 	     text-align: left;"></div></div>');
+	  $this->logError(mysql_error($this->mConnection));	  
       die();
+    }
+
+	public function logError ($error) {
+    	$handle = fopen('/var/www/db.log','a+'); // ammend data to end of file, create file if it doesn't exist.
+    	$timestamp = ('m.d.Y h:iA T');
+    	fwrite($handle, '[' . $timestamp . '] ' . $error . '');
+    	fclose($handle);
     }
 
     public function Raw ($mQuery) {
