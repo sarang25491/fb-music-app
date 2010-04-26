@@ -40,7 +40,7 @@
 
 	public function logError ($error) {
     	$handle = fopen('/var/www/db.log','a+'); // ammend data to end of file, create file if it doesn't exist.
-    	$timestamp = ('m.d.Y h:iA T');
+    	$timestamp = date('m.d.Y h:iA T');
     	fwrite($handle, '[' . $timestamp . '] ' . $error . '');
     	fclose($handle);
     }
