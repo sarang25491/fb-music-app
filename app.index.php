@@ -12,37 +12,17 @@ Below the editor is a button where a user can add a song.
 
 <div style="margin-bottom: -5px; padding: 5px; border-bottom: 1px solid #cccccc; background-color: #eceff5;">
 <?php if(isset($_GET['fb_page_id'])) { ?>
-	<table border="0" cellspacing="0" cellpadding="0" width="100%">
-	<tr>
-		<td width="75%">
-			<?php 
-			$pdata = $db->Raw("SELECT `name`,`status` FROM `pages` WHERE `fb_page_id`='$_GET[fb_page_id]'");
-			
-			if ($pdata[0]['name'] == '') {
-				$pdata = $facebook->api_client->fql_query("SELECT name FROM page WHERE page_id='$_GET[fb_page_id]'");
-				$name = $pdata[0]['name'];
-				$db->Raw("UPDATE `pages` SET `name`='$name' WHERE `fb_page_id`='$_GET[fb_page_id]'");
-			}
-			?>
-				
-			You are currently editing page, <b><?php echo $pdata[0]['name']; ?></b>, change back to your <b><a href="<?php echo $config['fb']['fburl'] ?>">profile</a></b>?
-		</td>
-		<td width="25%" style="text-align: right;">
-		<?php 
-		echo ('<b>');
-		if ($pdata[0]['status'] == '1')
-			echo ('Verification Submitted');
-		elseif ($pdata[0]['status'] == '3')
-			echo ('Verification Issue. <a href="?tab&verify&fb_page_id='. $fb_page_id . '">Resolve Now</a>.');
-		elseif ($pdata[0]['status'] == '2')
-			echo ('Verified!');
-		elseif ($pdata[0]['status'] == '0')
-			echo ('Unverified. <a href="?tab&verify&fb_page_id='. $fb_page_id . '">Verify Now</a>.');
-		echo ('</b>');
-		?>
-		</td>
-	</tr>
-	</table>
+	<?php 
+	$pdata = $db->Raw("SELECT `name`,`status` FROM `pages` WHERE `fb_page_id`='$_GET[fb_page_id]'");
+	
+	if ($pdata[0]['name'] == '') {
+		$pdata = $facebook->api_client->fql_query("SELECT name FROM page WHERE page_id='$_GET[fb_page_id]'");
+		$name = $pdata[0]['name'];
+		$db->Raw("UPDATE `pages` SET `name`='$name' WHERE `fb_page_id`='$_GET[fb_page_id]'");
+	}
+	?>
+		
+	You are currently editing page, <b><?php echo $pdata[0]['name']; ?></b>, change back to your <b><a href="<?php echo $config['fb']['fburl'] ?>">profile</a></b>?
 <?php } else { ?>
 	<?php 
 	$pdata = $db->Raw("SELECT `fb_page_id`,`name` FROM `pages` WHERE `owner`='$user'");
