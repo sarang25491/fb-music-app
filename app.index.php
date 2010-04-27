@@ -353,9 +353,9 @@ Below the editor is a button where a user can add a song.
 									<tr>
 										<td>
 											<fb:editor action="?tab=index&display=add&method=youtube&search<?php pages($_GET['fb_page_id']); ?>" labelwidth="0">
-												<fb:editor-text label="Search" name="search" value="song title - artist name"/>
+												<fb:editor-text label="Search" name="search" value="" />
 												<fb:editor-buttonset>
-													<fb:editor-button value="Submit"/>
+													<fb:editor-button value="Search"/>
 												</fb:editor-buttonset>
 											</fb:editor>
 										</td>

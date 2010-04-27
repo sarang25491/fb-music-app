@@ -24,44 +24,74 @@ if(isset($_GET['search'])) {
     $query = $youTubeService->newVideoQuery();
     $query->setQuery($_POST['search']);
     $query->setStartIndex(0);
-    $query->setMaxResults(5);
+    $query->setMaxResults(9);
     
 	$feed = $youTubeService->getVideoFeed($query);
 	
-	echo '	<form id="dummy_form"></form>
-			<div id="player" style="padding-bottom: 0px;" align="center"></div>';
+	/* Grabs the data received from Gdata and converts it into a nice array
+	for people like me to work with. Its just so I handle the data better.
+	It basically puts in the title of the video, the ID of the video,
+	the link to the video and the URL of the largest thumbnail possible */
+	$i = 0;
+	$youtubeData = array();
+	foreach($feed as $entry) {
+		$youtubeData[$i]['title'] = $entry->getVideoTitle();
+		$youtubeData[$i]['id'] = $entry->getVideoId();
+		$youtubeData[$i]['video'] = $entry->getFlashPlayerUrl();
+		$thumbnail = $entry->getVideoThumbnails();
+		$youtubeData[$i]['img'] = $thumbnail[2]['url'];
+		$i++;
+	} //end data parsing
+	echo '	<fb:dialog id="preview">
+				<fb:dialog-title>Youtube Preview</fb:dialog-title>
+				<fb:dialog-content>
+					<form id="dummy_form"></form>
+					<div id="player" align="center"></div>
+				</fb:dialog-content>
+				<fb:dialog-button type="button" value="Close" close_dialog=1 /> 
+			</fb:dialog>';
 	
-	echo '<fb:editor action="?tab=index&display=add&method=youtube&confirm" labelwidth="0">';
-		echo '<fb:editor-custom label="Selection">';
-		echo '<table border="0" cellpadding="0" cellspacing="0" width="500">';
+	echo '	<div style="padding-top: 10px">
+			<fb:editor action="?tab=index&display=add&method=youtube&search' . pages($_GET['fb_page_id']) . '" labelwidth="0">
+				<fb:editor-text label="Search" name="search" value="' . $_POST['search'] . '"/>
+				<fb:editor-buttonset>
+				<fb:editor-button value="Search"/>
+				</fb:editor-buttonset>
+			</fb:editor>
+			</div>';
+	
+	$tr = 0;
+	echo '<div align="center" style="padding-top: 5px; padding-bottom: 10px;">';
+	echo '<table border="0" cellspacing="5" cellpadding="0" width="700px">';
+	foreach ($youtubeData as $entry) {
+		if ($tr == 0)
+			echo '<tr>';
 		
-		$count = 0;
-		foreach ($feed as $entry) {
-			
-			echo '<tr><td width="5%" valign="top">';
-			echo '<input type="radio" name="id" value="' . $entry->getVideoId() .'">';
-			echo '</td><td width="60%" valign="top">';
-			echo '' . $entry->getVideoTitle() . '';
-			echo '</td><td width="35%" valign="top">';
-			echo '(<a href="http://www.youtube.com/watch?v=' . $entry->getVideoId() . '" target="_blank">preview</a>)';
-			echo '</td></tr>';
-			
-			$count++;
-			
+		echo '<td width="33%" style="padding-top: 10px; border: 1px solid #cccccc">';
+		echo '<fb:editor action="?tab=index&display=add&method=youtube&confirm&videoId=' . $entry['id'] . '" labelwidth="0" width="10">';
+		echo '<center><img src="' . $entry['img'] . '" /><br />' . $entry['title'] . '<br /></center>';
+		echo '<fb:editor-buttonset><fb:editor-button value="Select"></fb:editor-buttonset><div style="padding-left: 97px; padding-top: 5px; margin-bottom: -5px;"><a clickrewriteurl="' . $config['fb']['appcallbackurl'] . 'app.youtube-callback.php?vid=' . $entry['id'] . '" clickrewriteid="player" clickrewriteform="dummy_form" clicktoshowdialog="preview">preview</a></div>';
+		echo '</fb:editor>';
+
+		echo '</td>';
+		
+		$tr++;
+		
+		if ($tr == 3) {
+			echo '</tr>';
+			$tr = 0;
 		}
-		
-		echo '</table>';
-		echo '</fb:editor-custom>';
-		echo '<fb:editor-buttonset><fb:editor-button value="Submit"></fb:editor-buttonset>';
-	echo '</fb:editor>';
+	}
+	echo '</table>';
+	echo '</div>';
 } elseif (isset($_GET['confirm'])) {
 	
 	echo '<fb:editor action="?tab=index&display=add&method=youtube&submit" labelwidth="0">
-	<center><b><a href="http://www.youtube.com/watch?v=' . $_POST['id'] . '">http://www.youtube.com/watch?v=' . $_POST['id'] . '</a></b></center>
+	<center><b><a href="http://www.youtube.com/watch?v=' . $_GET['videoId'] . '">http://www.youtube.com/watch?v=' . $_GET['videoId'] . '</a></b></center>
 	<fb:editor-text label="Title" name="title" value="" maxlength="100" />
 	<fb:editor-text label="Artist" name="artist" value="" maxlength="100" />
 	<fb:editor-custom>
-		<input type="hidden" name="link" value="http://www.youtube.com/watch?v=' . $_POST['id'] . '">
+		<input type="hidden" name="link" value="http://www.youtube.com/watch?v=' . $_GET['videoId'] . '">
 	</fb:editor-custom>
 	<fb:editor-buttonset>
 		<fb:editor-button value="Submit"/>
