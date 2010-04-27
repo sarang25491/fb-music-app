@@ -69,8 +69,9 @@ if(isset($_GET['search'])) {
 		
 		echo '<td width="33%" style="padding-top: 10px; border: 1px solid #cccccc">';
 		echo '<fb:editor action="?tab=index&display=add&method=youtube&confirm&videoId=' . $entry['id'] . '" labelwidth="0" width="10">';
+		echo '<fb:editor-custom><input type="hidden" name="title" value="' . $entry['title'] . '"></fb:editor-custom>';
 		echo '<center><img src="' . $entry['img'] . '" /><br />' . $entry['title'] . '<br /></center>';
-		echo '<fb:editor-buttonset><fb:editor-button value="Select"></fb:editor-buttonset><div style="padding-left: 97px; padding-top: 5px; margin-bottom: -5px;"><a clickrewriteurl="' . $config['fb']['appcallbackurl'] . 'app.youtube-callback.php?vid=' . $entry['id'] . '" clickrewriteid="player" clickrewriteform="dummy_form" clicktoshowdialog="preview">preview</a></div>';
+		echo '<fb:editor-buttonset><fb:editor-button value="Select"></fb:editor-buttonset><div style="padding-left: 97px; padding-top: 5px; margin-bottom: -20px;"><a clickrewriteurl="' . $config['fb']['appcallbackurl'] . 'app.youtube-callback.php?vid=' . $entry['id'] . '" clickrewriteid="player" clickrewriteform="dummy_form" clicktoshowdialog="preview">preview</a></div>';
 		echo '</fb:editor>';
 
 		echo '</td>';
@@ -86,17 +87,24 @@ if(isset($_GET['search'])) {
 	echo '</div>';
 } elseif (isset($_GET['confirm'])) {
 	
-	echo '<fb:editor action="?tab=index&display=add&method=youtube&submit" labelwidth="0">
-	<center><b><a href="http://www.youtube.com/watch?v=' . $_GET['videoId'] . '">http://www.youtube.com/watch?v=' . $_GET['videoId'] . '</a></b></center>
-	<fb:editor-text label="Title" name="title" value="" maxlength="100" />
-	<fb:editor-text label="Artist" name="artist" value="" maxlength="100" />
+	list($title, $artist) = split(' - ', $_POST['title']);
+	
+	echo '<div style="padding-top: 15px;">
+	<fb:editor action="?tab=index&display=add&method=youtube&submit" labelwidth="0">
+	<div align="center" style="font-size: 10pt;">
+	<b>Youtube Link: </b><a href="http://www.youtube.com/watch?v=' . $_GET['videoId'] . '">http://www.youtube.com/watch?v=' . $_GET['videoId'] . '</a><br />
+	<b>Youtube Title: </b>' . $_POST['title'] . '
+	</div>
+	<fb:editor-text label="Title" name="title" value="' . $title  . '" maxlength="100" />
+	<fb:editor-text label="Artist" name="artist" value="' . $artist . '" maxlength="100" />
 	<fb:editor-custom>
 		<input type="hidden" name="link" value="http://www.youtube.com/watch?v=' . $_GET['videoId'] . '">
 	</fb:editor-custom>
 	<fb:editor-buttonset>
 		<fb:editor-button value="Submit"/>
 	</fb:editor-buttonset>
-	</fb:editor>';
+	</fb:editor>
+	</div>';
 
 } elseif (isset($_GET['submit'])) {
 	$title = htmlspecialchars(utf8_encode($_POST['title']), ENT_QUOTES); $artist = htmlspecialchars(utf8_encode($_POST['artist']), ENT_QUOTES);
