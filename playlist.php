@@ -61,7 +61,7 @@ list($userId, $timeIssued) = split("-", $decodedInput, 2);
 $expires = date("U", strtotime("-10 min")); // 15 minutes in the past
 
 if ($expires > $timeIssued)
-	die ("Sorry, this player expired!");
+	die ("Sorry, this playlist link has expired! You will need to request another from whoever you got it from.");
 ?>
 
 <div style="padding-top: 25px; padding-left: 25px;">
