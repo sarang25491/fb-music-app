@@ -5,6 +5,7 @@ include_once 'include/functions.php';
 ?>
 
 <?php 
+// FBPAGE HEADERS
 if(isset($_GET['fb_page_id']) AND $_POST['fb_sig_is_admin'] == '1')
 {
 	echo '<fb:page-admin-edit-header></fb:page-admin-edit-header>'; 
@@ -21,8 +22,9 @@ if(isset($_GET['fb_page_id']) AND $_POST['fb_sig_is_admin'] == '1')
 if(!isset($_GET['tab'])) {
 	
 	if(isset($_GET['fb_page_id']))
-		$db->Raw("INSERT IGNORE INTO `pages` (`fb_page_id`,`owner`,`status`) VALUES ('$_GET[fb_page_id]','$_POST[fb_sig_user]','0')");
+		$db->Raw("INSERT IGNORE INTO `pages` (`fb_page_id`,`owner`) VALUES ('$_GET[fb_page_id]','$_POST[fb_sig_user]')");
 	
+	// Puts a new user into the database or updates the the time in their user file.
 	$db->Raw("INSERT INTO `userdb_users` (`user`,`credit`,`override`,`pro`) VALUES ('$user','0','0','0') ON DUPLICATE KEY UPDATE `time`=CURRENT_TIMESTAMP");
 	
 	$accepted_tos = $db->Raw("SELECT COUNT(*) FROM `userdb_tos` WHERE `user`='$user'");
@@ -31,15 +33,14 @@ if(!isset($_GET['tab'])) {
 	{
 		$db->Raw("INSERT INTO `userdb_tos` (`user`) VALUES ('$user')");
 		if(isset($_GET['fb_page_id']))
-		{ 
 			redirect('' . $config['fb']['fburl'] . '?tab=index&fb_page_id=' . $_GET['fb_page_id'] . ''); 
-		} else { 
+		else
 			redirect('' . $config['fb']['fburl'] . '?tab=index'); 
-		}
+		
 		die();
 	} elseif ($accepted_tos[0]['COUNT(*)'] == '0') {
 		explanation('Terms of Service','For legal reasons, you must agree to our terms in order to use the application.');
-		include 'tos.php';
+		include_once 'tos.php';
 ?>
 		<fb:editor action="<?php echo $config['fb']['fburl']; ?>?accept_tos<?php if(isset($_GET['fb_page_id'])) { echo '&fb_page_id=' . $_GET['fb_page_id'] . ''; } ?>" labelwidth="0">
 			<fb:editor-buttonset>
@@ -86,9 +87,6 @@ switch($_GET['tab']) {
 	case "help":
 		include "app.help.php";
 		break;
-	case "verify":
-		include "app.verify.php";
-		break;	
 }
 ?>
 

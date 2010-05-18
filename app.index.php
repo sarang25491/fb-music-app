@@ -10,7 +10,7 @@ Below the editor is a button where a user can add a song.
 */
 ?>
 
-<?php include_once 'app.index-multihead.php'; ?>
+<?php include_once 'app.index-header.php'; ?>
 
 <?php if ($_GET['display'] == NULL) { ?>
 	<div style="margin: 10px;">

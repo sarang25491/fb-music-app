@@ -123,8 +123,6 @@ if($credit+2 <= $usage)
 						<fb:editor-text label="Artist" name="artist" value="<?php echo htmlspecialchars_decode(utf8_decode($temporary_information[0]['artist']), ENT_QUOTES); ?>" maxlength="100" />
 						<?php
 						if (isset($_GET['fb_page_id'])) {
-							$verifyStatus = $db->Raw("SELECT `status` FROM `pages` WHERE `fb_page_id`='$_GET[fb_page_id]'");
-							if ($verifyStatus[0]['status'] == 2) {
 						?>
 						<fb:editor-text label="Buy Link" name="buy_link" value="<?php echo $db_info[0]['buy_link']; ?>" maxlength="100" />
 						<fb:editor-custom label="DL-able?">
@@ -134,7 +132,6 @@ if($credit+2 <= $usage)
 							</select>
 						</fb:editor-custom>
 						<?php
-							}
 						}
 						?>
 						<fb:editor-buttonset>
