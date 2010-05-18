@@ -1,9 +1,5 @@
 <div style="margin-bottom: -5px; padding: 5px; border-bottom: 1px solid #cccccc; background-color: #eceff5;">
 <?php if(isset($_GET['fb_page_id'])) { ?>
-	<?php 
-	$pdata = $db->Raw("SELECT `status` FROM `pages` WHERE `fb_page_id`='$_GET[fb_page_id]'");
-	?>
-		
 	You are currently editing page, <b><fb:name uid="<?php echo $_GET[fb_page_id]; ?>" /></b>, change back to your <b><a href="<?php echo $config['fb']['fburl'] ?>">profile</a></b>?
 <?php } else { ?>
 	<?php 
