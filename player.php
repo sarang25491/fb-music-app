@@ -116,12 +116,5 @@ if($type == 'link') {
 <?php } ?>
 
 <?php
-if (!isset($_GET['from_feed'])) {
-	$owner = $db_data[0]['user'];
-	$player = $_POST['fb_sig_user']; 
-	if($from_share == NULL AND $from_embed == NULL AND $owner !== '0' AND $player !== '0') {
-		$db->Raw("INSERT INTO `userdb_plays` (`owner`,`player`,`id`,`type`,`title`,`artist`) VALUES ('$owner','$player','$id','$type','$title','$artist')");
-	}
-}
 $db->Raw("UPDATE `userdb_uploads` SET `count`=`count`+1 WHERE `id`='$id'"); // Updating individual song count.
 ?>
