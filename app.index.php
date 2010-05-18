@@ -33,8 +33,9 @@ Below the editor is a button where a user can add a song.
 			if($count !== 1 AND $count == count($pdata)) $page_string='' . $page_string . 'or ';
 			if($parse['name'] == '') {
 				$pname = $facebook->api_client->fql_query("SELECT name FROM page WHERE page_id='$parse[fb_page_id]'");
-				$pname = $pname[0]['name'];
-				$parse['name'] = $pname;
+				$parse['name'] = $pname[0]['name'];
+				$pname = htmlspecialchars(utf8_encode($parse['name']));
+				
 				$db->Raw("UPDATE `pages` SET `name`='$pname' WHERE `fb_page_id`='$parse[fb_page_id]'");
 			}
 			$page_string = '' . $page_string . '<b><a href="' . $config['fb']['fburl'] . '?fb_page_id=' . $parse['fb_page_id'] . '">' . $parse['name'] . '</a></b>';
