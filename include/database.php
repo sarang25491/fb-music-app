@@ -31,7 +31,7 @@
              border-color: #ffd04d; background-color: #fff5b1; padding:10px">
              <div style="letter-spacing: 1px; font-family: verdana;
 	     font-size: 20px; text-align: left; color: #003355">
-	     There seems to be an issue with the database.<br />Don\'t worry, it\'s only temporary.</div>
+	     Oops! Something went wrong.<br />Please report to the developers how you generated this error.</div>
 	     <div style="font-family: verdana; font-size: 12px;
 	     text-align: left;"></div></div>');
 	  $this->logError(mysql_error($this->mConnection));	  
@@ -41,7 +41,7 @@
 	public function logError ($error) {
     	$handle = fopen('/var/www/db.log','a+'); // ammend data to end of file, create file if it doesn't exist.
     	$timestamp = date('m.d.Y h:iA T');
-    	fwrite($handle, '[' . $timestamp . '] ' . $error . '\n');
+    	fwrite($handle, "[" . $timestamp . "] " . $error . " \r\n");
     	fclose($handle);
     }
 
