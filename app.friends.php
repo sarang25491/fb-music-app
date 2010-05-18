@@ -19,6 +19,7 @@ if (count($user_friends_info) == 0) {
 	*/
 	
 	foreach($user_friends_info as $ids) $user_friends_ids = "" . $user_friends_ids . "'" . $ids['uid'] . "',";
+	$user_friends_ids = "" . $user_friends_ids . "'2436915755'";
 
 	// $user_friends_with_songs = $db->Raw("SELECT userdb_uploads.user, userdb_links.user FROM `userdb_uploads`, `userdb_links` WHERE `user` IN (" . $user_friends_ids . ") GROUP BY `user`");
 
@@ -27,9 +28,7 @@ if (count($user_friends_info) == 0) {
 	This will grab all of the information and place it into a nice array.
 	*/
 	
-	$user_friends_ids = substr_replace($user_friends_ids,"",-1);
-	
-	$user_friends_uploads = $db->Raw("SELECT * FROM `userdb_uploads` WHERE `user` IN ($user_friends_ids) ORDER BY `user`,`order`,`id` ASC");
+	$user_friends_uploads = $db->Raw("SELECT * FROM `userdb_uploads` WHERE `user` IN (" . $user_friends_ids . ") ORDER BY `user`,`order`,`id` ASC");
 	
 	/*
 	Puts the data from SQL format to more user-friendly format.
