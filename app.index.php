@@ -188,7 +188,7 @@ Below the editor is a button where a user can add a song.
 													</td>
 													
 													<td>
-														<font size="2em">(mp3, m4a, flv supported; max 25MBs)</font>
+														<font size="2em">(mp3, m4a, flv supported; max 20MBs)</font>
 													</td>
 												</tr>
 												
@@ -210,6 +210,10 @@ Below the editor is a button where a user can add a song.
 											elseif ($_GET['error'] == 'no_file')
 											{
 												error('Nothing Uploaded','We cannot continue unless you give us an audio file.');
+											}
+											elseif ($_GET['error'] == 'file_size')
+											{
+												error('File Too Large','The file uploaded exceeds the maximum limit');
 											}
 											?>
 											

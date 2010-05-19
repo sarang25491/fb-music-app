@@ -65,6 +65,9 @@ if($credit+2 <= $usage)
 		<?php if(isset($_GET['fb_page_id'])) {  $facebook->redirect("" . $config['fb']['fburl'] . "?tab=index&display=add&error=no_file&fb_page_id=" . $_GET['fb_page_id'] . ""); } else { $facebook->redirect("" . $config['fb']['fburl'] . "?tab=index&display=add&error=no_file"); } ?>
 	<?php } elseif(!in_array(strtolower(substr($_FILES['upfile']['name'], strrpos($_FILES['upfile']['name'], '.') + 1)), array('mp3','m4a','mp4','aac','flv'))) { ?>
 		<?php if(isset($_GET['fb_page_id'])) {  $facebook->redirect("" . $config['fb']['fburl'] . "?tab=index&display=add&error=file_format&fb_page_id=" . $_GET['fb_page_id'] . ""); } else { $facebook->redirect("" . $config['fb']['fburl'] . "?tab=index&display=add&error=file_format"); } ?>
+		
+	<?php } elseif ($_FILES['upfile']['size'] >= 20971520) { ?>
+		<?php if(isset($_GET['fb_page_id'])) {  $facebook->redirect("" . $config['fb']['fburl'] . "?tab=index&display=add&error=file_size&fb_page_id=" . $_GET['fb_page_id'] . ""); } else { $facebook->redirect("" . $config['fb']['fburl'] . "?tab=index&display=add&error=file_size"); } ?>
 	<?php } else { ?>
 		<?php 
 		require_once('include/getid3/getid3.php');
