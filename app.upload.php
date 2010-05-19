@@ -19,13 +19,15 @@ if (isset($_GET['fb_page_id']))
 } else {
 	$users_pages = $db->Raw("SELECT `fb_page_id` FROM `pages` WHERE `owner`=$user");
 	
-	foreach ($users_pages as $page_parse) 
-	{
-		$page_credit = $db->Raw("SELECT `credit`,`override` FROM `userdb_users` WHERE `user`='$page_parse[fb_page_id]'");
-		$credit = $credit + $page_credit[0]['credit'] + $page_credit[0]['override'];
-		
-		$page_usage = $db->Raw("SELECT COUNT(*) FROM `userdb_uploads` WHERE `user`='$page_parse[fb_page_id]'");
-		$usage = $usage + $page_usage[0]['COUNT(*)'];
+	if (count($users_pages) !== 0) {
+		foreach ($users_pages as $page_parse) 
+		{
+			$page_credit = $db->Raw("SELECT `credit`,`override` FROM `userdb_users` WHERE `user`='$page_parse[fb_page_id]'");
+			$credit = $credit + $page_credit[0]['credit'] + $page_credit[0]['override'];
+			
+			$page_usage = $db->Raw("SELECT COUNT(*) FROM `userdb_uploads` WHERE `user`='$page_parse[fb_page_id]'");
+			$usage = $usage + $page_usage[0]['COUNT(*)'];
+		}
 	}
 }
 ?>
