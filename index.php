@@ -31,7 +31,7 @@ if(!isset($_GET['tab'])) {
 	
 	if (isset($_GET['accept_tos']))
 	{
-		$db->Raw("INSERT INTO `userdb_tos` (`user`) VALUES ('$user')");
+		$db->Raw("INSERT IGNORE INTO `userdb_tos` (`user`) VALUES ('$user')"); // If its already there, we don't have to bother with it.
 		if(isset($_GET['fb_page_id']))
 			redirect('' . $config['fb']['fburl'] . '?tab=index&fb_page_id=' . $_GET['fb_page_id'] . ''); 
 		else
