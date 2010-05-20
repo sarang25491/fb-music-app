@@ -131,7 +131,7 @@ Below the editor is a button where a user can add a song.
 
 			if (isset($_GET['fb_page_id'])) 
 			{
-				$credit_of_owner = $db->Raw("SELECT `credit`,`override` FROM `userdb_users` WHERE `user`=$_POST[fb_sig_user]");
+				$credit_of_owner = $db->Raw("SELECT `credit`,`override` FROM `userdb_users` WHERE `user`='$_POST[fb_sig_user]'");
 				$credit = $credit + $credit_of_owner[0]['credit'] + $credit_of_owner[0]['override'];
 
 				$usage_of_owner = $db->Raw("SELECT COUNT(*) FROM `userdb_uploads` WHERE `user`='$_POST[fb_sig_user]'");

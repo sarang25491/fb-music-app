@@ -11,7 +11,7 @@ $usage = $usage[0]['COUNT(*)'];
 
 if (isset($_GET['fb_page_id'])) 
 {
-	$credit_of_owner = $db->Raw("SELECT `credit`,`override` FROM `userdb_users` WHERE `user`=$_POST[fb_sig_user]");
+	$credit_of_owner = $db->Raw("SELECT `credit`,`override` FROM `userdb_users` WHERE `user`='$_POST[fb_sig_user]'");
 	$credit = $credit + $credit_of_owner[0]['credit'] + $credit_of_owner[0]['override'];
 	
 	$usage_of_owner = $db->Raw("SELECT COUNT(*) FROM `userdb_uploads` WHERE `user`='$_POST[fb_sig_user]'");
@@ -66,7 +66,7 @@ if($credit+2 <= $usage)
 	<?php } elseif(!in_array(strtolower(substr($_FILES['upfile']['name'], strrpos($_FILES['upfile']['name'], '.') + 1)), array('mp3','m4a','mp4','aac','flv'))) { ?>
 		<?php if(isset($_GET['fb_page_id'])) {  $facebook->redirect("" . $config['fb']['fburl'] . "?tab=index&display=add&error=file_format&fb_page_id=" . $_GET['fb_page_id'] . ""); } else { $facebook->redirect("" . $config['fb']['fburl'] . "?tab=index&display=add&error=file_format"); } ?>
 		
-	<?php } elseif ($_FILES['upfile']['size'] >= 20971520) { ?>
+	<?php } elseif ($_FILES['upfile']['size'] >= 20971520 || !file_exists($_FILES['upfile']['tmp_name'])) { ?>
 		<?php if(isset($_GET['fb_page_id'])) {  $facebook->redirect("" . $config['fb']['fburl'] . "?tab=index&display=add&error=file_size&fb_page_id=" . $_GET['fb_page_id'] . ""); } else { $facebook->redirect("" . $config['fb']['fburl'] . "?tab=index&display=add&error=file_size"); } ?>
 	<?php } else { ?>
 		<?php 
