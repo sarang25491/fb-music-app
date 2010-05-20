@@ -4,8 +4,14 @@
 <?php
 if (isset($_GET['updateList'])) {
 	$origPlaylist = $db->Raw("SELECT `xid` FROM `userdb_uploads` WHERE `user`='$_GET[id]'");
+	
+	if (count($_POST['playlist']) == 0)
+		$newList = array();
+	else
+		$newList = $_POST['playlist'];
+	
 	foreach ($origPlaylist as $origSong) {
-		if (!in_array($origSong['xid'], $_POST['playlist'])) {
+		if (!in_array($origSong['xid'], $newList)) {
 			$id = $origSong['xid'];
 			$deleteData = $db->Raw("SELECT `type`,`link`,`server`,`drive` FROM `userdb_uploads` WHERE `id`='$id' LIMIT 1");
 			if ($deleteData[0]['type'] == 'upload') { 
@@ -20,9 +26,12 @@ if (isset($_GET['updateList'])) {
 			$db->Raw("DELETE FROM `userdb_uploads` WHERE `id`='$id'"); 
 		}
 	}
-		
-	foreach ($_POST['playlist'] as $key => $song) {
-		$db->Raw("UPDATE `userdb_uploads` SET `order`='$key' WHERE `xid`='$song'");
+	
+	// Update the playlist order as long as there are still songs that exist in the playlist.
+	if (count($_POST['playlist']) !== 0) {	
+		foreach ($_POST['playlist'] as $key => $song) {
+			$db->Raw("UPDATE `userdb_uploads` SET `order`='$key' WHERE `xid`='$song'");
+		}
 	}
 	
 	$user = $_GET['id'];
