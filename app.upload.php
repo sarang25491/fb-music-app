@@ -49,27 +49,41 @@ if($credit+2 <= $usage)
 ?>
 
 <?php if($step == 'reset') { ?>
-	<?php $data_to_delete = $db->Raw("SELECT `location` FROM `userdb_temporary` WHERE `user`='$user'"); ?>
-	<?php
-	foreach($data_to_delete as $delete_queue) {
-		try {
-		unlink($delete_queue['location']);
-		} catch (Exception $e) {
-		}
-		$db->Raw("DELETE FROM `userdb_temporary` WHERE `user`='$user' LIMIT 1");
-	}
+	<?php 
+	$tempData = $db->Raw("SELECT `location` FROM `userdb_temporary` WHERE `user`='$user'");
+	try {
+		unlink($tempData[0]['location']);
+	} catch (Exception $e) { }
+	$db->Raw("DELETE FROM `userdb_temporary` WHERE `user`='$user' LIMIT 1"); // limit for good coding practice
 	?>
 	<?php if(isset($_GET['fb_page_id'])) { redirect('' . $config['fb']['fburl'] . '?tab=index&display=add&fb_page_id=' . $_GET['fb_page_id'] . ''); } else { redirect('' . $config['fb']['fburl'] . '?tab=index&display=add'); } ?>
 <?php } elseif($step == 2) { ?>
-	<?php if($_FILES['upfile']['name'] == NULL) { ?>
-		<?php if(isset($_GET['fb_page_id'])) {  $facebook->redirect("" . $config['fb']['fburl'] . "?tab=index&display=add&error=no_file&fb_page_id=" . $_GET['fb_page_id'] . ""); } else { $facebook->redirect("" . $config['fb']['fburl'] . "?tab=index&display=add&error=no_file"); } ?>
-	<?php } elseif(!in_array(strtolower(substr($_FILES['upfile']['name'], strrpos($_FILES['upfile']['name'], '.') + 1)), array('mp3','m4a','mp4','aac','flv'))) { ?>
-		<?php if(isset($_GET['fb_page_id'])) {  $facebook->redirect("" . $config['fb']['fburl'] . "?tab=index&display=add&error=file_format&fb_page_id=" . $_GET['fb_page_id'] . ""); } else { $facebook->redirect("" . $config['fb']['fburl'] . "?tab=index&display=add&error=file_format"); } ?>
+	<?php
+	if ($_FILES['upfile']['name'] == NULL) {
+		// just a nasty looking forward to page, differentiating between profiles and pages.
+		if(isset($_GET['fb_page_id'])) {  $facebook->redirect("" . $config['fb']['fburl'] . "?tab=index&display=add&error=no_file&fb_page_id=" . $_GET['fb_page_id'] . ""); } else { $facebook->redirect("" . $config['fb']['fburl'] . "?tab=index&display=add&error=no_file"); }
 		
-	<?php } elseif ($_FILES['upfile']['size'] >= 20971520 || !file_exists($_FILES['upfile']['tmp_name'])) { ?>
-		<?php if(isset($_GET['fb_page_id'])) {  $facebook->redirect("" . $config['fb']['fburl'] . "?tab=index&display=add&error=file_size&fb_page_id=" . $_GET['fb_page_id'] . ""); } else { $facebook->redirect("" . $config['fb']['fburl'] . "?tab=index&display=add&error=file_size"); } ?>
+	} elseif(!in_array(strtolower(substr($_FILES['upfile']['name'], strrpos($_FILES['upfile']['name'], '.') + 1)), array('mp3','m4a','mp4','aac','flv'))) {
+	
+		if(isset($_GET['fb_page_id'])) {  $facebook->redirect("" . $config['fb']['fburl'] . "?tab=index&display=add&error=file_format&fb_page_id=" . $_GET['fb_page_id'] . ""); } else { $facebook->redirect("" . $config['fb']['fburl'] . "?tab=index&display=add&error=file_format"); }
+		
+	} elseif ($_FILES['upfile']['size'] >= 20971520 || !file_exists($_FILES['upfile']['tmp_name'])) { 
+		if(isset($_GET['fb_page_id'])) {  $facebook->redirect("" . $config['fb']['fburl'] . "?tab=index&display=add&error=file_size&fb_page_id=" . $_GET['fb_page_id'] . ""); } else { $facebook->redirect("" . $config['fb']['fburl'] . "?tab=index&display=add&error=file_size"); }
+	?>
 	<?php } else { ?>
-		<?php 
+		<?php
+		
+		// We are first going to check it there's something already our control.
+		// If someone pressed the back button on their browser, they'll have a cache of old page
+		// So we're gonna assume that they want this new song in place
+		// therefore, we're going to replace it with the new data
+		
+		$tempData = $db->Raw("SELECT `location` FROM `userdb_temporary` WHERE `user`='$user'");
+		try {
+			unlink($tempData[0]['location']);
+		} catch (Exception $e) { }
+		$db->Raw("DELETE FROM `userdb_temporary` WHERE `user`='$user' LIMIT 1"); // limit for good coding practice
+		
 		require_once('include/getid3/getid3.php');
 		$getid3 = new getID3;
 	
