@@ -1,10 +1,5 @@
 <?php if ($_GET['step'] == 2) { ?>
 	<?php $link = $_POST['link']; ?>
-	<?php 
-	$tld = parse_url($link);
-	$tld = $tld['host'];
-	$tld = str_replace ('www.','', $tld);
-	?>
 	
 	<?php
 	$link = str_replace(" ", "", $link);
@@ -30,11 +25,11 @@
 	?>
 	
 	<?php if(isset($_GET['error'])) { ?>
-		<?php if($_GET['error'] == 'missing_information') { ?>
+		<?php if ($_GET['error'] == 'missing_information') { ?>
 			<?php error('Not Enough Information','I need ALL of the boxes filled below.'); ?>
 		<?php } ?>
-	<?php } elseif ($tld !== 'youtube.com') { ?>
-		<?php if ($link == NULL) { ?>
+	<?php } elseif (strpos($link, 'youtube.com') === false) { ?>
+		<?php if ($link == NULL || $link == 'http://') { ?>
 			<?php if(isset($_GET['fb_page_id'])) { redirect('index.php?tab=index&display=add&error=no_link_submitted&fb_page_id=' . $_GET['fb_page_id'] . ''); } else { redirect('index.php?tab=index&display=add&error=no_link_submitted'); } ?>
 		<?php } elseif (!in_array(strtolower(end(explode('.',$link))), array('mp3','m4a','mp4','aac','flv'))) { ?>
 			<?php if(isset($_GET['fb_page_id'])) { redirect('index.php?tab=index&display=add&error=does_not_end_in_mp3&fb_page_id=' . $_GET['fb_page_id'] . ''); } else { redirect('index.php?tab=index&display=add&error=does_not_end_in_mp3'); } ?>
