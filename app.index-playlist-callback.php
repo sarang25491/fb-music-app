@@ -47,7 +47,7 @@ if (isset($_GET['updateGlobal'])) {
 
 if (isset($_GET['grabSongData'])) {
 	$songData = $db->Raw("SELECT `title`,`artist` FROM `userdb_uploads` WHERE `xid`='$_GET[id]'");
-	echo '<b>Now Playing</b>: ' . $songData[0]['title'] . ' by ' . $songData[0]['artist'] . '';
+	echo '<b>Now Playing</b>: ' . htmlspecialchars_decode(utf8_decode($songData[0]['title']), ENT_QUOTES) . ' by ' . htmlspecialchars_decode(utf8_decode($songData[0]['artist']), ENT_QUOTES) . '';
 }
 
 if (isset($_GET['grabApiKey'])) {

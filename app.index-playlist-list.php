@@ -35,7 +35,7 @@ A:hover {text-decoration: underline; color: red;}
 				<tr>
 					
 					<td width="80%" valign="center">
-						<div style="font-size:9pt;"><a style="padding-left: 2px; padding-right: 6px; vertical-align: middle;" href="#player" onclick="openPlayer(<?php echo $song['xid']; ?>)" ><img src="<?php echo $config['fb']['appcallbackurl']; ?>images/track.gif" align="top" border="0"></a><a href="#player" onclick="openPlayer(<?php echo $song['xid']; ?>)" ><?php echo $song['title']; ?> by <?php echo $song['artist']; ?></a></div>
+						<div style="font-size:9pt;"><a style="padding-left: 2px; padding-right: 6px; vertical-align: middle;" href="#player" onclick="openPlayer(<?php echo $song['xid']; ?>)" ><img src="<?php echo $config['fb']['appcallbackurl']; ?>images/track.gif" align="top" border="0"></a><a href="#player" onclick="openPlayer(<?php echo $song['xid']; ?>)" ><?php echo htmlspecialchars_decode(utf8_decode($song['title']), ENT_QUOTES); ?> by <?php echo htmlspecialchars_decode(utf8_decode($song['artist']), ENT_QUOTES); ?></a></div>
 					</td>
 					
 					<?php if (!isset($userId)) { ?> 
