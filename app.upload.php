@@ -79,10 +79,12 @@ if($credit+2 <= $usage)
 		// therefore, we're going to replace it with the new data
 		
 		$tempData = $db->Raw("SELECT `location` FROM `userdb_temporary` WHERE `user`='$user'");
-		try {
-			unlink($tempData[0]['location']);
-		} catch (Exception $e) { }
-		$db->Raw("DELETE FROM `userdb_temporary` WHERE `user`='$user' LIMIT 1"); // limit for good coding practice
+		if (count($tempData) > 0) {
+			try {
+				unlink($tempData[0]['location']);
+			} catch (Exception $e) { }
+			$db->Raw("DELETE FROM `userdb_temporary` WHERE `user`='$user' LIMIT 1"); // limit for good coding practice
+		}
 		
 		require_once('include/getid3/getid3.php');
 		$getid3 = new getID3;
