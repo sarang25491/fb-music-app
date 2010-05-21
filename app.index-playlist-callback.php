@@ -57,7 +57,13 @@ if (isset($_GET['grabApiKey'])) {
 
 if (isset($_GET['grabInfo'])) {
 	$songData = $db->Raw("SELECT `type`,`count` FROM `userdb_uploads` WHERE `xid`='$_GET[id]'");
-	echo '<b>Type</b>: ' . $songData[0]['type'] . ' | <b>Plays</b>: ' . $songData[0]['count'] . '';
+	// types: link, upload
+	if ($songData[0]['type'] == 'link')
+		echo 'Song was <b>given</b>';
+	else if ($songData[0]['type'] == 'upload')
+		echo 'Song was <b>uploaded</b>';
+		
+	echo ' and was played <b>' . $songData[0]['count'] . '</b> times.';
 }
 
 if (isset($_GET['grabPlayerUrl'])) {
