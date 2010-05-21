@@ -6,20 +6,15 @@
 	
 	function link_available($url, $timeout = 30) {
         $ch = curl_init(); // get cURL handle
-
         // set cURL options
         $opts = array(CURLOPT_RETURNTRANSFER => true, // do not output to browser
                                   CURLOPT_URL => $url,            // set URL
                                   CURLOPT_NOBODY => true,                 // do a HEAD request only
                                   CURLOPT_TIMEOUT => $timeout);   // set timeout
         curl_setopt_array($ch, $opts); 
-
         curl_exec($ch); // do it!
-
         $retval = curl_getinfo($ch, CURLINFO_HTTP_CODE) == 200; // check if HTTP OK
-
         curl_close($ch); // close handle
-
         return $retval;
 	}
 	?>
@@ -28,7 +23,17 @@
 		<?php if ($_GET['error'] == 'missing_information') { ?>
 			<?php error('Not Enough Information','I need ALL of the boxes filled below.'); ?>
 		<?php } ?>
-	<?php } elseif (strpos($link, 'youtube.com') === false) { ?>
+		
+	<?php } else if (stripos($link, 'youtube.com') !== false) { ?>
+		<?php 
+		//REDIRECT TO YOUTUBE PAGE
+		
+		preg_match('/youtube\.com\/watch\?v=([^&]+)/ie', $link, $matches);
+		
+		if(isset($_GET['fb_page_id'])) { redirect('?tab=index&display=add&method=youtube&confirm&videoId=' . $matches[1] . '&fb_page_id=' . $_GET['fb_page_id'] . ''); } else { redirect('?tab=index&display=add&method=youtube&confirm&videoId=' . $matches[1] . ''); }
+		
+		?>
+	<?php } else { ?>
 		<?php if ($link == NULL || $link == 'http://') { ?>
 			<?php if(isset($_GET['fb_page_id'])) { redirect('index.php?tab=index&display=add&error=no_link_submitted&fb_page_id=' . $_GET['fb_page_id'] . ''); } else { redirect('index.php?tab=index&display=add&error=no_link_submitted'); } ?>
 		<?php } elseif (!in_array(strtolower(end(explode('.',$link))), array('mp3','m4a','mp4','aac','flv'))) { ?>
