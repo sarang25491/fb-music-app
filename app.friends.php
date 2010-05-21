@@ -10,7 +10,7 @@ $user_friends_info = $facebook->api_client->fql_query("SELECT uid,name,pic_squar
 //$user_friends_info = $facebook->api_client->users_getInfo($user_friends, array('name','uid','pic_square'));
 
 
-if (count($user_friends_info) == 0) {
+if (count($user_friends_info) <= 1) {
 	error('You do not have any friends using this application!','Invite some and you might be able to see some music that they like!');
 } else {
 	/*
