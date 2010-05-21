@@ -10,7 +10,7 @@ $config = array();
 ############################################################
 $config['fb']['key'] = 'cd92203d073c3556a00ca2167c661421';
 $config['fb']['secret'] = 'd0f1a9f7a0a85aa51badb50110e7bfd8';
-$config['fb']['appcallbackurl'] = 'http://wdc01.web.burst-dev.com/music/';
+$config['fb']['appcallbackurl'] = 'http://music.burst-dev.com/';
 $config['fb']['fburl'] = 'http://apps.facebook.com/stevenlu/';
 $config['fb']['about_url'] = 'http://www.facebook.com/apps/application.php?id=2436915755';
 
@@ -18,16 +18,16 @@ $config['fb']['about_url'] = 'http://www.facebook.com/apps/application.php?id=24
 # This should be a reflection of your 
 # server infomation, its as simple as that.
 ########################################
-$config['server']['internal_url'] = '/var/www/domains/wdc01.web.burst-dev.com/html/music/';
+$config['server']['internal_url'] = '/var/www/music/';
 $config['server']['secret'] = "theqa3ExUs92f4uNADrebR5sTusWadREJa5AP3U4AZ6fERA7aQaTaheFU7asufru";
-$config['server']['streaming'] = "http://wdc01.stream.burst-dev.com";
+$config['server']['streaming'] = "http://music-stream.burst-dev.com";
 $config['server']['uri_prefix'] = "/stream/";
 
 ########## Paypal Instant Payment Notification ##########
 # Instantly inputs all data into the database;
 # instant payment processing.
 ############################################################
-$config['pp']['pay_to'] = 'slu@burst-dev.com';
+$config['pp']['pay_to'] = 'accounting@burst-dev.com';
 	
 ########## Database Information ##########
 # The MySQL database information needed
@@ -35,7 +35,7 @@ $config['pp']['pay_to'] = 'slu@burst-dev.com';
 ########################################
 $config['db']['host'] = "localhost";
 $config['db']['username'] = 'music';
-$config['db']['password'] = 'KTPtd2dX4Zh4XMw7';
+$config['db']['password'] = 'aAy9XEcGJ58MKtGw';
 $config['db']['table'] = 'music';	
 
 ########## DO NOT TOUCH ANYTHING BELOW HERE ##########
@@ -63,5 +63,6 @@ if ($pre !== 'skip_fbapi') {
 }
 
 $db = new BurstMySQL ($config['db']['host'], $config['db']['username'], $config['db']['password'], $config['db']['table']);	
+$mysqli = new mysqli($config['db']['host'], $config['db']['username'], $config['db']['password'], $config['db']['table']);
 
 ?>
