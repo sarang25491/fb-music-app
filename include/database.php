@@ -26,7 +26,7 @@
       mysql_select_db ($mDatabase, $this->mConnection);
     }
 
-    public function OnError () {
+    public function OnError ($mQuery) {
       echo ('<br><div style="border-style:solid; border-width: 1px;
              border-color: #ffd04d; background-color: #fff5b1; padding:10px">
              <div style="letter-spacing: 1px; font-family: verdana;
@@ -34,20 +34,20 @@
 	     Oops! Something went wrong.<br />Please report to the developers how you generated this error.</div>
 	     <div style="font-family: verdana; font-size: 12px;
 	     text-align: left;"></div></div>');
-	  $this->logError(mysql_error($this->mConnection));	  
+	  $this->logError(mysql_error($this->mConnection), $mQuery);	  
       die();
     }
 
-	public function logError ($error) {
+	public function logError ($error, $mQuery) {
     	$handle = fopen('/var/www/db.log','a+'); // ammend data to end of file, create file if it doesn't exist.
     	$timestamp = date('m.d.Y h:iA T');
-    	fwrite($handle, "[" . $timestamp . "] " . $error . " \r\n");
+    	fwrite($handle, "[" . $timestamp . "] " . $mQuery . " -- " . $error . " \r\n");
     	fclose($handle);
     }
 
     public function Raw ($mQuery) {
       $mReturnData = array();
-      $mResult = @mysql_query ($mQuery, $this->mConnection) or $this->OnError();
+      $mResult = @mysql_query ($mQuery, $this->mConnection) or $this->OnError($mQuery);
       while ($row = @mysql_fetch_array ($mResult, MYSQL_ASSOC))
         $mReturnData[] = $row;
       return $mReturnData;
