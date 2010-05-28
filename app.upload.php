@@ -155,9 +155,16 @@ if($credit+2 <= $usage)
 						<?php
 						}
 						?>
+
+						<fb:editor-custom label="Post to Wall?">
+							<input type="checkbox" name="wall" value="true">
+						</fb:editor-custom>
+							
+
 						<fb:editor-buttonset>
 							<fb:editor-button value="Submit"/>
 						</fb:editor-buttonset>
+
 					</fb:editor>
 					</td>
 					
@@ -204,7 +211,14 @@ if($credit+2 <= $usage)
 		
 		<?php // if(!isset($_GET['fb_page_id'])) { include 'fb.feed.php'; } ?>
 		<?php include 'fb.profile.php'; ?>
-		<?php if(isset($_GET['fb_page_id'])) { redirect('' . $config['fb']['fburl'] . '?tab=index&fb_page_id=' . $_GET['fb_page_id'] . ''); } else { redirect('' . $config['fb']['fburl'] . '?tab=index&publish'); } ?>
+
+		
+		<?php 
+		if($_POST['wall'])
+			if(isset($_GET['fb_page_id'])) { redirect('' . $config['fb']['fburl'] . '?tab=index&publish&fb_page_id=' . $_GET['fb_page_id'] . ''); } else { redirect('' . $config['fb']['fburl'] . '?tab=index&publish'); } 
+		else
+			if(isset($_GET['fb_page_id'])) { redirect('' . $config['fb']['fburl'] . '?tab=index&fb_page_id=' . $_GET['fb_page_id'] . ''); } else { redirect('' . $config['fb']['fburl'] . '?tab=index'); }
+		?>
 		
 	<?php } ?>
 <?php } ?>

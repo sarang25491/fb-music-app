@@ -97,6 +97,11 @@ if(isset($_GET['search'])) {
 	</div>
 	<fb:editor-text label="Title" name="title" value="' . $title  . '" maxlength="100" />
 	<fb:editor-text label="Artist" name="artist" value="' . $artist . '" maxlength="100" />
+	
+	<fb:editor-custom label="Post to Wall?">
+		<input type="checkbox" name="wall" value="true">
+	</fb:editor-custom>
+
 	<fb:editor-custom>
 		<input type="hidden" name="link" value="http://www.youtube.com/watch?v=' . $_GET['videoId'] . '">
 	</fb:editor-custom>
@@ -116,6 +121,13 @@ if(isset($_GET['search'])) {
 	$db->Raw("UPDATE `userdb_uploads` SET `xid`=`id` WHERE `id`='$id'");
 
 	include 'fb.profile.php';
-	if(isset($_GET['fb_page_id'])) { redirect('' . $config['fb']['fburl'] . '?tab=index&fb_page_id=' . $_GET['fb_page_id'] . ''); } else { redirect('' . $config['fb']['fburl'] . '?tab=index&publish'); } 
+	<?php
+	if($_POST['wall'])
+		if(isset($_GET['fb_page_id'])) { redirect('' . $config['fb']['fburl'] . '?tab=index&publish&fb_page_id=' . $_GET['fb_page_id'] . ''); } else { redirect('' . $config['fb']['fburl'] . '?tab=index&publish'); }
+	else
+		if(isset($_GET['fb_page_id'])) { redirect('' . $config['fb']['fburl'] . '?tab=index&fb_page_id=' . $_GET['fb_page_id'] . ''); } else { redirect('' . $config['fb']['fburl'] . '?tab=index'); }
+	?>
+
+ 
 }
 ?>
