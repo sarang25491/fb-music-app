@@ -30,7 +30,7 @@ $title = htmlspecialchars(utf8_encode($db_data[0]['title']), ENT_QUOTES);
 $artist = htmlspecialchars(utf8_encode($db_data[0]['artist']), ENT_QUOTES);
 
 if($type == 'link') {
-	$link = $db_data[0]['link'];
+	$link = htmlspecialchars_decode($db_data[0]['link'], ENT_QUOTES);
 	$duration = 0;
 	$urlParse = parse_url($link);
 	if (str_replace('www.','',$urlParse['host']) == 'youtube.com') {

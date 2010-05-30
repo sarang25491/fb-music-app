@@ -65,6 +65,7 @@
 	<?php if($title == NULL or $artist == NULL) { ?>
 		<?php if(isset($_GET['fb_page_id'])) { redirect('' . $config['fb']['fburl'] . '?tab=index&display=add&method=link&step=2&error=missing_information&fb_page_id=' . $_GET['fb_page_id'] . ''); } else { redirect('' . $config['fb']['fburl'] . '?tab=index&display=add&method=link&step=2&error=missing_information'); } ?>
 	<?php } else { ?>
+		<?php $link = htmlspecialchars($link, ENT_QUOTES); ?>
 		<?php $db->Raw("INSERT INTO `userdb_uploads` (`user`,`title`,`artist`,`type`,`link`) VALUES ('$user','$title','$artist','link','$link')"); ?>
 		<?php
 		//need to get a STATIC XID from id
