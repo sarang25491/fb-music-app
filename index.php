@@ -33,9 +33,9 @@ if(!isset($_GET['tab'])) {
 	{
 		$db->Raw("INSERT IGNORE INTO `userdb_tos` (`user`) VALUES ('$user')"); // If its already there, we don't have to bother with it.
 		if(isset($_GET['fb_page_id']))
-			redirect('' . $config['fb']['fburl'] . '?tab=index&fb_page_id=' . $_GET['fb_page_id'] . ''); 
+			redirect('' . $config['fb']['fburl'] . '?fb_page_id=' . $_GET['fb_page_id'] . '&intro'); 
 		else
-			redirect('' . $config['fb']['fburl'] . '?tab=index'); 
+			redirect('' . $config['fb']['fburl'] . '?intro'); 
 		
 		die();
 	} elseif ($accepted_tos[0]['COUNT(*)'] == '0') {
@@ -47,6 +47,16 @@ if(!isset($_GET['tab'])) {
 				<fb:editor-button value="Agree"/>
 			</fb:editor-buttonset>
 		</fb:editor>
+<?php
+		die();
+	} elseif (isset($_GET['intro'])) {
+?>
+		
+			<div align="right" style="font-size: 24px; background-color: #eceff5"><a href="<?php echo $config['fb']['fburl']; ?>?tab=index<?php if(isset($_GET['fb_page_id'])) { echo '&fb_page_id=' . $_GET['fb_page_id'] . ''; } ?>">Skip Intro Video</a></div>
+			
+			<div style="padding: 10px;"><fb:swf swfsrc="http://screenr.com/Content/assets/screenr_1116090935.swf" flashvars="i=76679" height="520" /></div>
+			
+			<div align="right" style="font-size: 24px; background-color: #eceff5"><a href="<?php echo $config['fb']['fburl']; ?>?tab=index<?php if(isset($_GET['fb_page_id'])) { echo '&fb_page_id=' . $_GET['fb_page_id'] . ''; } ?>">Skip Intro Video</a></div>
 <?php
 		die();
 	} elseif ($accepted_tos[0]['COUNT(*)'] >= 1) {
@@ -95,7 +105,7 @@ switch($_GET['tab']) {
 <?php if($is_pro == 0) include 'include/advertisement.php'; ?>
 
 <div style="margin-top: 10px; border-top: 1px solid #d8dfea; padding: 3px 16px; height: 14px; color: #3b5998;">
-	<div style="float: left;"><a href="http://www.facebook.com/apps/application.php?id=2436915755" target="_blank">Music</a> v2.3.1 [<a href="<?php echo $config['fb']['appcallbackurl']; ?>tos.php">Acceptable Use & Privacy Policy</a>]</div>
+	<div style="float: left;"><a href="http://www.facebook.com/apps/application.php?id=2436915755" target="_blank">Music</a> v2.3.1 [<a href="?intro">Intro</a> - <a href="<?php echo $config['fb']['appcallbackurl']; ?>tos.php">AUP/PP</a>]</div>
 	<div style="float: right;">A <a href="http://burst-dev.com/" target="_blank">Burst Development</a> Project by <a href="http://stevenlu.com">Steven J. Lu</a></div>
 </div>
 
