@@ -121,13 +121,11 @@ if(isset($_GET['search'])) {
 	$db->Raw("UPDATE `userdb_uploads` SET `xid`=`id` WHERE `id`='$id'");
 
 	include 'fb.profile.php';
-	<?php
+
 	if($_POST['wall'])
 		if(isset($_GET['fb_page_id'])) { redirect('' . $config['fb']['fburl'] . '?tab=index&publish&fb_page_id=' . $_GET['fb_page_id'] . ''); } else { redirect('' . $config['fb']['fburl'] . '?tab=index&publish'); }
 	else
 		if(isset($_GET['fb_page_id'])) { redirect('' . $config['fb']['fburl'] . '?tab=index&fb_page_id=' . $_GET['fb_page_id'] . ''); } else { redirect('' . $config['fb']['fburl'] . '?tab=index'); }
-	?>
-
  
 }
 ?>
