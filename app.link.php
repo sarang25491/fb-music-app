@@ -44,18 +44,15 @@
 		<?php explanation('Input Song Information','I need some information about the song before we can continue.'); ?>
 	<?php } ?>
 	
-	<fb:editor action="?tab=index&display=add&method=link&step=3<?php if(isset($_GET['fb_page_id'])) { echo '&fb_page_id=' . $_GET['fb_page_id'] . ''; } ?>" labelwidth="0">
+	<fb:editor action="?tab=index&display=add&method=link&step=3<?php if(isset($_GET['fb_page_id'])) { echo '&fb_page_id=' . $_GET['fb_page_id'] . ''; } ?>" labelwidth="50">
 		<fb:editor-text label="Title" name="title" value="" maxlength="100" />
 		<fb:editor-text label="Artist" name="artist" value="" maxlength="100" />
 		<fb:editor-custom>
 			<input type="hidden" name="link" value="<?php echo $link; ?>">
 		</fb:editor-custom>
-		
 		<fb:editor-custom label="Post to Wall?">
-	                <input type="checkbox" name="wall" value="true">
+			<input type="checkbox" name="wall" value="true">
 		</fb:editor-custom>
-
-
 		<fb:editor-buttonset>
 			<fb:editor-button value="Submit"/>
 		</fb:editor-buttonset>

@@ -90,7 +90,7 @@ if(isset($_GET['search'])) {
 	list($title, $artist) = split(' - ', $_POST['title']);
 	
 	echo '<div style="padding-top: 15px;">
-	<fb:editor action="?tab=index&display=add&method=youtube&submit" labelwidth="0">
+	<fb:editor action="?tab=index&display=add&method=youtube&submit" labelwidth="50">
 	<div align="center" style="font-size: 10pt;">
 	<b>Youtube Link: </b><a href="http://www.youtube.com/watch?v=' . $_GET['videoId'] . '">http://www.youtube.com/watch?v=' . $_GET['videoId'] . '</a><br />
 	<b>Youtube Title: </b>' . $_POST['title'] . '

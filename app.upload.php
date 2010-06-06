@@ -139,7 +139,7 @@ if($credit+2 <= $usage)
 			<table border="0" cellpadding="0" cellspacing="0">
 				<tr>
 					<td>
-					<fb:editor action="?tab=index&display=add&method=upload&step=4<?php if(isset($_GET['fb_page_id'])) { echo '&fb_page_id=' . $_GET['fb_page_id'] . ''; } ?>" labelwidth="0">
+					<fb:editor action="?tab=index&display=add&method=upload&step=4<?php if(isset($_GET['fb_page_id'])) { echo '&fb_page_id=' . $_GET['fb_page_id'] . ''; } ?>" labelwidth="50">
 						<fb:editor-text label="Title" name="title" value="<?php echo htmlspecialchars_decode(utf8_decode($temporary_information[0]['title']), ENT_QUOTES); ?>" maxlength="100" />
 						<fb:editor-text label="Artist" name="artist" value="<?php echo htmlspecialchars_decode(utf8_decode($temporary_information[0]['artist']), ENT_QUOTES); ?>" maxlength="100" />
 						<?php
@@ -155,16 +155,12 @@ if($credit+2 <= $usage)
 						<?php
 						}
 						?>
-
 						<fb:editor-custom label="Post to Wall?">
 							<input type="checkbox" name="wall" value="true">
 						</fb:editor-custom>
-							
-
 						<fb:editor-buttonset>
 							<fb:editor-button value="Submit"/>
 						</fb:editor-buttonset>
-
 					</fb:editor>
 					</td>
 					
