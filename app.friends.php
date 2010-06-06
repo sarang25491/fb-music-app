@@ -90,7 +90,7 @@ if (count($user_friends_info) <= 1) {
 							<div style="padding-right: 5px; padding-left: 5px;"><a clicktoshowdialog="embed_player_friends" clickrewriteurl="' . $config['fb']['appcallbackurl'] . 'player.php?upload=' . $display['id'] . '&from_friends=1&owner=' . $transverse['uid'] . '" clickrewriteid="player_friends" clickrewriteform="dummy_form_friends" clicktoshow="spinner_friends"><img src="' . $config['fb']['appcallbackurl'] . 'images/track.gif" align="top" border="0"></a></div>
 						</td>
 						<td valign="center" width="95%">
-							<a clicktoshowdialog="embed_player_friends" clickrewriteurl="' . $config['fb']['appcallbackurl'] . 'player.php?upload=' . $display['id'] . '&from_friends=1&owner=' . $transverse['uid'] . '" clickrewriteid="player_friends" clickrewriteform="dummy_form_friends" clicktoshow="spinner">' . $display['title'] . ' by ' . $display['artist']. '</a>
+							<a clicktoshowdialog="embed_player_friends" clickrewriteurl="' . $config['fb']['appcallbackurl'] . 'player.php?upload=' . $display['id'] . '&from_friends=1&owner=' . $transverse['uid'] . '" clickrewriteid="player_friends" clickrewriteform="dummy_form_friends" clicktoshow="spinner">' . htmlspecialchars_decode(utf8_decode($display['title']), ENT_QUOTES) . ' by ' . htmlspecialchars_decode(utf8_decode($display['artist']), ENT_QUOTES) . '</a>
 						</td>
 					</tr>
 				</table>
