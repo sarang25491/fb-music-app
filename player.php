@@ -69,8 +69,8 @@ if($type == 'link') {
 	<center>
 	<embed
 		src="<?php echo $config['fb']['appcallbackurl']; ?>flash/player/player.swf" 
-		flashvars="file=<?php echo $link; ?>&autostart=1&fullscreen=false&skin=<?php echo $config['fb']['appcallbackurl']; ?>flash/skin/stylish.swf&backcolor=#3b5998&lightcolor=#ffffff&frontcolor=#f7f7f7&abouttext=0&aboutlink=0&volume=75&duration=<?php echo $duration; ?>&bufferlength=1&provider=<?php echo $provider; ?>"
-		height="30"
+		flashvars="player=v5&file=<?php echo $link; ?>&provider=<?php echo $provider; ?>&skin=<?php echo $config['fb']['appcallbackurl']; ?>flash/skin/skewd.zip&autostart=1&volume=75"
+		height="28"
 		width="500"
 	/>
 	</center>
@@ -79,9 +79,8 @@ if($type == 'link') {
 <?php if(isset($_GET['from_friends']) || isset($_GET['from_tab']) || isset($_GET['from_explore'])) { ?>
 	<fb:swf 
 		swfsrc="<?php echo $config['fb']['appcallbackurl']; ?>flash/player/player.swf" 
-		flashvars="file=<?php echo $link; ?>&autostart=true&fullscreen=false&skin=<?php echo $config['fb']['appcallbackurl']; ?>flash/skin/stylish.swf&backcolor=#3b5998&lightcolor=#ffffff&frontcolor=#f7f7f7&abouttext=0&aboutlink=0&volume=75&duration=<?php echo $duration; ?>&bufferlength=1&provider=<?php echo $provider; ?>"
-		quality="high" 
-		height="30" 
+		flashvars="player=v5&file=<?php echo $link; ?>&provider=<?php echo $provider; ?>&skin=<?php echo $config['fb']['appcallbackurl']; ?>flash/skin/skewd.zip&autostart=1&volume=75"
+		height="28" 
 		width="<?php if(isset($from_edit)) echo "530"; elseif(isset($from_friends)) echo "420"; elseif(isset($from_tab)) echo "760"; elseif(isset($from_explore)) echo "400"; ?>" 
 	/>
 <?php } elseif(isset($_GET['from_feed'])) { ?>
@@ -98,18 +97,18 @@ if($type == 'link') {
 	<fb:wide>
 		<fb:swf 
 			swfsrc="<?php echo $config['fb']['appcallbackurl']; ?>flash/player/player.swf" 
-			flashvars="file=<?php echo $link; ?>&autostart=true&fullscreen=false&skin=<?php echo $config['fb']['appcallbackurl']; ?>flash/skin/stylish.swf&backcolor=#3b5998&lightcolor=#ffffff&frontcolor=#f7f7f7&abouttext=0&aboutlink=0&volume=75&duration=<?php echo $duration; ?>&bufferlength=1&provider=<?php echo $provider; ?>"
+			flashvars="player=v5&file=<?php echo $link; ?>&provider=<?php echo $provider; ?>&skin=<?php echo $config['fb']['appcallbackurl']; ?>flash/skin/skewd.zip&autostart=1&volume=75"
 			quality="high" 
-			height="30" 
+			height="28" 
 			width="380" 
 		/>
 	</fb:wide>
 	<fb:narrow>
 		<fb:swf 
 			swfsrc="<?php echo $config['fb']['appcallbackurl']; ?>flash/player/player.swf" 
-			flashvars="file=<?php echo $link; ?>&autostart=true&fullscreen=false&skin=<?php echo $config['fb']['appcallbackurl']; ?>flash/skin/stylish_small.swf&backcolor=#3b5998&lightcolor=#ffffff&frontcolor=#f7f7f7&abouttext=0&aboutlink=0&volume=75&duration=<?php echo $duration; ?>&bufferlength=1&provider=<?php echo $provider; ?>" 
+			flashvars="player=v5&file=<?php echo $link; ?>&provider=<?php echo $provider; ?>&skin=<?php echo $config['fb']['appcallbackurl']; ?>flash/skin/skewd.zip&autostart=1&volume=75"
 			quality="high"
-			height="30" 
+			height="28" 
 			width="184" 
 			/>
 	</fb:narrow>
