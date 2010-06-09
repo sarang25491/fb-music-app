@@ -28,11 +28,11 @@ $attachment =  array(
       'caption' => '{*actor*} added a song to their profile.',
       'properties' => $properties,
       'media' => array(array('type' => 'flash',
-                             'swfsrc' => '' . $config['fb']['appcallbackurl'] . 'flash/player/player.swf?file=' . $config['fb']['appcallbackurl'] . 'player.php?from_feed=' . $pubData[0]['xid'] . '&skin=' . $config['fb']['appcallbackurl'] . 'flash/skin/skewd.zip&backcolor=#3b5998&lightcolor=#ffffff&frontcolor=#f7f7f7&autostart=true',
+                             'swfsrc' => '' . $config['fb']['appcallbackurl'] . 'flash/player/player.swf?file=' . $config['fb']['appcallbackurl'] . 'player.php?from_feed=' . $pubData[0]['xid'] . '&skin=' . $config['fb']['appcallbackurl'] . 'flash/skin/skewd.zip&autostart=true',
                              'imgsrc' => '' . $config['fb']['appcallbackurl'] . 'images/play.jpg',
                              'width' => '100', 
                              'height' => '80', 
-                             'expanded_width' => '330', 
+                             'expanded_width' => '360', 
                              'expanded_height' => '30')));                     
 ?>
 
