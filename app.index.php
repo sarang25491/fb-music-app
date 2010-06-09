@@ -157,7 +157,12 @@ Below the editor is a button where a user can add a song.
 			<div style="margin: 10px">
 			<table border="0" width="100%" cellspacing="5px">
 				<tr>
-					<td width="70%">
+				
+					<td width="40%" valign="top">
+						<div style="background-color: #fff5b1; border: 1px solid #ffd04d; padding: 10px; font-size: 16px; text-align: left;">Start at <b>searching Youtube</b> for what you want. If you can't find what you need, try <b>uploading the file</b>. More advanced users can also <b>add their own links</b> from other websites.</div>
+					</td>
+				
+					<td width="60%">
 						<table border="0" width="100%">
 	
 							<tr>
@@ -181,10 +186,37 @@ Below the editor is a button where a user can add a song.
 								<table border="0" width="100%">
 									<tr>
 										<td>
+											<font size="2em"><b>Search Youtube Database</b> (keyword)</font>
+											
+											<?php 
+											if ($_GET['error'] == 'empty')
+											{
+												error('Nothing Submitted','We cannot continue until you give us a link to a file on the web.');
+											}
+											?>
+											
+										</td>
+									</tr>
+									
+									<tr>
+										<td>
+											<fb:editor action="?tab=index&display=add&method=youtube&search<?php pages($_GET['fb_page_id']); ?>" labelwidth="0">
+												<fb:editor-text label="Search" name="search" value="" />
+												<fb:editor-buttonset>
+													<fb:editor-button value="Search"/>
+												</fb:editor-buttonset>
+											</fb:editor>
+										</td>
+									</tr>
+								</table>
+								
+								<table border="0" width="100%">
+									<tr>
+										<td>
 											<table border="0" cellpadding="0" cellspacing="1">
 												<tr>
 													<td>
-														<font size="2em"><b>From your computer&nbsp;</b></font>
+														<font size="2em"><b>Upload File&nbsp;</b></font>
 													</td>
 													
 													<td>
@@ -227,7 +259,7 @@ Below the editor is a button where a user can add a song.
 												<?php $check_temporary = $check_temporary[0]['COUNT(*)']; ?>
 												<?php if ($check_temporary >= 1) { ?>
 													<?php if(isset($_GET['fb_page_id'])) { error("Incomplete","Looks like you forgot to finish a previous addition, would you like to continue?<br /><a href='" .  $config['fb']['fburl'] . "?tab=index&display=add&method=upload&step=3&fb_page_id=" . $_GET['fb_page_id'] . "'>Yes, lets continue!</a> - <a href='" . $config['fb']['fburl'] . "?tab=index&display=add&method=upload&step=reset&fb_page_id=" . $_GET['fb_page_id'] . "'>No, scrap it.</a>"); } else { error("Incomplete","Looks like you forgot to finish, would you like to continue? <a href='" . $config['fb']['fburl'] . "?tab=index&display=add&method=upload&step=3'>Yes</a> - <a href='" .$config['fb']['fburl'] . "?tab=index&display=add&method=upload&step=reset'>No</a>"); } ?>
-												<?php } elseif ($credit+2 <= $usage) { ?>
+												<?php } elseif ($credit+$config['basicSlots'] <= $usage) { ?>
 													<?php error('Not enough slots!','You need more slots to use this feature! <a href="' . $config['fb']['fburl'] . '?tab=offers">Click here to get some!</a>'); // I want this an image overlaying the actual upload system ?>
 												<?php } else { ?>
 														<form name="form1" enctype="multipart/form-data" method="post" action="<?php echo $config['fb']['appcallbackurl']; ?>?tab=index&display=add&method=upload&step=2<?php pages($_GET['fb_page_id']); ?>&X-Progress-ID=<?php echo md5($user); ?>">
@@ -266,7 +298,7 @@ Below the editor is a button where a user can add a song.
 								<table border="0" width="100%">
 									<tr>
 										<td>
-											<font size="2em"><b>From online</b> (mp3, m4a, youtube supported)</font>
+											<font size="2em"><b>Add External Link</b> (mp3, m4a, youtube supported)</font>
 											
 											<?php 
 											if ($_GET['error'] == 'no_link_submitted')
@@ -300,32 +332,7 @@ Below the editor is a button where a user can add a song.
 								
 								<br />
 								
-								<table border="0" width="100%">
-									<tr>
-										<td>
-											<font size="2em"><b>Youtube Search</b> (keyword)</font>
-											
-											<?php 
-											if ($_GET['error'] == 'empty')
-											{
-												error('Nothing Submitted','We cannot continue until you give us a link to a file on the web.');
-											}
-											?>
-											
-										</td>
-									</tr>
-									
-									<tr>
-										<td>
-											<fb:editor action="?tab=index&display=add&method=youtube&search<?php pages($_GET['fb_page_id']); ?>" labelwidth="0">
-												<fb:editor-text label="Search" name="search" value="" />
-												<fb:editor-buttonset>
-													<fb:editor-button value="Search"/>
-												</fb:editor-buttonset>
-											</fb:editor>
-										</td>
-									</tr>
-								</table>
+								
 								
 								<br />
 								
@@ -334,9 +341,7 @@ Below the editor is a button where a user can add a song.
 						</table>
 					</td>
 
-					<td width="30%">
-						<div style="background-color: #fff5b1; border: 1px solid #ffd04d; padding: 10px; font-size: 16px; text-align: center;">Three ways of adding music to your player. Either give us the file  to host or give us a link (can be from youtube).<br /><br />Letting us host it (<i>from your computer</i> feature) requires a sufficient amount of slots. You can use the other features as much as you like.<br /><br />Fill in any of the feature's required data and press the appropriate button to continue.</div>
-					</td>
+
 
 				</tr>
 			</table>

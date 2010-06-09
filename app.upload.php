@@ -33,7 +33,7 @@ if (isset($_GET['fb_page_id']))
 ?>
 
 <?php
-if($credit+2 <= $usage)
+if($credit+$config['basicSlots'] <= $usage)
 {
 	if(isset($_GET['fb_page_id']))
 	{ 

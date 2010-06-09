@@ -28,6 +28,8 @@ $config['server']['uri_prefix'] = "/stream/";
 # instant payment processing.
 ############################################################
 $config['pp']['pay_to'] = 'accounting@burst-dev.com';
+
+$config['basicSlots'] = 3;
 	
 ########## Database Information ##########
 # The MySQL database information needed

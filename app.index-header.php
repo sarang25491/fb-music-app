@@ -19,7 +19,7 @@
 	<?php 
 	} else {
 	?>
-		You are currently editing your <b>profile</b>. No other players or pages have been detected, <b><a href="http://www.facebook.com/add.php?api_key=<?php echo $config['fb']['key']; ?>&pages&_fb_q=1">add a page</a></b>.
+		You are currently editing your <b>profile</b>. No pages have been found, <b><a href="http://www.facebook.com/add.php?api_key=<?php echo $config['fb']['key']; ?>&pages&_fb_q=1">add a page</a></b>?
 	<?php } ?>
 <?php } ?>
 </div>
