@@ -106,7 +106,7 @@ if($type == 'link') {
 	<fb:narrow>
 		<fb:swf 
 			swfsrc="<?php echo $config['fb']['appcallbackurl']; ?>flash/player/player.swf" 
-			flashvars="player=v5&file=<?php echo $link; ?>&provider=<?php echo $provider; ?>&skin=<?php echo $config['fb']['appcallbackurl']; ?>flash/skin/skewd.zip&autostart=1&volume=75"
+			flashvars="player=v5&file=<?php echo $link; ?>&provider=<?php echo $provider; ?>&skin=<?php echo $config['fb']['appcallbackurl']; ?>flash/skin/skewd-slim.zip&autostart=1&volume=75"
 			quality="high"
 			height="28" 
 			width="184" 
