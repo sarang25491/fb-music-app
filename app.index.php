@@ -17,7 +17,7 @@ Below the editor is a button where a user can add a song.
 	<table border="0" width="100%" cellspacing="5px">
 		<tr>
 			<td valign="top">
-				<div style="border: 1px solid #cccccc; padding: 10px; margin-top: 5px;">
+				<div style="border: 1px solid #cccccc; padding: 10px; margin-top: 5px; margin-bottom: 5px;">
 				<table border="0" width="100%">
 					<tr>
 						<td valign="top">
@@ -59,6 +59,7 @@ Below the editor is a button where a user can add a song.
 					</tr>
 				</table>
 				</div>
+				<?php include 'inc.stats.php'; ?>
 			</td>
 
 			<td width="170px" valign="top">
@@ -66,7 +67,7 @@ Below the editor is a button where a user can add a song.
 				<center><b>EDITOR KEY</b></center>
 				<table border="0">
 					<tr>
-						<td></td><td style="padding-left: 5px;">move songs by drag-and-drop grey areas</td>
+						<td width="16px" style="border: 1px solid #cccccc; padding: 2px; background-color: #f7f7f7;"></td><td style="padding-left: 5px;">move songs by drag 'n dropping grey areas</td>
 					</tr>
 					
 					<tr>
@@ -83,11 +84,11 @@ Below the editor is a button where a user can add a song.
 						<td style="border: 1px solid #cccccc; padding: 2px;"><img src="<?php echo $config['fb']['appcallbackurl']; ?>images/delete.png" align="top" border="0"></td><td style="padding-left: 5px;"><fb:intl>delete song</fb:intl></td>
 					</tr>
 				</table>
+				<center><b>Remember to save your changes!!!</b></center>
 			</td>
 
 		</tr>
 	</table>
-	<?php include 'inc.stats.php'; ?>
 	</div>
 <?php } elseif ($_GET['display'] == 'add') { ?>
 	<?php 

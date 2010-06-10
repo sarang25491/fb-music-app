@@ -109,4 +109,8 @@ if($type == 'link') {
 
 <?php
 $db->Raw("UPDATE `userdb_uploads` SET `count`=`count`+1 WHERE `id`='$id'"); // Updating individual song count.
+if(isset($_POST['fb_sig_user']))
+	$db->Raw("INSERT INTO `userdb_actions` (`xid`,`who`,`action`) VALUES ('$id','$_POST[fb_sig_user]','play')");
+else
+	$db->Raw("INSERT INTO `userdb_actions` (`xid`,`who`,`action`) VALUES ('$id','outside','play')");
 ?>
