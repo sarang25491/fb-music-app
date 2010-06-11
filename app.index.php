@@ -49,7 +49,7 @@ Below the editor is a button where a user can add a song.
 					<tr>
 						<td valign="top">
 							
-							<center><fb:iframe src="<?php echo $config['fb']['appcallbackurl']; ?>app.index-playlist.php?<?php pages($_GET['fb_page_id']); ?>" width="500" height="1000" frameborder="0" scrolling="no" name="editor" resizeable="true" /></center>
+							<center><fb:iframe src="<?php echo $config['fb']['appcallbackurl']; ?>app.index-playlist.php?<?php echo pages($_GET['fb_page_id']); ?>" width="500" height="1000" frameborder="0" scrolling="no" name="editor" resizeable="true" /></center>
 							<?php if (isset($_GET['publish'])) { 
 								include 'fb.publish.php';
 							}
@@ -201,7 +201,7 @@ Below the editor is a button where a user can add a song.
 									
 									<tr>
 										<td>
-											<fb:editor action="?tab=index&display=add&method=youtube&search<?php pages($_GET['fb_page_id']); ?>" labelwidth="0">
+											<fb:editor action="?tab=index&display=add&method=youtube&search<?php echo pages($_GET['fb_page_id']); ?>" labelwidth="0">
 												<fb:editor-text label="Search" name="search" value="" />
 												<fb:editor-buttonset>
 													<fb:editor-button value="Search"/>
@@ -263,7 +263,7 @@ Below the editor is a button where a user can add a song.
 												<?php } elseif ($credit+$config['basicSlots'] <= $usage) { ?>
 													<?php error('Not enough slots!','You need more slots to use this feature! <a href="' . $config['fb']['fburl'] . '?tab=offers">Click here to get some!</a>'); // I want this an image overlaying the actual upload system ?>
 												<?php } else { ?>
-														<form name="form1" enctype="multipart/form-data" method="post" action="<?php echo $config['fb']['appcallbackurl']; ?>?tab=index&display=add&method=upload&step=2<?php pages($_GET['fb_page_id']); ?>&X-Progress-ID=<?php echo md5($user); ?>">
+														<form name="form1" enctype="multipart/form-data" method="post" action="<?php echo $config['fb']['appcallbackurl']; ?>?tab=index&display=add&method=upload&step=2<?php echo pages($_GET['fb_page_id']); ?>&X-Progress-ID=<?php echo md5($user); ?>">
 															<table class="editorkit" border="0" cellspacing="0" style="width:425px">
 																<tr class="width_setter">
 																	<th style="width:75px"></th>
@@ -321,7 +321,7 @@ Below the editor is a button where a user can add a song.
 									
 									<tr>
 										<td>
-											<fb:editor action="?tab=index&display=add&method=link&step=2<?php pages($_GET['fb_page_id']); ?>" labelwidth="0">
+											<fb:editor action="?tab=index&display=add&method=link&step=2<?php echo pages($_GET['fb_page_id']); ?>" labelwidth="0">
 												<fb:editor-text label="Link" name="link" value="http://"/>
 												<fb:editor-buttonset>
 													<fb:editor-button value="Submit"/>

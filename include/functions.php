@@ -1,6 +1,6 @@
 <?php
 function pages($fb_page_id) {
-	if($fb_page_id !== 0 AND $fb_page_id !== NULL) { echo '&fb_page_id=' . $fb_page_id . ''; }
+	if($fb_page_id !== 0 AND $fb_page_id !== NULL) { return '&fb_page_id=' . $fb_page_id . ''; }
 }
 
 function execution_start()

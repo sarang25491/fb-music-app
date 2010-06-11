@@ -68,7 +68,7 @@ if(isset($_GET['search'])) {
 			echo '<tr>';
 		
 		echo '<td width="33%" style="padding-top: 10px; border: 1px solid #cccccc">';
-		echo '<fb:editor action="?tab=index&display=add&method=youtube&confirm&videoId=' . $entry['id'] . '" labelwidth="0" width="10">';
+		echo '<fb:editor action="?tab=index&display=add&method=youtube&confirm&videoId=' . $entry['id'] . '' . pages($_GET['fb_page_id']) . '" labelwidth="0" width="10">';
 		echo '<fb:editor-custom><input type="hidden" name="title" value="' . $entry['title'] . '"></fb:editor-custom>';
 		echo '<center><img src="' . $entry['img'] . '" /><br />' . $entry['title'] . '<br /></center>';
 		echo '<fb:editor-buttonset><fb:editor-button value="Select"></fb:editor-buttonset><div style="padding-left: 97px; padding-top: 5px; margin-bottom: -20px;"><a clickrewriteurl="' . $config['fb']['appcallbackurl'] . 'app.youtube-callback.php?vid=' . $entry['id'] . '" clickrewriteid="player" clickrewriteform="dummy_form" clicktoshowdialog="preview">preview</a></div>';
@@ -90,7 +90,7 @@ if(isset($_GET['search'])) {
 	list($title, $artist) = split(' - ', $_POST['title']);
 	
 	echo '<div style="padding-top: 15px;">
-	<fb:editor action="?tab=index&display=add&method=youtube&submit" labelwidth="50">
+	<fb:editor action="?tab=index&display=add&method=youtube&submit' . pages($_GET['fb_page_id']) . '" labelwidth="50">
 	<div align="center" style="font-size: 10pt;">
 	<b>Youtube Link: </b><a href="http://www.youtube.com/watch?v=' . $_GET['videoId'] . '">http://www.youtube.com/watch?v=' . $_GET['videoId'] . '</a><br />
 	<b>Youtube Title: </b>' . $_POST['title'] . '
