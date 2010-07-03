@@ -59,7 +59,6 @@ Below the editor is a button where a user can add a song.
 					</tr>
 				</table>
 				</div>
-				<?php include 'inc.stats.php'; ?>
 			</td>
 
 			<td width="170px" valign="top">
@@ -89,6 +88,7 @@ Below the editor is a button where a user can add a song.
 
 		</tr>
 	</table>
+	<?php include 'inc.stats.php'; ?>
 	</div>
 <?php } elseif ($_GET['display'] == 'add') { ?>
 	<?php 
