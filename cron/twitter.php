@@ -25,18 +25,6 @@ print_r($timeline);
 $file = fopen('../statics/twitter.txt','w');
 fwrite($file,'<b>Twitter Announcements Timeline</b><br />');
 
-while ($end == 0) {
-	$currentLine = addslashes_deep($timeline[$i]['text']);
-	if (strpos(strtolower($currentLine), '#musicapp') === false) {
-		echo 'nothing found';
-	} else {
-		$currentLine = str_replace('#musicapp','',$currentLine);
-		$db->Raw("UPDATE `system` SET `data`='$currentLine' WHERE `var`='twitter'");
-		$end = 1;
-	}
-	$i++;
-}
-
 foreach ($timeline as $tweet) {
 	if (strpos(strtolower($tweet['text']), '#musicapp') > 0) { //strpos will return a position of the said string, if it doesnt find it it will return false
 		$text = htmlspecialchars(utf8_encode(str_replace('#musicapp','',$tweet['text'])), ENT_QUOTES);
