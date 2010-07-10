@@ -22,8 +22,19 @@ if(!isset($_GET['id'])) {
 
 if (isset($_GET['xmlData']) || isset($_GET['from_feed'])) {
 
-	$decodedInput = base64_decode($id);
-	list($id, $time) = split("-", $decodedInput, 2);
+	if (isset($_GET['xmlData'])) {
+		$decodedInput = base64_decode($id);
+		list($id, $timeIssued) = split("-", $decodedInput, 2);
+		
+		$expires = date("U", strtotime("-5 sec")); // 15 minutes in the past
+
+		if ($expires > $timeIssued)
+			die ("410 - Gone");
+		
+		$time = time();
+	} else {
+		$time = time();
+	}
 
 	$db_data = $db->Raw("SELECT `xid`,`user`,`type`,`link`,`title`,`artist`,`playtime` FROM `userdb_uploads` WHERE `xid`='$id' OR `id`='$id';");
 	$id = $db_data[0]['xid'];
