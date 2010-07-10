@@ -27,67 +27,70 @@ if($argv[1] == 'fb') {
 	// Will clear out the cached images on Facebook's side.
 	$facebook->api_client->fbml_refreshImgSrc("" . $config['fb']['appcallbackurl'] . "images/spinner.gif");
 } elseif ($argv[1] == 'server') {
-	// Directory listing function.
-	function dirList ($directory) 
+	
+	ini_set("memory_limit", "1024M");
+	
+	$fsArray = array();
+	$dir = scandir('' . $config['server']['internal_url'] . 'users/');
+
+	unset($dir[0]);
+	unset($dir[1]);
+	array_pop($dir);
+	
+	echo "Generating file server array... ";
+	
+	foreach ($dir as $drive)
 	{
-
-		// create an array to hold directory list
-		$results = array();
-
-		// create a handler for the directory
-		$handler = opendir($directory);
-
-		// keep going until all files in directory have been read
-		while ($file = readdir($handler)) {
-
-			// if $file isn't this directory or its parent, 
-			// add it to the results array
-			if ($file != '.' && $file != '..')
-				$results[] = $file;
-		}
-
-		// tidy up: close the handler
-		closedir($handler);
-
-		// done!
-		return $results;
-
-	}
-
-	// Compares the files to the database to make sure that a database entry for the file exists.
-	// If there is no database entry, the file will be deleted.
-	$dir = dirList('' . $config['server']['internal_url'] . 'users/');
-	foreach ($dir as $currDir) {
-		$subDir = dirList('' . $config['server']['internal_url'] . 'users/' . $currDir . '');
-		foreach ($subDir as $currSubDir) {
-			$files = dirList('' . $config['server']['internal_url'] . 'users/' . $currDir . '/' . $currSubDir . '/');
-			foreach ($files as $file) {
-				echo $file;
-				$link_to_check = '' . $config['server']['streaming'] . '/stream/' . $currDir . '/' . $currSubDir . '/' . $file . '';
-				$existor = $db->Raw("SELECT COUNT(*) FROM `userdb_uploads` WHERE `link`='$link_to_check'");
-
-				if ($existor[0]['COUNT(*)'] == 0) {
-					echo ' - removing';
-					unlink('' . $config['server']['internal_url'] . 'users/' . $currDir . '/' . $currSubDir . '/' . $file . '');
-				}
-				echo "\n";
+		$userFolders = scandir('' . $config['server']['internal_url'] . 'users/' . $drive . '');
+		unset($userFolders[0]);
+		unset($userFolders[1]);
+		foreach ($userFolders as $userFolder)
+		{
+			$files = scandir('' . $config['server']['internal_url'] . 'users/' . $drive . '/' . $userFolder . '');
+			unset($files[0]);
+			unset($files[1]);
+			foreach ($files as $file)
+			{
+				array_push($fsArray, '' . $drive . '/' . $userFolder . '/' . $file . '');
 			}
 		}
 	}
-
-	// If there is no file matching the database entry, the database entry will be deleted.
-	$database_entries = $db->Raw("SELECT `user`,`drive`,`link` FROM `userdb_uploads` WHERE `type`='upload'");
-	foreach ($database_entries as $database_entry) {
-		echo $database_entry['link'];
-		
-		$userFolder = array_sum(str_split($database_entry['user']));
-		if(!file_exists('' . $config['server']['internal_url'] . 'users/' . $database_entry['drive'] . '/' . $userFolder . '/' . basename($database_entry['link']) . '')) {
-			echo ' - removing';
-			$db->Raw("DELETE FROM `userdb_uploads` WHERE `link`='$database_entry[link]'");
-		}
-		
-		echo "\n";
+	
+	echo "" . count($fsArray) . " elements!\n";
+	
+	$dbArray = array();
+	
+	echo "Generating database array... ";
+	$dbQuery = $db->Raw("SELECT `link` FROM `userdb_uploads` WHERE `type`='upload'");
+	foreach ($dbQuery as $link)
+	{
+		$split = split ("/", $link['link']);
+		array_push($dbArray, '' . $split[4] . '/' . $split[5] . '/' . $split[6] . '');
 	}
+	
+	echo "" . count($dbArray) . " elements!\n";
+	
+	function my_array_diff($a, $b) {
+	    $map = $out = array();
+	    foreach($a as $val) $map[$val] = 1;
+	    foreach($b as $val) if(isset($map[$val])) $map[$val] = 0;
+	    foreach($map as $val => $ok) if($ok) $out[] = $val;
+	    return $out;
+	}
+	
+	echo "Comparing the two arrays for files that do not have an entry in the database... ";
+	$filesToDelete = my_array_diff($fsArray, $dbArray);
+	
+	echo "" . count($filesToDelete) . " files found!\n";
+	
+	echo "We are now deleting these files... ";
+	
+	foreach ($filesToDelete as $delete)
+	{
+		unlink('' . $config['server']['internal_url'] . 'users/' . $delete . '');
+	}
+	
+	echo "done!\n";
 
 } else if ($argv[1] == 'accounts') {
 	$ex_day = date('Y-m-d', strtotime('-90 days'));
