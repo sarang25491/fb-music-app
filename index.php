@@ -77,7 +77,7 @@ if(!isset($_GET['tab'])) {
 </div>
 
 <fb:tabs>
-	<fb:tab-item href='<?php echo $config['fb']['fburl']; ?>?tab=index<?php pages($_GET['fb_page_id']); ?>' title='My Music' <?php if($_GET['tab'] == 'index') { echo "selected='true'"; } ?> />
+	<fb:tab-item href='<?php echo $config['fb']['fburl']; ?>?tab=index<?php echo pages($_GET['fb_page_id']); ?>' title='My Music' <?php if($_GET['tab'] == 'index') { echo "selected='true'"; } ?> />
 	<fb:tab-item href='<?php echo $config['fb']['fburl']; ?>?tab=music_friends' title="Friend's Music" <?php if($_GET['tab'] == 'music_friends') { echo "selected='true'"; } ?> />
 	<fb:tab-item href='<?php echo $config['fb']['fburl']; ?>?tab=offers' title='Earn Slots' align='right' <?php if($_GET['tab'] == 'offers') { echo "selected='true'"; } ?> />
 	<fb:tab-item href='<?php echo $config['fb']['fburl']; ?>?tab=help' title='Get Help' align='right' <?php if($_GET['tab'] == 'help') { echo "selected='true'"; } ?> />
