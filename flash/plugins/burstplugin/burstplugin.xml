@@ -1,0 +1,21 @@
+<plugin>
+	<title>Burst Music App Plugin</title>
+	<filename>burstplugin.swf</filename>
+	<version>1</version>
+	<compatibility>Compatible with 5.2.</compatibility>
+	<author>Burst Development</author>
+	<description>
+		This plugin adds in extra security to the JW Player when loading in external files. The plugin requires lighttpd's mod_secdownload with a security key along with a PHP server-side script to get the server's time in order to create an appropriate mod_secdownload link.
+	</description>
+	<href>http://music.burst-dev.com/flash/</href>
+
+	<flashvars>
+		<flashvar>
+			<name>xid</name>
+			<default>0</default>
+			<description>Contains the ID of the song to retrieve the data from.</description>
+		</flashvar>
+	</flashvars>
+
+
+</plugin>
