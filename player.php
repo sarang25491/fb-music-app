@@ -43,7 +43,7 @@ if(!isset($_GET['id'])) {
 	<fb:narrow>
 		<fb:swf 
 			swfsrc="<?php echo $config['fb']['appcallbackurl']; ?>flash/player/player.swf"
-			flashvars="plugins=<?php echo $config['fb']['appcallbackurl']; ?>flash/plugins/burstplugin/burstplugin.swf&burstplugin.xid=<?php echo $id; ?>&skin=<?php echo $config['fb']['appcallbackurl']; ?>flash/skin/skewd.zip&bufferlength=0"
+			flashvars="plugins=<?php echo $config['fb']['appcallbackurl']; ?>flash/plugins/burstplugin/burstplugin.swf&burstplugin.xid=<?php echo $id; ?>&skin=<?php echo $config['fb']['appcallbackurl']; ?>flash/skin/skewd-slim.zip&bufferlength=0"
 			height="28" 
 			width="184" 
 			/>
