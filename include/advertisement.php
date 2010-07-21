@@ -34,7 +34,7 @@ include_once('inc.rawclix.php');
 $timestamp = date("mdyHis");
 
 $social_media = '<fb:iframe src="http://www.socialmedia.com/facebook/monetize.php?fmt=canvas&pubid=a0fb5ac60e4cd72075b1337eb6fb4336&bgcolor=F7F7F7&bordercolor=F7F7F7&textcolor=000&linkcolor=3B5998&e" border="0" width="645" height="60" scrolling="no" frameborder="0" />';
-$cubics = '<fb:iframe src="http://cubics.com/displayAd.aspx?pid=14311&plid=15965&adSize=728x90&bgColor=%23ffffff&textColor=%23000000&linkColor=%230033ff&channel=&appid=43221" width="728" height="90" frameborder="0" border="0" scrolling="no"></fb:iframe>';
+$cubics = "<fb:iframe src='http://social.bidsystem.com/displayAd.aspx?pid=14311&plid=15965&adSize=728x90&channel=&appid=43221&pfid=" . $user . "' width='728' height='90' frameborder='0' border='0' scrolling='no'></fb:iframe>";
 $zohark = '<script>var zohark_api_key = "cd92203d073c3556a00ca2167c661421";var zohark_background_color = "FFFFFF";var zohark_border_color = "6D84B4";var zohark_text_color = "000000";var zohark_title_color = "0000FF";var zohark_display_url_color = "6D84B4";var zohark_button_color = "6D84B4";var zohark_button_text = "FFFFFF";var zohark_button = "6D84B4-FFFFFF";</script><fb:ref url="http://www.niagaramedia.com/facebook/fbml_ads/?ad_format=646x60" />';
 $lookery = '<fb:iframe id="lookery-ad-8169" name="lookery-ad-8169" src="http://ads.lookery.com/ad/?p=7c7945c922cf4735cdf2dbfc2e374c36&z=8169&d=645x60" framespacing="no" frameborder="no" scrolling="no" width="645" height="80"></fb:iframe>';
 $super_rewards = '<center><fb:iframe src="http://apps.kitnmedia.com/superrewards/banner_fbml.php?h=utxwppn" frameborder="0" width="648" height="60" scrolling="no" /></center>';
