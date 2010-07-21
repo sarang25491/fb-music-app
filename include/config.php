@@ -29,7 +29,7 @@ $config['server']['uri_prefix'] = "/stream/";
 ############################################################
 $config['pp']['pay_to'] = 'accounting@burst-dev.com';
 
-$config['basicSlots'] = 3;
+$config['basicSlots'] = 4;
 	
 ########## Database Information ##########
 # The MySQL database information needed
@@ -51,8 +51,7 @@ if ($pre !== 'skip_fbapi') {
 	{
 		if (isset($fb_page_id)) 
 		{
-			if ($_POST['fb_sig_is_admin'] == '1') 
-				$user = $fb_page_id;
+			$user = $fb_page_id;
 		} 
 		else
 		{	
