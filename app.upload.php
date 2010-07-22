@@ -48,7 +48,7 @@ if($credit+$config['basicSlots'] <= $usage)
 } 
 ?>
 
-<?php if($step == 'reset') { ?>
+<?php if($_GET['step'] == 'reset') { ?>
 	<?php 
 	$tempData = $db->Raw("SELECT `location` FROM `userdb_temporary` WHERE `user`='$user'");
 	try {
@@ -57,7 +57,7 @@ if($credit+$config['basicSlots'] <= $usage)
 	$db->Raw("DELETE FROM `userdb_temporary` WHERE `user`='$user' LIMIT 1"); // limit for good coding practice
 	?>
 	<?php if(isset($_GET['fb_page_id'])) { redirect('' . $config['fb']['fburl'] . '?tab=index&display=add&fb_page_id=' . $_GET['fb_page_id'] . ''); } else { redirect('' . $config['fb']['fburl'] . '?tab=index&display=add'); } ?>
-<?php } elseif($step == 2) { ?>
+<?php } elseif($_GET['step'] == 2) { ?>
 	<?php
 	if ($_FILES['upfile']['name'] == NULL) {
 		// just a nasty looking forward to page, differentiating between profiles and pages.
@@ -122,7 +122,7 @@ if($credit+$config['basicSlots'] <= $usage)
 		<?php if(isset($_GET['fb_page_id'])) { $facebook->redirect("" . $config['fb']['fburl'] . "?tab=index&display=add&method=upload&step=3&fb_page_id=" . $_GET['fb_page_id'] . ""); } else { $facebook->redirect("" . $config['fb']['fburl'] . "?tab=index&display=add&method=upload&step=3"); } ?>
 
 	<?php } ?>
-<?php } elseif ($step == 3) { ?>
+<?php } elseif ($_GET['step'] == 3) { ?>
 	<?php if(isset($error)) { ?>
 		<?php if($error == 'missing_information') { ?>
 			<?php error('Not Enough Information','I need ALL of the boxes filled below.'); ?>
@@ -176,7 +176,7 @@ if($credit+$config['basicSlots'] <= $usage)
 			</table>
 		<?php } ?>
 	<?php } ?>
-<?php } elseif ($step == 4) { ?>
+<?php } elseif ($_GET['step'] == 4) { ?>
 	<?php if($_POST['title'] == NULL or $_POST['artist'] == NULL) { ?>
 		<?php if(isset($_GET['fb_page_id'])) { redirect('' . $config['fb']['fburl'] . '?tab=index&display=add&method=upload&step=3&error=missing_information&fb_page_id=' . $_GET['fb_page_id'] . ''); } else { redirect('' . $config['fb']['fburl'] . '?tab=index&display=add&method=upload&step=3&error=missing_information'); } ?>
 	<?php } else { ?>
