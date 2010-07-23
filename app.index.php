@@ -259,7 +259,15 @@ Below the editor is a button where a user can add a song.
 												<?php $check_temporary = $db->Raw("SELECT COUNT(*) FROM `userdb_temporary` WHERE `user`='$user'"); ?>
 												<?php $check_temporary = $check_temporary[0]['COUNT(*)']; ?>
 												<?php if ($check_temporary >= 1) { ?>
-													<?php if(isset($_GET['fb_page_id'])) { error("Incomplete","Looks like you forgot to finish a previous addition, would you like to continue?<br /><a href='" .  $config['fb']['fburl'] . "?tab=index&display=add&method=upload&step=3&fb_page_id=" . $_GET['fb_page_id'] . "'>Yes, lets continue!</a> - <a href='" . $config['fb']['fburl'] . "?tab=index&display=add&method=upload&step=reset&fb_page_id=" . $_GET['fb_page_id'] . "'>No, scrap it.</a>"); } else { error("Incomplete","Looks like you forgot to finish, would you like to continue? <a href='" . $config['fb']['fburl'] . "?tab=index&display=add&method=upload&step=3'>Yes</a> - <a href='" .$config['fb']['fburl'] . "?tab=index&display=add&method=upload&step=reset'>No</a>"); } ?>
+													<?php 
+													if(isset($_GET['fb_page_id'])) 
+													{ 
+														error("Incomplete","Looks like you forgot to finish an upload, would you like to continue?<br /><a href='" .  $config['fb']['fburl'] . "?tab=index&display=add&method=upload&step=3&fb_page_id=" . $_GET['fb_page_id'] . "'>Yes, continue!</a> - <a href='" . $config['fb']['fburl'] . "?tab=index&display=add&method=upload&step=reset&fb_page_id=" . $_GET['fb_page_id'] . "'>No, remove it.</a>"); 
+													} else 
+													{ 
+														error("Incomplete","Looks like you forgot to finish an upload, would you like to continue? <a href='" . $config['fb']['fburl'] . "?tab=index&display=add&method=upload&step=3'>Yes, continue!</a> - <a href='" .$config['fb']['fburl'] . "?tab=index&display=add&method=upload&step=reset'>No, remove it.</a>"); 
+													} 
+													?>
 												<?php } elseif ($credit+$config['basicSlots'] <= $usage) { ?>
 													<?php error('Not enough slots!','You need more slots to use this feature! <a href="' . $config['fb']['fburl'] . '?tab=offers">Click here to get some!</a>'); // I want this an image overlaying the actual upload system ?>
 												<?php } else { ?>
