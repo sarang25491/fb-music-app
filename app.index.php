@@ -81,6 +81,7 @@ Below the editor is a button where a user can add a song.
 					</tr>
 					<tr>	
 						<td style="border: 1px solid #cccccc; padding: 2px;"><img src="<?php echo $config['fb']['appcallbackurl']; ?>images/delete.png" align="top" border="0"></td><td style="padding-left: 5px;"><fb:intl>delete song</fb:intl></td>
+
 					</tr>
 				</table>
 				<center><b>Remember to save your changes!!!</b></center>
@@ -165,21 +166,6 @@ Below the editor is a button where a user can add a song.
 				
 					<td width="60%">
 						<table border="0" width="100%">
-	
-							<tr>
-								<td>
-									<table border="0" width="100%">
-										<tr>
-											<td width="20%">
-												<img src="<?php echo $config['fb']['appcallbackurl']; ?>images/add_music.gif" align="top" border="0">
-											</td>
-											<td width="80%">
-												<font size="1em">[<a href="<?php echo $config['fb']['fburl']; ?>?tab=help">need help?</a>]</font>
-											</td>
-										</tr>
-									</table>
-								</td>
-							</tr>
 							<tr>
 
 								<td>
