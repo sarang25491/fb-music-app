@@ -4,6 +4,14 @@
 <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
 </head>
 
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" type="text/javascript"></script> 
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js" type="text/javascript"></script>
+<script src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php" type="text/javascript"></script>
+
+<body>
+<div id="FB_HiddenContainer"  style="position:absolute; top:-10000px; width:0px; height:0px;" ></div>
+
+
 <?php
 // PAGE IS PULLED BY IFRAME BY "app.index.php"
 // THIS PAGE IS NOT ATTACHED TO THE APPLICATION
@@ -11,8 +19,6 @@
 // $_GET['fb_sig_user] gets the current user ID.
 ?>
 
-<div id="FB_HiddenIFrameContainer" style="display:none; position:absolute; left:-100px; top:-100px; width:0px; height: 0px;"></div>
-<script src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php" type="text/javascript"></script>
 <script type="text/javascript">
     FB_RequireFeatures(["CanvasUtil"], function()
     { 
@@ -27,9 +33,6 @@ if(isset($_GET['fb_page_id']))
 else
 	$id = $_GET['fb_sig_user'];
 ?>
-
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" type="text/javascript"></script> 
-<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js" type="text/javascript"></script>
 
 <style>
 body {
@@ -229,4 +232,5 @@ function grabPlayerUrl() {
 
 <div style="padding: 10px;">
 </div>
-	
+
+</body>	
