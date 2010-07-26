@@ -74,7 +74,7 @@ if ($_POST['method'] == 'publisher_getInterface') {
 	                             'swfsrc' => '' . $config['fb']['appcallbackurl'] . 'flash/player/player.swf?plugins=' . $config['fb']['appcallbackurl'] . 'flash/plugins/burstplugin/burstplugin.swf&burstplugin.xid=' . $pubData[0]['xid'] . '&skin=' . $config['fb']['appcallbackurl'] . 'flash/skin/skewd.zip&autostart=true',
 	                             'imgsrc' => '' . $config['fb']['appcallbackurl'] . 'images/transparent_square.png',
 	                             'width' => '40', 
-	                             'height' => '30', 
+	                             'height' => '32', 
 	                             'expanded_width' => '360', 
 	                             'expanded_height' => '28')));
 	                             
