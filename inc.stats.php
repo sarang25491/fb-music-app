@@ -19,29 +19,27 @@ if (count($xidList) > 0) {
 	
 	// print_r($activity);
 	?>
-	<div style="padding-left: 10px; font-size: 14px; font-weight: bold;">Recent Activity & Announcements (beta)</div>
+	
+	<fb:dialog id="ann" width="500">
+		<fb:dialog-title>Announcements</fb:dialog-title>
+		<fb:dialog-content>
+			<?php include_once('./statics/twitter.txt'); ?>
+		</fb:dialog-content>
+		<fb:dialog-button type="button" value="Close" close_dialog=1 />
+	</fb:dialog>
+	
+	<div style="padding-left: 10px; font-size: 14px; font-weight: bold; border-bottom: 1px solid #899cc1;">Recent Activity & Announcements (beta)</div>
+	<div style="padding: 10px; margin: 10px; border: 1px solid #e2c822; background-color: #fff9d7; font-weight: bold; font-size: 12pt;">
+		<?php echo $announcements[0]['message']; ?>
+	</div>
+	<div align="right" style="margin-top: -10px; margin-right: 10px; margin-bottom: 10px;">
+		Message posted at <fb:time t="<?php echo strtotime($announcements[0]['time']); ?>" /> - <a clicktoshowdialog="ann">View More Recent Anouncements >></a>
+	</div>
+	
+	
 	<center>
-	<table border="0" cellpadding="2" cellspacing="0" width="100%">
-		<tr>
-			<td style="border-bottom: 1px solid #899cc1;">
-			</td>
-		</tr>
-		
-		<?php foreach ($announcements as $ann) { ?>
-			<tr>
-				<td>
-				
-				<div style="margin-left: 15px; margin-right: 15px; background-color: #eceff5;">
-					<b>[<fb:time t="<?php echo strtotime($ann['time']); ?>" />] <?php echo $ann['message']; ?></b>
-				</div>
-				
-				</td>
-			
-			
-			</tr>
-		<?php } ?>
-		
-		
+	<div style="background-color: #f7f7f7; border: 1px solid #cccccc; padding: 10px; margin-left: 10px; margin-right: 10px;">
+	<table border="0" cellpadding="0" cellspacing="0" width="100%">
 		<?php function action2txt($dbAction) {
 		if ($dbAction == 'play')
 			return 'played';
@@ -57,9 +55,7 @@ if (count($xidList) > 0) {
 				$artist = htmlspecialchars_decode(utf8_decode($xidInfo[0]['artist']), ENT_QUOTES);
 				?>
 				
-				<div style="padding-left: 15px;">
-					<b><?php echo $title; ?></b> by <b><?php echo $artist; ?></b> was played around <fb:time t="<?php echo $action['unix_timestamp(`time`)']; ?>" />.
-				</div>
+				<b><?php echo $title; ?></b> by <b><?php echo $artist; ?></b> was played around <fb:time t="<?php echo $action['unix_timestamp(`time`)']; ?>" />.
 										
 				</td>
 			</tr>
@@ -72,6 +68,7 @@ if (count($xidList) > 0) {
 		?>
 	
 	</table>
+	</div>
 	</center>
 	
 	<fb:dialog id="unknownUser">
