@@ -130,46 +130,50 @@ if($credit+$config['basicSlots'] <= $usage)
 	<?php } else { ?>
 		<?php explanation('Song Information (ID3)','Here is what I got from what you uploaded, but I\'m not sure if it is right. Do me a favor and check it over and press sumbit when you\'re done.'); ?>
 
-		<?php $temporary_information = $db->Raw("SELECT `title`,`artist`,`filesize`,`sample_rate`,`fileformat` FROM `userdb_temporary` WHERE `user`='$user' LIMIT 1"); ?>
+		<?php $temporary_information = $db->Raw("SELECT `title`,`artist`,`filesize`,`sample_rate`,`fileformat`,`playtime` FROM `userdb_temporary` WHERE `user`='$user' LIMIT 1"); ?>
 		
 		<?php if(count($temporary_information) == '0') { ?>
 			<?php if(isset($_GET['fb_page_id'])) { error('Error','What the?! Something wrong happened, try going <a href="' . $config['fb']['fburl'] . '?action=2&method=upload&fb_page_id=' . $_GET['fb_page_id'] . '">back</a> and try again.'); } else { error('Error','An unexpected error has occurred, please go <a href="' . $config['fb']['fburl'] . '?action=2&method=upload">back</a> and try again.'); } ?>
 		<?php } else { ?>
 			<?php $external_temp = substr($temporary_information['0']['location'], $temporary_information['0']['location'], '/') + 1; ?>
-			<table border="0" cellpadding="0" cellspacing="0">
+			<table border="0" cellpadding="0" cellspacing="0" width="100%">
 				<tr>
-					<td>
-					<fb:editor action="?tab=index&display=add&method=upload&step=4<?php if(isset($_GET['fb_page_id'])) { echo '&fb_page_id=' . $_GET['fb_page_id'] . ''; } ?>" labelwidth="50">
-						<fb:editor-text label="Title" name="title" value="<?php echo htmlspecialchars_decode(utf8_decode($temporary_information[0]['title']), ENT_QUOTES); ?>" maxlength="100" />
-						<fb:editor-text label="Artist" name="artist" value="<?php echo htmlspecialchars_decode(utf8_decode($temporary_information[0]['artist']), ENT_QUOTES); ?>" maxlength="100" />
-						<?php
-						if (isset($_GET['fb_page_id'])) {
-						?>
-						<fb:editor-text label="Buy Link" name="buy_link" value="<?php echo $db_info[0]['buy_link']; ?>" maxlength="100" />
-						<fb:editor-custom label="DL-able?">
-							<select name="dl">
-								<option value="0" <?php if($db_info[0]['dl'] == 0) echo 'selected'; ?>>downloadable to nobody</option>
-								<option value="1" <?php if($db_info[0]['dl'] == 1) echo 'selected'; ?>>downloadable to all</option>
-							</select>
-						</fb:editor-custom>
-						<?php
-						}
-						?>
-						<fb:editor-custom label="Post to Wall?">
-							<input type="checkbox" name="wall" value="true">
-						</fb:editor-custom>
-						<fb:editor-buttonset>
-							<fb:editor-button value="Submit"/>
-						</fb:editor-buttonset>
-					</fb:editor>
-					</td>
-					
-					<td>
-					<div style="background-color: #fff5b1; border: 1px solid #ffd04d; padding: 10px; font-size: 16px; text-align: center; margin-right: 20px;">
+				
+					<td valign="top">
+					<div style="background-color: #fff5b1; border: 1px solid #ffd04d; padding: 10px; font-size: 16px; text-align: center; margin: 10px 0px 10px 20px;">
 						File Size: <?php echo round(($temporary_information[0]['filesize']/1000000), 2); ?>MB<br />
 						File Format: <?php echo $temporary_information[0]['fileformat']; ?><br />
-						Sample Rate: <?php echo round(($temporary_information[0]['sample_rate']/1000), 1); ?>KHz
+						Sample Rate: <?php echo round(($temporary_information[0]['sample_rate']/1000), 1); ?>KHz<br />
+						Playtime: <?php echo round($temporary_information[0]['playtime']/60, 2); ?> min.
 					</div>
+					</td>
+				
+					<td valign="top">
+						<div align="center" style="margin:10px 20px 10px 10px; background-color: #f7f7f7; border: 1px solid #cccccc;">
+						<fb:editor action="?tab=index&display=add&method=upload&step=4<?php if(isset($_GET['fb_page_id'])) { echo '&fb_page_id=' . $_GET['fb_page_id'] . ''; } ?>" labelwidth="100">
+							<fb:editor-text label="Title" name="title" value="<?php echo htmlspecialchars_decode(utf8_decode($temporary_information[0]['title']), ENT_QUOTES); ?>" maxlength="100" />
+							<fb:editor-text label="Artist" name="artist" value="<?php echo htmlspecialchars_decode(utf8_decode($temporary_information[0]['artist']), ENT_QUOTES); ?>" maxlength="100" />
+							<?php
+							if (isset($_GET['fb_page_id'])) {
+							?>
+							<fb:editor-text label="Buy Link" name="buy_link" value="<?php echo $db_info[0]['buy_link']; ?>" maxlength="100" />
+							<fb:editor-custom label="DL-able?">
+								<select name="dl">
+									<option value="0" <?php if($db_info[0]['dl'] == 0) echo 'selected'; ?>>downloadable to nobody</option>
+									<option value="1" <?php if($db_info[0]['dl'] == 1) echo 'selected'; ?>>downloadable to all</option>
+								</select>
+							</fb:editor-custom>
+							<?php
+							}
+							?>
+							<fb:editor-custom label="Post to Wall?">
+								<input type="checkbox" name="wall" value="true">
+							</fb:editor-custom>
+							<fb:editor-buttonset>
+								<fb:editor-button value="Submit"/>
+							</fb:editor-buttonset>
+						</fb:editor>
+						</div>
 					</td>
 					
 				</tr>
