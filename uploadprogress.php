@@ -49,6 +49,6 @@ $received = $lighttpd->{'received'}; // how much we got of the file.
 <?php if(!isset($_GET['update'])) { ?>
 </div>
 <script type="text/javascript">
-	new Ajax.PeriodicalUpdater('status', 'uploadprogress.php?update&id=<?php echo $md5; ?>', {asynchronous:true, frequency:0.5});
+	new Ajax.PeriodicalUpdater('status', 'uploadprogress.php?update&id=<?php echo $md5; ?>', {asynchronous:true, frequency:0.75});
 </script>
 <?php } ?>
