@@ -2,7 +2,7 @@
 # This is a simple script that compiles the plugin using the free Flex SDK on Linux/Mac.
 # Learn more at http://developer.longtailvideo.com/trac/wiki/PluginsCompiling
 
-FLEXPATH=/Developer/flex_sdk_3.5/
+FLEXPATH=/Developer/flex_sdk/
 
 
 echo "Compiling positioning plugin..."
