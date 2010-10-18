@@ -2,6 +2,27 @@
 <?php include 'statics/campfire.txt'; ?>
 </div>
 
+<fb:dialog id="support">
+	<fb:dialog-title>Before Contacting Support</fb:dialog-title>
+	<fb:dialog-content>
+		<?php success('Please read the following support guidelines...', ''); ?>
+		<div style="padding: 10px; margin: 0 10px 10px 10px; border: 1px solid #d4dae8">
+			<div style="margin-left: -20px;">
+            <ol>
+				   <li>All requests should be in English, we can't read anything else.</li>
+				   <li>Make sure that you explain your situation thoroughly; give us what you were trying to do and what exactly happened (error messages, abnormalities, etc).</li>
+				   <li>Read the FAQ and watch the videos. We don't know how much to express this, but most questions are answered by the FAQ.</li>
+			   </ol>
+         </div>			
+
+			<b>Please note that if your support request does not follow the above, it will automatically be ignored due to the high number of requests.</b>
+      </div>
+		
+		<?php success('When you have read the above...<br /><a href="http://www.facebook.com/?compose=1&id=1340490250&sk=messages">Click here to submit a support request</a>',''); ?>
+	</fb:dialog-content>
+	<fb:dialog-button type="button" value="Close" close_dialog=1 />
+</fb:dialog>
+
 
 <?php explanation('1. Watch the Intro Videos','Having trouble? These videos should help out a little. Each link will redirect you to a page on screenr.'); ?>
 <div style="margin-left: 20px; margin-right: 20px;">
