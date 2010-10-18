@@ -16,5 +16,5 @@ $attachment =  array(
 
 <script type="text/javascript">
 var attachment = <?php echo json_encode($attachment); ?>;
-Facebook.streamPublish('', attachment, null, <?php echo $user; ?>);	
+Facebook.streamPublish('', attachment, [], <?php echo $user; ?>);	
 </script>
