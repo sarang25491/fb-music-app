@@ -63,29 +63,34 @@ Below the editor is a button where a user can add a song.
 
 			<td width="170px" valign="top">
 			<div style="margin: 5px; padding: 10px; border: 1px solid #cccccc;">
-				<center><b>EDITOR KEY</b></center>
+			   <div style="background-color: #eceff5; margin: -10px -10px 5px -10px; padding: 5px;">	
+               <center><b>EDITOR KEY</b></center>
+            </div>
 				<table border="0">
 					<tr>
-						<td width="16px" style="border: 1px solid #cccccc; padding: 2px; background-color: #f7f7f7;"></td><td style="padding-left: 5px;">move songs by drag 'n dropping grey areas</td>
+						<td width="16px" style="border: 1px solid #cccccc; padding: 2px; background-color: #f7f7f7;"></td><td style="padding-left: 5px;">Drag & Drop to Order Playlist</td>
 					</tr>
 					
 					<tr>
-						<td style="border: 1px solid #cccccc; padding: 2px;"><img src="<?php echo $config['fb']['appcallbackurl']; ?>images/track.gif" align="top" border="0"></td><td style="padding-left: 5px;"><fb:intl>play song</fb:intl></td>
+						<td style="border: 1px solid #cccccc; padding: 2px;"><img src="<?php echo $config['fb']['appcallbackurl']; ?>images/track.gif" align="top" border="0"></td><td style="padding-left: 5px;"><fb:intl>Play Song</fb:intl></td>
 					</tr>
 					
 					<tr>
-						<td style="border: 1px solid #cccccc; padding: 2px;"><img src="<?php echo $config['fb']['appcallbackurl']; ?>images/key.png" align="top" border="0"></td><td style="padding-left: 5px;"><fb:intl>get api key</fb:intl></td>
+						<td style="border: 1px solid #cccccc; padding: 2px;"><img src="<?php echo $config['fb']['appcallbackurl']; ?>images/key.png" align="top" border="0"></td><td style="padding-left: 5px;"><fb:intl>Grab API Key</fb:intl></td>
 					</tr>
 					<tr>	
-						<td style="border: 1px solid #cccccc; padding: 2px;"><img src="<?php echo $config['fb']['appcallbackurl']; ?>images/tag_blue_edit.png" align="top" border="0"></td><td style="padding-left: 5px;"><fb:intl>edit settings</fb:intl></td>
+						<td style="border: 1px solid #cccccc; padding: 2px;"><img src="<?php echo $config['fb']['appcallbackurl']; ?>images/tag_blue_edit.png" align="top" border="0"></td><td style="padding-left: 5px;"><fb:intl>Edit Info</fb:intl></td>
 					</tr>
 					<tr>	
-						<td style="border: 1px solid #cccccc; padding: 2px;"><img src="<?php echo $config['fb']['appcallbackurl']; ?>images/delete.png" align="top" border="0"></td><td style="padding-left: 5px;"><fb:intl>delete song</fb:intl></td>
+						<td style="border: 1px solid #cccccc; padding: 2px;"><img src="<?php echo $config['fb']['appcallbackurl']; ?>images/delete.png" align="top" border="0"></td><td style="padding-left: 5px;"><fb:intl>Delete Song</fb:intl></td>
+
 
 					</tr>
 				</table>
-				<center><b>Remember to save your changes!!!</b></center>
-			</td>
+				<div style="background-color: #eceff5; margin: 5px -10px -10px -10px; padding: 5px;">
+            <center><b>Save Your Changes!</b></center>
+		      </div>	
+      </td>
 
 		</tr>
 	</table>
