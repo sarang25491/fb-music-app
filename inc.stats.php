@@ -15,25 +15,25 @@ if (count($xidList) > 0) {
 	$xidString = substr_replace($xidString,"",-1);
 	
 	$activity = $db->Raw("SELECT unix_timestamp(`time`),`xid`,`who`,`action` FROM `userdb_actions` WHERE `xid` IN (" . $xidString . ") OR `who`='$user' ORDER BY `time` DESC LIMIT 15");
-	$announcements = $db->Raw("SELECT `time`, `message` FROM `twitter` ORDER BY `id` DESC LIMIT 3");
-	
-	// print_r($activity);
+   $announcements = $facebook->api_client->fql_query("SELECT status_id,time,message FROM status WHERE uid='2436915755' ORDER BY time DESC LIMIT 10");
 	?>
 	
 	<fb:dialog id="ann" width="500">
 		<fb:dialog-title>Announcements</fb:dialog-title>
 		<fb:dialog-content>
-			<?php include_once('./statics/twitter.txt'); ?>
-		</fb:dialog-content>
+         <?php foreach ($announcements as $announcement) { ?>
+		   [<fb:time t="<?php echo $announcement['time']; ?>" />] <?php echo $announcement['message']; ?> <br /><br />
+         <?php } ?>
+      </fb:dialog-content>
 		<fb:dialog-button type="button" value="Close" close_dialog=1 />
 	</fb:dialog>
 	
-	<div style="padding-left: 10px; font-size: 14px; font-weight: bold; border-bottom: 1px solid #899cc1;">Recent Activity & Announcements (beta)</div>
-	<div style="padding: 10px; margin: 10px; border: 1px solid #e2c822; background-color: #fff9d7; font-weight: bold; font-size: 12pt;">
+	<div style="padding-left: 10px; font-size: 14px; font-weight: bold; border-bottom: 1px solid #899cc1;">Recent Activity & Announcements</div>
+	<div style="padding: 10px; margin: 10px; border: 1px solid #e2c822; background-color: #fff9d7; font-weight: bold; font-size: 12px;">
 		<?php echo $announcements[0]['message']; ?>
 	</div>
-	<div align="right" style="margin-top: -10px; margin-right: 10px; margin-bottom: 10px;">
-		Message posted at <fb:time t="<?php echo strtotime($announcements[0]['time']); ?>" /> - <a clicktoshowdialog="ann">View More Recent Anouncements >></a>
+	<div style="margin: -8px 15px 10px 0; text-align: right;">
+		Message posted at <fb:time t="<?php echo $announcements[0]['time']; ?>" /> - <a clicktoshowdialog="ann">View More Recent Anouncements >></a>
 	</div>
 	
 	
