@@ -40,7 +40,7 @@ switch ($_GET['action']) {
 		echo '
 		<div id="header" style="padding-top: 15px; padding-right: 25px; padding-left: 20px; padding-bottom: 50px;">
 		<div style="float: left;"><img src="' . $config['fb']['appcallbackurl'] . 'images/music.png" /></div>
-		<div style="float: right; padding-top: 5px;"><b><font size="2px"><fb:intl>MAKE A DONATION</fb:intl></font></b></div>
+		<div style="float: right; padding-top: 5px;"><b><font size="2px"><fb:intl>ORDERING SLOTS</fb:intl></font></b></div>
 		</div>
 	  
 		<center>
@@ -51,18 +51,18 @@ switch ($_GET['action']) {
 		donating to this application will not be in vein!<br />
 		<br />
 		<b>
-		Each $1 in donations will give you one slot!<br />
-		Accumulate more than $10 and all advertisements in the application will be removed.<br />
+		Each slot costs $2, order more than 10 and we will remove all the ads.<br />
+		Please indicate how many you would like to order below.<br />
 		<br />
-		Any problems should be reported to support@burst-dev.com<br />
-		and remember, you are donating to the application, we cannot provide refunds.<br />
+		Any problems should be reported through our <a href="' . $config['fb']['fburl'] . '?tab=help">help pages</a>.<br />
+		We can provide refunds within 3 days of the order.<br />
 		An confirmation email will be sent after successful payment.<br />
 		</b>
 		</fb:intl>
 		</center>
 
 		<fb:editor action="' . $this_script . '?action=process" labelwidth="0">
-			<fb:editor-text label="Amount" name="amount" value="10.00" />
+			<fb:editor-text label="Number of Slots" name="amount" value="5.00" />
 			<fb:editor-custom>
 				<input type="hidden" name="user" value="' . $_POST['fb_sig_user'] . '">
 			</fb:editor-custom>
@@ -102,6 +102,8 @@ switch ($_GET['action']) {
 				echo 'NOT A PROPER DONATION AMOUNT, PLEASE GO BACK AND TRY AGAIN';
 				die();
 			}
+			
+			$amount = $amount * 2;
 		}
 
 		$p->add_field('business', $config['pp']['pay_to']);
@@ -110,7 +112,7 @@ switch ($_GET['action']) {
 		$p->add_field('cancel_return', $this_script.'?action=cancel');
 		$p->add_field('notify_url', $this_script.'?action=ipn&user=' . $_POST['user'] . '');
 		$p->add_field('item_name', 'Music Application Donation');
-		$p->add_field('amount', $_POST['amount']);
+		$p->add_field('amount', $_POST['amount']*2);
 
 		$p->submit_paypal_post(); // submit the fields to paypal
 		//$p->dump_fields();      // for debugging, output a table of all the fields
@@ -181,24 +183,16 @@ switch ($_GET['action']) {
 			include 'include/class.phpmailer.php';
 			$mail = new PHPMailer();
 
-			$mail->IsSMTP();
-			$mail->Host			= "mail.burst-dev.com";
-			$mail->Port			= 25;
-			$mail->SMTPSecure 	= "";
-			$mail->SMTPAuth		= true;
-			$mail->Username		= "support@burst-dev.com";
-			$mail->Password		= "tmD35BVvrstmQzPa";
+			$mail->IsMail();
 			
 			$mail->From       	= "support@burst-dev.com";
-			$mail->FromName   	= "Burst Development";
-			$mail->Subject    	= $subject;
-			$mail->Body       	= $body;
-		
-			$mail->AddCC("accounting@burst-dev.com", "Burst Development Accounting");
+			$mail->FromName   	= "Burst Development Support";
+			
+			// $mail->AddCC("accounting@burst-dev.com", "Burst Development Accounting");
 			
 			$mail->Subject		= "Your Donation to the Music Application (" . $txn_id . ")";
 		 
-			$db->Raw("INSERT INTO `userdb_transactions` (`id`,`user`,`payee`,`amount`) VALUES ('$txn_id','$user','$payee','$amount');");
+			$db->Raw("INSERT INTO `userdb_transactions` (`id`,`txn_type`,`user`,`payee`,`amount`) VALUES ('$txn_id','web_accept','$user','$payee','$amount');");
 		
 			$user_data = $db->Raw("SELECT `pro`,`override` FROM `userdb_users` WHERE `user`='$user'"); 
 			$exists = count($user_data);
@@ -225,12 +219,6 @@ switch ($_GET['action']) {
 			$body .=	"If you have any issues, please do not hesitate to email us through our application or by email at support@burst-dev.com.\n";
 			$body .=	"\n";
 			$body .=	"- The Burst Development Team\n";
-			$body .=	"\n";
-			$body .=	"----- DONOR DATA -----";
-			$body .=	"Full Name: \t" . $payee_name . "\n";
-			$body .=	"Email: \t" . $payee . "\n";
-			$body .=	"Date: \t" . $date . "\n";
-			$body .=	"AMT: \t" . $amount . "\n";
 			
 			$mail->Body = $body;
 			$mail->AddAddress($payee, $payee_name);
