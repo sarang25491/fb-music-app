@@ -62,12 +62,6 @@ if (count($xidList) > 0) {
 				</td>
 			</tr>
 		<?php } ?>
-		
-		<?php 
-		
-		$twitter = $db->Raw("SELECT * FROM `twitter`");
-		
-		?>
 	
 	</table>
 	</div>
