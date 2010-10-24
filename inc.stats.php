@@ -32,9 +32,11 @@ if (count($xidList) > 0) {
 	<div style="padding: 10px; margin: 10px; border: 1px solid #e2c822; background-color: #fff9d7; font-weight: bold; font-size: 12px;">
 		<?php echo $announcements[0]['message']; ?>
 	</div>
-	<div style="margin: -8px 15px 10px 0; text-align: right;">
-		Message posted at <fb:time t="<?php echo $announcements[0]['time']; ?>" /> - <a clicktoshowdialog="ann">View More Recent Anouncements >></a>
-	</div>
+	<div style="height: 16px; margin: -10px 20px 10px 0;">
+	   <div style="float: right; padding: 3px 5px 3px 5px; border-left: 1px solid #d4dae8; border-bottom: 1px solid #d4dae8; border-right: 1px solid #d4dae8; background-color: #eceff6;">
+   	   Message posted at <fb:time t="<?php echo $announcements[0]['time']; ?>" /> - <a clicktoshowdialog="ann">View More Recent Anouncements</a>
+	   </div>
+   </div>
 	
 	
 	<center>

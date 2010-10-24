@@ -68,7 +68,7 @@ Below the editor is a button where a user can add a song.
             </div>
 				<table border="0">
 					<tr>
-						<td width="16px" style="border: 1px solid #cccccc; padding: 2px; background-color: #f7f7f7;"></td><td style="padding-left: 5px;">Drag & Drop to Order Playlist</td>
+						<td width="16px" style="border: 1px solid #cccccc; padding: 2px; background-color: #f7f7f7;"></td><td style="padding-left: 5px;">Drag & Drop to <br />Order Playlist</td>
 					</tr>
 					
 					<tr>
