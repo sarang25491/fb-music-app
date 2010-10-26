@@ -51,7 +51,7 @@ switch ($_GET['action']) {
 		donating to this application will not be in vein!<br />
 		<br />
 		<b>
-		Each slot costs $2, order more than 10 and we will remove all the ads.<br />
+		Each slot costs $1.50 (25% off), order more than 10 and we will remove all the ads.<br />
 		Please indicate how many you would like to order below.<br />
 		<br />
 		Any problems should be reported through our <a href="' . $config['fb']['fburl'] . '?tab=help">help pages</a>.<br />
@@ -103,7 +103,7 @@ switch ($_GET['action']) {
 				die();
 			}
 			
-			$amount = $amount * 2;
+			$amount = $amount * 1.5;
 		}
 
 		$p->add_field('business', $config['pp']['pay_to']);
@@ -112,7 +112,7 @@ switch ($_GET['action']) {
 		$p->add_field('cancel_return', $this_script.'?action=cancel');
 		$p->add_field('notify_url', $this_script.'?action=ipn&user=' . $_POST['user'] . '');
 		$p->add_field('item_name', 'Music Application Donation');
-		$p->add_field('amount', $_POST['amount']*2);
+		$p->add_field('amount', $amount);
 
 		$p->submit_paypal_post(); // submit the fields to paypal
 		//$p->dump_fields();      // for debugging, output a table of all the fields
@@ -199,14 +199,14 @@ switch ($_GET['action']) {
 		
 			if ($exists == '1')
 			{
-				$slots = $user_data[0]['override']+(round($amount));
+				$slots = $user_data[0]['override']+(round($amount/1.5));
 				$db->Raw("UPDATE `userdb_users` SET `override`='$slots',`pp_email`='$payee' WHERE `user`='$user';");
 			} else {
-				$slots = round($amount);
+				$slots = round($amount/1.5);
 				$db->Raw("INSERT INTO `userdb_users` (`user`,`credit`,`override`,`pro`,`pp_email`) VALUES ('$user','0','$slots','0','$payee');");
 			}
 		 
-		 	if(($user_data[0]['override']+round($amount)) >= 10.00)
+		 	if(($user_data[0]['override']+round($amount/1.5)) >= 10.00)
 		 		$db->Raw("UPDATE `userdb_users` SET `pro`='1' WHERE `user`='$user'");
 			
 			$body = "Thanks for your donation to the Music Application!\n";
