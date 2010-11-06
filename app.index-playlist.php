@@ -31,7 +31,7 @@
 if(isset($_GET['fb_page_id']))
 	$id = $_GET['fb_page_id'];
 else
-	$id = $_POST['fb_sig_user'];
+	$id = $_GET['fb_sig_user'];
 ?>
 
 <style>
