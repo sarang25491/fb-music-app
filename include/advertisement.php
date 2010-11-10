@@ -41,8 +41,9 @@ $super_rewards = '<center><fb:iframe src="http://apps.kitnmedia.com/superrewards
 $ad_blade = '<fb:iframe src="http://adblade.com/facebook/monetize.php?affid=397&app_id=1048&pos=1" border="0" width="645" height="60" frameborder="0" hspace="0" vspace="0" marginwidth="0" marginheight="0" scrolling="no" />';
 // $tatto_media = '<fb:iframe src="http://banner.resulthost.org/adtag?source_id=5288&width=728&height=90&age=' . $years . '&gender=' . $user_info[0]['sex'] . '&ran=' . $timestamp . '" scrolling="no" frameborder="0" marginheight="0" marginwidth="0" width="728" height="90"></fb:iframe>';
 $custom = '<fb:iframe src="http://burst-dev.com/advertisement.html" border="0" width="645" height="60" frameborder="0" hspace="0" vspace="0" marginwidth="0" marginheight="0" scrolling="no">';
+$marimedia = '<fb:iframe src="http://ad.yieldmanager.com/st?ad_type=iframe&ad_size=728x90&section=1557280" width="728" height="90" scrolling="no" marginheight="0" marginwidth="0" frameborder="0" vspace="0" hspace="0" />';
 ?>
 
 <div style="border-bottom: 0px solid #cccccc; border-top: 0px solid #cccccc; background-color: #F7F7F7; width: 100%; margin-top: 0px;">
-<center><?php echo $cubics; ?></center>
+<center><?php echo $marimedia; ?></center>
 </div>
