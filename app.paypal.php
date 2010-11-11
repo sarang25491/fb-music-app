@@ -18,9 +18,9 @@
 */
 
 // Setup class
-if (!empty($_GET['action']) OR $_GET['action'] !== 'data') {
+if (!isset($_GET['tab'])) {
 	$pre = 'skip_fbapi';
-	include 'include/config.php';
+	include_once 'include/config.php';
 }
 
 require_once('include/class.paypal.php');  // include the class file
