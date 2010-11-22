@@ -45,5 +45,5 @@ $marimedia = '<fb:iframe src="http://ad.yieldmanager.com/st?ad_type=iframe&ad_si
 ?>
 
 <div style="border-bottom: 0px solid #cccccc; border-top: 0px solid #cccccc; background-color: #F7F7F7; width: 100%; margin-top: 0px;">
-<center><?php echo $marimedia; ?></center>
+<center><?php echo $cubics; ?></center>
 </div>
