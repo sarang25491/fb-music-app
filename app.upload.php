@@ -210,8 +210,6 @@ if($credit+$config['basicSlots'] <= $usage)
 		?>	
 		
 		<?php // if(!isset($_GET['fb_page_id'])) { include 'fb.feed.php'; } ?>
-		<?php include 'fb.profile.php'; ?>
-
 		
 		<?php 
 		if($_POST['wall'])

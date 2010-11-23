@@ -1,6 +1,8 @@
 <?php
 include 'database.php';
 
+ini_set('register_globals', 'Off');
+
 $config = array();
 
 ########## Facebook Developer API Information ##########
@@ -10,8 +12,8 @@ $config = array();
 ############################################################
 $config['fb']['key'] = 'cd92203d073c3556a00ca2167c661421';
 $config['fb']['secret'] = 'd0f1a9f7a0a85aa51badb50110e7bfd8';
-$config['fb']['appcallbackurl'] = 'http://music.burst-dev.com/';
-$config['fb']['fburl'] = 'http://apps.facebook.com/stevenlu/';
+$config['fb']['appcallbackurl'] = 'http://music.burst-dev.com/testing/';
+$config['fb']['fburl'] = 'http://apps.facebook.com/stevenlu/testing/';
 $config['fb']['about_url'] = 'http://www.facebook.com/apps/application.php?id=2436915755';
 
 ########## Server Information ##########
@@ -37,7 +39,7 @@ $config['basicSlots'] = 4;
 ########################################
 $config['db']['host'] = "localhost";
 $config['db']['username'] = 'music';
-$config['db']['password'] = 'aAy9XEcGJ58MKtGw';
+$config['db']['password'] = '4w3da3heVehu4ACRethaxu7eNeD3u9AGESpUpr27U9rEpufr6prE9RuhA8aVEM2F';
 $config['db']['table'] = 'music';	
 
 ########## DO NOT TOUCH ANYTHING BELOW HERE ##########

@@ -11,7 +11,6 @@
 <body>
 <div id="FB_HiddenContainer"  style="position:absolute; top:-10000px; width:0px; height:0px;" ></div>
 
-
 <?php
 // PAGE IS PULLED BY IFRAME BY "app.index.php"
 // THIS PAGE IS NOT ATTACHED TO THE APPLICATION
@@ -45,7 +44,7 @@ body {
 
 .buttonBlue
 {
-    font-size: 14px;
+    font-size: 13px;
     background-color: #d8dfea;
     color: #3b5998;
     font-weight: bold;
@@ -61,7 +60,7 @@ body {
 
 .buttonRed
 {
-    font-size: 14px;
+    font-size: 13px;
     background-color: #ffebe8;
     color: #dd3c10;
     font-weight: bold;
@@ -74,6 +73,7 @@ body {
     color: #ffffff;
     cursor: hand;
 }
+
 </style>
 
 <script type="text/javascript">
@@ -81,8 +81,11 @@ $(document).ready(function() {
 	$(function() {
 	
 		$("#playlist").sortable({ 
-			opacity: 0.6, 
-			cursor: 'move', 
+			opacity: 0.6,
+         axis: 'y', 
+
+
+         cursor: 'move', 
 			update: 
 				function() {
 					$("#menuBar").fadeOut(250);
@@ -105,7 +108,7 @@ function savePlaylist() {
 
 	$("#saveBar").fadeOut(250, function () {
 		var order = $("#playlist").sortable("serialize");
-		$.post("app.index-playlist-callback.php?id=<?php echo $id; ?>&updateList", order, 
+		$.post("app.index-playlist-callback.php?uid=<?php echo $id; ?>&updateList", order, 
 			function(response) {
 				$("#status").html(response);
 			}
@@ -118,21 +121,22 @@ function savePlaylist() {
 }
 
 function revertPlaylist() {
-	$("#playlist").slideUp(500);
+	$("#playlist").fadeOut(500);
 	$("#saveBar").fadeOut(250, function () {
-		$.post("app.index-playlist-list.php?<?php if (isset($_GET['fb_page_id'])) echo 'fb_page_id=' . $_GET['fb_page_id'] . ''; else echo 'fb_sig_user=' . $_GET['fb_sig_user'] . ''; ?>", 
+		$.post("inc.playlist.php?<?php if (isset($_GET['fb_page_id'])) echo 'fb_page_id=' . $_GET['fb_page_id'] . ''; else echo 'fb_sig_user=' . $_GET['fb_sig_user'] . ''; ?>", 
 			function(response) {
 				$("#playlist").html(response);
 			}
 		);
 	});
-	$("#playlist").slideDown(500);
+	$("#playlist").fadeIn(500);
 	$("#menuBar").delay(250).fadeIn(250);
 	
 }
 
 function openPlayer(xid) {
-	$("#editor").slideUp(500);
+   $("#player").slideUp(250);
+   $("#playerData").delay(250).slideUp(250);
 	$.post("player.php?caller=editor&id=" + xid,
 		function (response) {
 			$("#player").html(response);
@@ -145,17 +149,9 @@ function openPlayer(xid) {
 		}
 	);
 	
-	
 	$("#playerData").delay(500).slideDown(250);
 	$("#playerBar").delay(500).fadeIn(250);
 	$("#player").delay(1250).slideDown(500);
-}
-
-function showEditor() {
-	$("#player").slideUp(500);
-	$("#playerBar").fadeOut(250);
-	$("#playerData").delay(500).slideUp(500);
-	$("#editor").delay(1000).slideDown(500);
 }
 
 function showInfo(xid) {
@@ -167,45 +163,10 @@ function showInfo(xid) {
 	)
 	$("#status").delay(500).slideDown(250);
 }
-
-function showApiKey(xid) {
-	$("#status").slideUp(50);
-	$.post("app.index-playlist-callback.php?grabApiKey&id=" +xid,
-		function (response) {
-			$("#status").delay(500).html(response);
-		}
-	);
-	$("#status").delay(500).slideDown(250);
-}
-
-function updateGlobal() {
-	$("#status").slideUp(50);
-	$.post("app.index-playlist-callback.php?updateGlobal&id=<?php echo $id; ?>",
-		function (response) {
-			$("#status").delay(500).html(response);
-		}
-	);
-	$("#status").delay(500).slideDown(250);
-	$("#status").delay(1500).slideUp(250);
-}
-
-function grabPlayerUrl() {
-	$("#status").slideUp(50);
-	$.post("app.index-playlist-callback.php?grabPlayerUrl&id=<?php echo $id; ?>",
-		function (response) {
-			$("#status").delay(500).html(response);
-		}
-	);
-	$("#status").delay(500).slideDown(250);
-}
 </script>
 
 <div id="playerData" style="width: 490px; display:none; background-color: #f7f7f7; font-size: 14px; padding: 5px;"></div>
 <div id="player" style="width:500px; display: none;"></div>
-
-<div style="margin-top: 5px; width: 500px; display: none; font-size: 14px;" id="playerBar">
-	<div align="right"><a onclick="showEditor()" class="buttonBlue" style="margin-left: 10px; padding: 2px 5px 2px 5px;">Back to Playlist</a></div>
-</div>
 
 <div id="editor">
 	
@@ -213,7 +174,7 @@ function grabPlayerUrl() {
 	
 	<div id="playlist" style="width:500px;">
 			
-		<?php include 'app.index-playlist-list.php'; ?>
+		<?php include 'inc.playlist.php'; ?>
 			
 	</div><!-- end playlist -->
 	
@@ -221,13 +182,6 @@ function grabPlayerUrl() {
 	<div align="right"><a onclick="savePlaylist()" class="buttonBlue" style="margin-left: 10px; padding: 2px 5px 2px 5px;">Save</a><a onclick="revertPlaylist()" class="buttonRed" style="padding: 2px 5px 2px 5px;">Revert</a></div>
 	</div>
 	
-	<div style="margin-top: 5px; width: 500px; font-size: 14px;" id="menuBar">
-		<div align="right">
-		<a class="buttonBlue" style="margin-left: 10px; padding: 2px 5px 2px 5px;" onclick="grabPlayerUrl()">Grab Player URL</a>
-		<a class="buttonBlue" style="padding: 2px 5px 2px 5px;" onclick="updateGlobal()">Update Player Globally</a>
-		<a target="_parent" href="<?php echo $config['fb']['fburl']; ?>?tab=index&display=add<?php if(isset($_GET['fb_page_id'])) echo '&fb_page_id=' . $_GET['fb_page_id'] . ''; ?>" class="buttonBlue" style="padding: 2px 5px 2px 5px;">Add a Song</a>
-		</div>
-	</div>
 </div>
 
 <div style="padding: 10px;">

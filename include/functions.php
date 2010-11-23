@@ -24,7 +24,7 @@ function disk_percentage_used($i) {
 	return round(100-(($disk_free/$disk_total)*100), 1);
 }
 
-function error($header,$message) 
+function error($header,$message='') 
 {
 	echo '<div style="padding: 10px;">';
 	if(!is_null($message))
@@ -38,7 +38,7 @@ function error($header,$message)
 	echo '</div>';
 }
 
-function success($header,$message) 
+function success($header,$message='') 
 {
 	echo '<div style="padding: 10px;">';
 	if(!is_null($message))
@@ -52,7 +52,7 @@ function success($header,$message)
 	echo '</div>';
 }
 
-function explanation($header,$message) 
+function explanation($header,$message='') 
 {
 	echo '<div style="padding: 10px;">';
 	if(!is_null($message))
@@ -87,4 +87,19 @@ function addslashes_deep($value)
 
     return $value;
 }
+
+require_once ('class.google-translate.php');
+
+function translate($text)
+{
+   $to_lang = substr($_POST['fb_sig_locale'], 0, 2);
+   if ($to_lang == 'en')
+   {
+      return $text;
+   }
+   else
+   {   
+      return Google_Translate_API::translate($text, 'en', $to_lang);
+   }
+}   
 ?>

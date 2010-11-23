@@ -87,7 +87,7 @@ if(isset($_GET['search'])) {
 	echo '</div>';
 } elseif (isset($_GET['confirm'])) {
 	
-	list($title, $artist) = split(' - ', $_POST['title']);
+	list($artist,$title) = split(' - ', $_POST['title']);
 	
 	echo '<div style="padding-top: 15px;">
 	<fb:editor action="?tab=index&display=add&method=youtube&submit' . pages($_GET['fb_page_id']) . '" labelwidth="50">
@@ -119,8 +119,6 @@ if(isset($_GET['search'])) {
 	$id = $db->Raw("SELECT `id` FROM `userdb_uploads` WHERE `user`='$user' ORDER BY `id` DESC LIMIT 1");
 	$id = $id[0]['id'];
 	$db->Raw("UPDATE `userdb_uploads` SET `xid`=`id` WHERE `id`='$id'");
-
-	include 'fb.profile.php';
 
 	if($_POST['wall'])
 		if(isset($_GET['fb_page_id'])) { redirect('' . $config['fb']['fburl'] . '?tab=index&publish&fb_page_id=' . $_GET['fb_page_id'] . ''); } else { redirect('' . $config['fb']['fburl'] . '?tab=index&publish'); }

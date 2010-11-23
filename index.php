@@ -77,10 +77,10 @@ if(!isset($_GET['tab'])) {
 </div>
 
 <fb:tabs>
-	<fb:tab-item href='<?php echo $config['fb']['fburl']; ?>?tab=index<?php echo pages($_GET['fb_page_id']); ?>' title='My Music' <?php if($_GET['tab'] == 'index') { echo "selected='true'"; } ?> />
-	<fb:tab-item href='<?php echo $config['fb']['fburl']; ?>?tab=music_friends' title="Friend's Music" <?php if($_GET['tab'] == 'music_friends') { echo "selected='true'"; } ?> />
-	<fb:tab-item href='<?php echo $config['fb']['fburl']; ?>?tab=offers' title='Earn Slots' align='right' <?php if($_GET['tab'] == 'offers') { echo "selected='true'"; } ?> />
-	<fb:tab-item href='<?php echo $config['fb']['fburl']; ?>?tab=help' title='Get Help' align='right' <?php if($_GET['tab'] == 'help') { echo "selected='true'"; } ?> />
+	<fb:tab-item href='<?php echo $config['fb']['fburl']; ?>?tab=index<?php echo pages($_GET['fb_page_id']); ?>' title='<?php echo translate('My Music'); ?>' <?php if($_GET['tab'] == 'index') { echo "selected='true'"; } ?> />
+	<fb:tab-item href='<?php echo $config['fb']['fburl']; ?>?tab=music_friends' title="<?php echo translate('Friend\'s Music'); ?>" <?php if($_GET['tab'] == 'music_friends') { echo "selected='true'"; } ?> />
+	<fb:tab-item href='<?php echo $config['fb']['fburl']; ?>?tab=offers' title='<?php echo translate('Earn Slots'); ?>' align='right' <?php if($_GET['tab'] == 'offers') { echo "selected='true'"; } ?> />
+	<fb:tab-item href='<?php echo $config['fb']['fburl']; ?>?tab=help' title='<?php echo translate('Get Help'); ?>' align='right' <?php if($_GET['tab'] == 'help') { echo "selected='true'"; } ?> />
 </fb:tabs>
 
 <?php
@@ -97,6 +97,9 @@ switch($_GET['tab']) {
 	case "help":
 		include "app.help.php";
 		break;
+   case "donate":
+      include "app.paypal.php";
+      break;
 }
 ?>
 

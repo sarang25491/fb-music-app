@@ -1,5 +1,18 @@
 <?php $pre = 'skip_fbapi'; include 'include/config.php'; ?>
 
+<link rel="stylesheet" type="text/css" href="javascript/colortip-1.0-jquery.css"/>
+<script type="text/javascript" src="javascript/colortip-1.0-jquery.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+
+   /* Adding a colortip to any tag with a title attribute: */
+
+   $('[title]').colorTip({color:'yellow'});
+
+});
+</script>
+
 <?php
 if (isset($userId)) //called from the external playlist (playlist.php)
 	$id = $userId;
@@ -35,12 +48,16 @@ A:hover {text-decoration: underline; color: red;}
 				<tr>
 					
 					<td width="80%" valign="center">
-						<div style="font-size:9pt;"><a style="padding-left: 2px; padding-right: 6px; vertical-align: middle;" href="#player" onclick="openPlayer(<?php echo $song['xid']; ?>)" ><img src="<?php echo $config['fb']['appcallbackurl']; ?>images/track.gif" align="top" border="0"></a><a href="#player" onclick="openPlayer(<?php echo $song['xid']; ?>)" ><?php echo htmlspecialchars_decode(utf8_decode($song['title']), ENT_QUOTES); ?> by <?php echo htmlspecialchars_decode(utf8_decode($song['artist']), ENT_QUOTES); ?></a></div>
+						<div style="font-size:9pt;"><a class="blue" title="Play" style="padding-left: 2px; padding-right: 6px; vertical-align: middle;" href="#player" onclick="openPlayer(<?php echo $song['xid']; ?>)" ><img src="<?php echo $config['fb']['appcallbackurl']; ?>images/track.gif" align="top" style="margin-right: 5px;" border="0"><?php echo htmlspecialchars_decode(utf8_decode($song['title']), ENT_QUOTES); ?> by <?php echo htmlspecialchars_decode(utf8_decode($song['artist']), ENT_QUOTES); ?></a></div>
 					</td>
 					
 					<?php if (!isset($userId)) { ?> 
 					<td width="20%">
-						<div align="right"><img src="images/key.png" border="0" onclick="showApiKey(<?php echo $song['xid']; ?>)" style="padding-right:2px;"><img src="images/info.png" border="0" onclick="showInfo(<?php echo $song['xid']; ?>)" style="padding-right:2px;"><img src="images/tag_blue_edit.png" border="0" onclick="editTag(<?php echo $song['xid']; ?>)" style="padding-right:2px;"><img src="images/delete.png" border="0" onclick="removeSong(<?php echo $song['xid']; ?>)"></div>
+						<div align="right">
+                     <a class="blue" title="Song Info" onclick="showInfo(<?php echo $song['xid']; ?>)"><img src="images/info.png" border="0" style="padding-right:2px;"></a>
+                     <a class="blue" title="Edit Tags" onclick="editTag(<?php echo $song['xid']; ?>)"><img src="images/tag_blue_edit.png" border="0" style="padding-right:2px;"></a>
+                     <a class="red" title="Delete" onclick="removeSong(<?php echo $song['xid']; ?>)"><img src="images/delete.png" border="0"></a>
+                  </div>
 					</td>
 					<?php } ?>
 					

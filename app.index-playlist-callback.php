@@ -3,8 +3,8 @@
 
 <?php
 if (isset($_GET['updateList'])) {
-	$origPlaylist = $db->Raw("SELECT `xid` FROM `userdb_uploads` WHERE `user`='$_GET[id]'");
-	
+	$origPlaylist = $db->Raw("SELECT `xid` FROM `userdb_uploads` WHERE `user`='$_GET[uid]'");
+   
 	if (count($_POST['playlist']) == 0)
 		$newList = array();
 	else
@@ -13,7 +13,7 @@ if (isset($_GET['updateList'])) {
 	foreach ($origPlaylist as $origSong) {
 		if (!in_array($origSong['xid'], $newList)) {
 			$id = $origSong['xid'];
-			$deleteData = $db->Raw("SELECT `type`,`link`,`server`,`drive` FROM `userdb_uploads` WHERE `id`='$id' LIMIT 1");
+         $deleteData = $db->Raw("SELECT `type`,`link`,`server`,`drive` FROM `userdb_uploads` WHERE `id`='$id' LIMIT 1");
 			if ($deleteData[0]['type'] == 'upload') { 
 				$server = $deleteData[0]['server'];
 				$serverData = $db->Raw("SELECT `internal_uri` FROM `servers` WHERE `name`='$server'");
@@ -34,15 +34,7 @@ if (isset($_GET['updateList'])) {
 		}
 	}
 	
-	$user = $_GET['id'];
-	include 'fb.profile.php';
-	echo "<b>Playlist saved! -- Updated to Profile!<b>";
-}
-
-if (isset($_GET['updateGlobal'])) {
-	$user = $_GET['id'];
-	include 'fb.profile.php';
-	echo "<b>Updated to Profile!</b>";
+	echo "<b>Playlist successfully saved!<b>";
 }
 
 if (isset($_GET['grabSongData'])) {
