@@ -6,7 +6,7 @@ $date_end = date("Y-m-01", $date_end);
 
 $donations_month = $db->Raw("SELECT *,SUM(`amount`) FROM `userdb_transactions` WHERE date(`time`) > '$date_begin' AND date(`time`) < '$date_end' AND `user` > 0");
 
-$goal = 800;
+$goal = 400;
 
 $percentage = round(($donations_month[0]['SUM(`amount`)']/$goal)*100);
 //$percentage = 100;
