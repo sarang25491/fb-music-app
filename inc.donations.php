@@ -39,6 +39,6 @@ $percentage = round(($donations_month[0]['SUM(`amount`)']/$goal)*100);
 
 <div style="">
    <div style="float: right; padding: 2px 5px 2px 5px; text-align: center; font-weight: bold; border-left: 1px solid #d4dae8; border-bottom: 1px solid #d4dae8; background-color: #eceff6;">
-      <?php echo translate('Keep this app alive while getting <u>slots & benefits</u> (25% off)'); ?>; <a href="<?php echo $config['fb']['fburl']; ?>app.paypal.php"><?php echo translate('please consider <u>donating</u>'); ?></a>!
+      Keep this app alive while getting <u>slots & benefits</u> (25% off); <a href="<?php echo $config['fb']['fburl']; ?>app.paypal.php">please consider <u>donating</u></a>!
    </div>
 </div>

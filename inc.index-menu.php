@@ -62,9 +62,9 @@ a.button{
    display: block;
    font-weight:bold;
    padding: 1px 1px;
-   margin-bottom:5px;
+   margin: 0 1px 5px 1px;
    text-decoration:none;
-   width:88px;
+   width:83px;
    border: 1px solid #d4dae8;
 }
 
@@ -88,12 +88,30 @@ function hide(obj)
 
 <?php $pages = json_decode($_POST['fb_sig_page_id']); ?>
 
+<table border="0" cellspacing="0" cellpadding="0">
+<tr>
+<td>
+
 <a class="button" clicktoshowdialog="add_music">
 <table border="0"><tr>
    <td valign="middle"><img valign="middle" src="<?php echo $config['fb']['appcallbackurl']; ?>images/add.png"></td>
    <td valign="middle">Add Song</td>
 </tr></table>
 </a>
+
+</td>
+<td>
+
+<a class="button">
+<table border="0"><tr>
+   <td valign="middle"><img valign="middle" src="<?php echo $config['fb']['appcallbackurl']; ?>images/layout_add.png"></td>
+   <td valign="middle">Share</td>
+</tr></table>
+</a>
+
+</td>
+</tr>
+</table>
 
 <div class="main_nav">
    <ul>

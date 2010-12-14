@@ -38,7 +38,7 @@
 </div>
 <div style="height: 16px; margin: -10px 20px 10px 0;">
   <div style="float: right; padding: 3px 5px 3px 5px; border-left: 1px solid #d4dae8; border-bottom: 1px solid #d4dae8; border-right: 1px solid #d4dae8; background-color: #eceff6;">
-      <?php echo translate('Message posted'); ?> <fb:time t="<?php echo $announcements[0]['time']; ?>" /> - <a clicktoshowdialog="ann"><?php echo translate('View More Recent Anouncements'); ?></a> 
+      Message posted <fb:time t="<?php echo $announcements[0]['time']; ?>" /> - <a clicktoshowdialog="ann">View More Recent Anouncements</a> 
   </div>
 </div> 
 

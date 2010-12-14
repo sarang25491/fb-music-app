@@ -84,13 +84,8 @@ Below the editor is a button where a user can add a song.
                <tr>
                   <td width="16px" style="border: 1px solid #cccccc; padding: 2px; background-color: #f7f7f7;"></td><td style="padding-left: 5px;">Drag & Drop to <br />Order Playlist</td>
                </tr>
-               
                <tr>
                   <td style="border: 1px solid #cccccc; padding: 2px;"><img src="<?php echo $config['fb']['appcallbackurl']; ?>images/track.gif" align="top" border="0"></td><td style="padding-left: 5px;">Play Song</td>
-               </tr>
-               
-               <tr>
-                  <td style="border: 1px solid #cccccc; padding: 2px;"><img src="<?php echo $config['fb']['appcallbackurl']; ?>images/key.png" align="top" border="0"></td><td style="padding-left: 5px;">Grab API Key</td>
                </tr>
                <tr>  
                   <td style="border: 1px solid #cccccc; padding: 2px;"><img src="<?php echo $config['fb']['appcallbackurl']; ?>images/tag_blue_edit.png" align="top" border="0"></td><td style="padding-left: 5px;">Edit Info</td>

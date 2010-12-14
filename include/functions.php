@@ -87,19 +87,4 @@ function addslashes_deep($value)
 
     return $value;
 }
-
-require_once ('class.google-translate.php');
-
-function translate($text)
-{
-   $to_lang = substr($_POST['fb_sig_locale'], 0, 2);
-   if ($to_lang == 'en')
-   {
-      return $text;
-   }
-   else
-   {   
-      return Google_Translate_API::translate($text, 'en', $to_lang);
-   }
-}   
 ?>
