@@ -48,15 +48,15 @@ A:hover {text-decoration: underline; color: red;}
 				<tr>
 					
 					<td width="80%" valign="center">
-						<div style="font-size:9pt;"><a class="blue" title="Play" href="#player" onclick="openPlayer(<?php echo $song['xid']; ?>)" ><img src="<?php echo $config['fb']['appcallbackurl']; ?>images/track.gif" align="top" style="margin: -3px 8px 0 4px; vertical-align: middle" border="0"><?php echo htmlspecialchars_decode(utf8_decode($song['title']), ENT_QUOTES); ?> by <?php echo htmlspecialchars_decode(utf8_decode($song['artist']), ENT_QUOTES); ?></a></div>
+						<div style="font-size:9pt; margin: 1px 0 0 0;"><a class="blue" title="Play" href="#player" onclick="openPlayer(<?php echo $song['xid']; ?>)" ><img src="<?php echo $config['fb']['appcallbackurl']; ?>images/track.gif" style="margin: -3px 8px 0 4px" valign="middle" border="0"><?php echo htmlspecialchars_decode(utf8_decode($song['title']), ENT_QUOTES); ?> by <?php echo htmlspecialchars_decode(utf8_decode($song['artist']), ENT_QUOTES); ?></a></div>
 					</td>
 					
 					<?php if (!isset($userId)) { ?> 
 					<td width="20%">
-						<div align="right">
-                     <a class="blue" title="Song Info" onclick="showInfo(<?php echo $song['xid']; ?>)"><img src="images/info.png" border="0" style="padding-right:2px;"></a>
-                     <a class="blue" title="Edit Tags" onclick="editTag(<?php echo $song['xid']; ?>)"><img src="images/tag_blue_edit.png" border="0" style="padding-right:2px;"></a>
-                     <a class="red" title="Delete" onclick="removeSong(<?php echo $song['xid']; ?>)"><img src="images/delete.png" border="0"></a>
+						<div align="right" style="margin: 1px;">
+                     <a class="blue" valign="middle" title="Song Info" onclick="showInfo(<?php echo $song['xid']; ?>)"><img src="images/info.png" border="0" style="padding-right:2px;"></a>
+                     <a class="blue" valign="middle" title="Edit Tags" onclick="editTag(<?php echo $song['xid']; ?>)"><img src="images/tag_blue_edit.png" border="0" style="padding-right:2px;"></a>
+                     <a class="red" valign="middle" title="Delete" onclick="removeSong(<?php echo $song['xid']; ?>)"><img src="images/delete.png" border="0"></a>
                   </div>
 					</td>
 					<?php } ?>

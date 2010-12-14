@@ -95,7 +95,7 @@ function hide(obj)
 <a class="button" clicktoshowdialog="add_music">
 <table border="0"><tr>
    <td valign="middle"><img valign="middle" src="<?php echo $config['fb']['appcallbackurl']; ?>images/add.png"></td>
-   <td valign="middle">Add Song</td>
+   <td valign="middle">Add</td>
 </tr></table>
 </a>
 

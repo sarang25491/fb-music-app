@@ -14,7 +14,7 @@ if(isset($_GET['fb_page_id']) AND $_POST['fb_sig_is_admin'] == '1')
 ?>
 
 <?php $is_pro = $db->Raw("SELECT `pro` FROM `userdb_users` WHERE `user`='$_POST[fb_sig_user]'"); $is_pro = $is_pro[0]['pro']; ?>
-<?php if($is_pro == 0) include 'include/advertisement.php'; ?>
+<?php include 'include/advertisement.php'; ?>
 
 <div style="border: 1px solid #cccccc;">
 	
@@ -105,7 +105,7 @@ switch($_GET['tab']) {
 
 </div>
 
-<?php if($is_pro == 0) include 'include/advertisement.php'; ?>
+<?php include 'include/advertisement.php'; ?>
 
 <div style="margin-top: 10px; border-top: 1px solid #d8dfea; padding: 3px 16px; height: 14px; color: #3b5998;">
 	<div style="float: left;"><a href="http://www.facebook.com/apps/application.php?id=2436915755" target="_blank">Music</a> v2.3.1 [<a href="?intro">Intro</a> - <a href="<?php echo $config['fb']['appcallbackurl']; ?>tos.php">AUP/PP</a>]</div>

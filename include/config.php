@@ -31,7 +31,7 @@ $config['server']['uri_prefix'] = "/stream/";
 ############################################################
 $config['pp']['pay_to'] = 'accounting@burst-dev.com';
 
-$config['basicSlots'] = 4;
+$config['basicSlots'] = 2;
 	
 ########## Database Information ##########
 # The MySQL database information needed
