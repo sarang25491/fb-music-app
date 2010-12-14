@@ -63,6 +63,17 @@ $userId = $_GET['id'];
 ?>
 
 <div style="padding-top: 25px; padding-left: 25px;">
+   <!--- Cubics Ad Code START -->
+   <script type="text/javascript">
+   var pid = 14311;
+   var appId = 43221;
+   var plid = 15965;
+   var adSize = "468x60";
+   var channel = "";
+   </script>
+   <script language="javascript" type="text/javascript" src="http://social.bidsystem.com/displayAd.js"></script>
+   <!--- Cubics Ad Code END -->
+
 	<div id="playerData" style="width: 490px; display:none; background-color: #f7f7f7; font-size: 14px; padding: 5px;"></div>
 	<div id="player" style="width:500px; display: none;"></div>
 
