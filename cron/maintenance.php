@@ -93,26 +93,8 @@ if($argv[1] == 'fb') {
 	echo "done!\n";
 
 } else if ($argv[1] == 'accounts') {
-	$ex_day = date('Y-m-d', strtotime('-90 days'));
-	$ex_acc = $db->Raw("SELECT `user` FROM `userdb_users` WHERE date(`time`) < '$ex_day' AND `pro`='0' AND `credit`='0' AND `override`='0'");
-	
-	foreach ($ex_acc as $curr_user) {
-		echo $curr_user[user];
-		$if_page = $db->Raw("SELECT `owner` FROM `pages` WHERE `fb_page_id`='$curr_user[user]'");
-		if (count($if_page) == 1) {
-			$if_owner = $db->Raw("SELECT COUNT(*) FROM `userdb_users` WHERE `user`='$if_page[0][owner]' AND `pro`='0' AND `credit`='0' AND `override`='0'");
-		}
-		
-		if (count($if_page) == 0 OR $if_owner[0]['COUNT'] == 0) {
-			echo " - removing";
-			$del_queue = $db->Raw("SELECT `link` FROM `userdb_uploads` WHERE `user`='$curr_user[user]'");
-			foreach ($del_queue as $del_curr) {
-				$f = explode("/",$del_curr['link']); // array 5 selects current drive
-				unlink('' . $config['server']['internal_url'] . 'users/' . $f[5] . '/' . basename($del_curr['link']). '');
-			}
-		}
-		
-		echo "\n";	
-	}
+	$ex_day = date('Y-m-d', strtotime('-60 days'));
+	$ex_acc = $db->Raw("DELETE FROM `userdb_users` WHERE `user` IN (SELECT `user` FROM `userdb_users` WHERE `time` <= '$ex_day') AND `type`='upload' AND `time` <= '$ex_day'");
+	// THIS JUST DELETES DB ENTRIES, YOU NEED TO RUN MAINTENANCE TO COMPLETE THE CLEANUP OF DEAD ACCOUNTS
 }
 ?>
