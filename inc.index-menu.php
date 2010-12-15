@@ -61,15 +61,16 @@ a.button{
    background-color:#eceff6;
    display: block;
    font-weight:bold;
-   padding: 1px 1px;
    margin: 0 1px 5px 1px;
    text-decoration:none;
-   width:83px;
+   width:85px;
    border: 1px solid #d4dae8;
 }
 
 a:hover.button{
-   color:#0066CC;
+   color: #FFF;
+   border: 1px solid #3b5998;
+   background-color: #3b5998;
 }
 </style>
 
@@ -93,9 +94,9 @@ function hide(obj)
 <td>
 
 <a class="button" clicktoshowdialog="add_music">
-<table border="0"><tr>
-   <td valign="middle"><img valign="middle" src="<?php echo $config['fb']['appcallbackurl']; ?>images/add.png"></td>
-   <td valign="middle">Add</td>
+<table border="0" cellspacing="0" cellpadding="0" height="20px"><tr>
+   <td valign="middle" width="25px" style="background-color: #d4dae8; text-align: center;"><img valign="middle" src="<?php echo $config['fb']['appcallbackurl']; ?>images/add.png"></td>
+   <td valign="middle" style="padding-left: 5px;">Add</td>
 </tr></table>
 </a>
 
@@ -103,9 +104,9 @@ function hide(obj)
 <td>
 
 <a class="button">
-<table border="0"><tr>
-   <td valign="middle"><img valign="middle" src="<?php echo $config['fb']['appcallbackurl']; ?>images/layout_add.png"></td>
-   <td valign="middle">Share</td>
+<table border="0" cellspacing="0" cellpadding="0" height="20px"><tr>
+   <td valign="middle" width="25px" style="background-color: #d4dae8; text-align: center;"><img valign="middle" src="<?php echo $config['fb']['appcallbackurl']; ?>images/layout_add.png"></td>
+   <td valign="middle" style="padding-left: 5px;">Share</td>
 </tr></table>
 </a>
 
