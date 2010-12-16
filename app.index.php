@@ -56,9 +56,8 @@ Below the editor is a button where a user can add a song.
                   </td>
                </tr>
                <tr>
-                  <td valign="top">
-                     
-                     <center><fb:iframe src='<?php echo $config['fb']['appcallbackurl']; ?>app.index-playlist.php?<?php echo pages($_GET['fb_page_id']); ?>' width="515" height="500" frameborder="0" scrolling="no" name="editor" resizeable="true" /></center>
+                  <td valign="top" style="padding-left: 10px;">
+                     <fb:iframe src='<?php echo $config['fb']['appcallbackurl']; ?>app.index-playlist.php?<?php echo pages($_GET['fb_page_id']); ?>' width="510" height="500" frameborder="0" scrolling="no" name="editor" resizeable="true" />
                      <br />
                   <td>  
                </tr>

@@ -184,7 +184,7 @@ function showInfo(xid) {
 	
 </div>
 
-<div style="padding: 10px;">
+<div style="padding: 10px; height: 10px;">
 </div>
 
 </body>	
