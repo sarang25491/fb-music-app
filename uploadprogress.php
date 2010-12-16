@@ -9,6 +9,15 @@ http://redmine.lighttpd.net/wiki/1/Docs:ModUploadProgress
 */
 ?>
 
+<?php include_once 'include/config.php'; ?>
+
+<?php if (isset($_GET['getIframe']))
+{
+   echo '<fb:iframe src="' .  $config['fb']['appcallbackurl'] . 'uploadprogress.php?id=' . $md5-id . '" width="250" height="45" frameborder="0" scrolling="no"></fb:iframe>';
+   die();
+}
+?>
+
 <?php if(!isset($_GET['update'])) { ?>
 <script type="text/javascript" src="javascript/prototype.js"></script>
 <script type="text/javascript" src="javascript/scriptaculous.js"></script>
@@ -19,31 +28,28 @@ http://redmine.lighttpd.net/wiki/1/Docs:ModUploadProgress
 <?php
 $md5 = $_GET['id']; // Part of the music app.
 
-if (file_exists('http://127.0.0.1/progress?X-Progress-ID=' . $md5 . ''))
+$jsonArray = file_get_contents('http://127.0.0.1/progress?X-Progress-ID=' . $md5 . '');
+$jsonArray = str_replace(array("new","Object","(",")"), '', $jsonArray);
+$jsonArray = str_replace("'",'"', $jsonArray);
+
+$lighttpd = json_decode($jsonArray);
+
+// There is state, status, size, received. Unfortunately, its very limited.
+$state = $lighttpd->{'state'}; // can be starting, error, done, uploading
+$status = $lighttpd->{'status'}; // http error status
+$size = $lighttpd->{'size'}; // size of the file
+$received = $lighttpd->{'received'}; // how much we got of the file.
+
+if($state == 'uploading')
 {
-   $jsonArray = file_get_contents('http://127.0.0.1/progress?X-Progress-ID=' . $md5 . '');
-   $jsonArray = str_replace(array("new","Object","(",")"), '', $jsonArray);
-   $jsonArray = str_replace("'",'"', $jsonArray);
+   if($size == 0) die(); // nothing to track 
 
-   $lighttpd = json_decode($jsonArray);
+   // our own little calculations
+   $percent = round(($received/$size)*100, 2);
+   $sizeM = round($size/1000000, 2);
+   $receivedM = round($receivedM/1000000, 2);
 
-   // There is state, status, size, received. Unfortunately, its very limited.
-   $state = $lighttpd->{'state'}; // can be starting, error, done, uploading
-   $status = $lighttpd->{'status'}; // http error status
-   $size = $lighttpd->{'size'}; // size of the file
-   $received = $lighttpd->{'received'}; // how much we got of the file.
-
-   if($state == 'uploading')
-   {
-	   if($size == 0) die(); // nothing to track 
-	
-	// our own little calculations
-	   $percent = round(($received/$size)*100, 2);
-	   $sizeM = round($size/1000000, 2);
-	   $receivedM = round($receivedM/1000000, 2);
-	
-	echo 'Sent <b>' . $percent . '%</b> of <b>' . $sizeM . 'MB</b>...';
-   }
+   echo 'Sent <b>' . $percent . '%</b> of <b>' . $sizeM . 'MB</b>...';
 }
 ?>
 

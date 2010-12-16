@@ -56,7 +56,7 @@ if($credit+$config['basicSlots'] <= $usage)
 	} catch (Exception $e) { }
 	$db->Raw("DELETE FROM `userdb_temporary` WHERE `user`='$user' LIMIT 1"); // limit for good coding practice
 	?>
-	<?php if(isset($_GET['fb_page_id'])) { redirect('' . $config['fb']['fburl'] . '?tab=index&fb_page_id=' . $_GET['fb_page_id'] . ''); } else { redirect('' . $config['fb']['fburl'] . '?tab=index&display=add'); } ?>
+	<?php if(isset($_GET['fb_page_id'])) { redirect('' . $config['fb']['fburl'] . '?tab=index&fb_page_id=' . $_GET['fb_page_id'] . ''); } else { redirect('' . $config['fb']['fburl'] . '?tab=index'); } ?>
 <?php } elseif($_GET['step'] == 2) { ?>
 	<?php
 	if ($_FILES['upfile']['name'] == NULL) {

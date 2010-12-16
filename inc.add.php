@@ -92,21 +92,6 @@ else
                         </td>
                      </tr>
                   </table>
-                        
-                  <?php 
-                  if ($_GET['error'] == 'file_format')
-                  {
-                     error('Not an Acceptable File','You did not give us a file that we accept, you must upload a MP3, M4A, MP4, or AAC audio file.');
-                  }
-                  elseif ($_GET['error'] == 'no_file')
-                  {
-                     error('Nothing Uploaded','We cannot continue unless you give us an audio file.');
-                  }
-                  elseif ($_GET['error'] == 'file_size')
-                  {
-                     error('File Too Large','The file uploaded exceeds the maximum limit');
-                  }
-                  ?>
                   
                </td>
             </tr>
@@ -144,15 +129,15 @@ else
                                  <tr>
                                     <th></th>
                                     <td class="editorkit_buttonset">
-                                       <input name='upload' type='submit' id='upload' class="editorkit_button action" value='Upload' clickthrough="true" />
+                                       <input name='upload' type='submit' id='upload' class="editorkit_button action" value='Upload' clickrewriteurl="<?php echo $config['fb']['appcallbackurl']; ?>uploadprogress.php?getIframe&md5-id=<?php echo md5($user); ?>" clickrewriteid="upload_progress" />
                                     </td>
                                     <td class="right_padding">
                                        
                                     </td>
                                  </tr>
                               </table>
-                              <div style="margin-left: 200px; margin-top: -40px;">
-                              <fb:iframe src="<?php echo $config['fb']['appcallbackurl']; ?>uploadprogress.php?id=<?php echo md5($user); ?>" width="250" height="45" frameborder="0" scrolling="no"></fb:iframe></div>
+                              <div id="upload_progress" style="margin-left: 200px; margin-top: -40px; height: 40px;">
+                              </div>
                            </form>
                      <?php } ?>
                      

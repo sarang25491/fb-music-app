@@ -20,13 +20,12 @@ Below the editor is a button where a user can add a song.
    <table border="0" width="100%" cellspacing="5px">
       <tr>
          <td valign="top">
+            <?php include_once 'inc.index-errors.php'; ?>
             <div style="height: 16px;">
                <div style="float: left; text-align: center; background-color: #eceff6; margin: 0 0 0px 0; padding: 3px 5px 3px 5px; font-weight: bold; border-left: 1px solid #d4dae8; border-right: 1px solid #d4dae8; border-top: 1px solid #d4dae8;">
                Playlist
                </div>
             </div>            
-
-            <?php include 'inc.index-errors.php'; ?>
 
             <div style="border: 1px solid #cccccc; padding: 10px; margin-top: 4px; margin-bottom: 5px;">
             <table border="0" width="100%">
