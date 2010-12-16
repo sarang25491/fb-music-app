@@ -71,7 +71,7 @@ else
          <table border="0" width="100%">
             <tr>
                <td>
-                  <?php error('Upload Shutdown on 12/18/2010','In the next few days, we will be shutting down the upload and slot system for the application temporarily until we figure out a new plan for the application. All your current slots will not removed, but a new slot model will be released to help drive more funding for the application. Thanks for your support!'); ?>
+                  <?php error('Info on Uploads','We will be keeping the current "slot" system intact for now. However, new rules will be implemented into each slot including expiration dates and bandwidth restrictions. Sorry for all this, but it is getting necessary for us to implement it so that we can push for our new "pro" features.'); ?>
                   <table border="0" cellpadding="0" cellspacing="1">
                      <tr>
                         <td>

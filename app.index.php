@@ -26,35 +26,10 @@ Below the editor is a button where a user can add a song.
                </div>
             </div>            
 
+            <?php include 'inc.index-errors.php'; ?>
+
             <div style="border: 1px solid #cccccc; padding: 10px; margin-top: 4px; margin-bottom: 5px;">
             <table border="0" width="100%">
-               <tr>
-                  <td valign="top">
-                     <div>
-                        <?php 
-                        if (isset($_GET['hide_box'])) {
-                           if (isset($_GET['fb_page_id']))
-                              $db->Raw("UPDATE `pages` SET `comment_box`='0' WHERE `fb_page_id`='$_GET[fb_page_id]'");
-                           else
-                              $db->Raw("UPDATE `userdb_users` SET `comment_box`='0' WHERE `user`='$user'");
-                        } elseif (isset($_GET['show_box'])) {
-                           if (isset($_GET['fb_page_id']))
-                              $db->Raw("UPDATE `pages` SET `comment_box`='1' WHERE `fb_page_id`='$_GET[fb_page_id]'");
-                           else
-                              $db->Raw("UPDATE `userdb_users` SET `comment_box`='1' WHERE `user`='$user'");
-                        }
-                        ?>
-                        
-                        <?php 
-                        if (isset($_GET['fb_page_id']))
-                           $commentBoxStatus = $db->Raw("SELECT `comment_box` FROM `pages` WHERE `fb_page_id`='$_GET[fb_page_id]'");
-                        else
-                           $commentBoxStatus = $db->Raw("SELECT `comment_box` FROM `userdb_users` WHERE `user`='$user'");
-                        ?>
-
-                     </div>
-                  </td>
-               </tr>
                <tr>
                   <td valign="top" style="padding-left: 10px;">
                      <fb:iframe src='<?php echo $config['fb']['appcallbackurl']; ?>app.index-playlist.php?<?php echo pages($_GET['fb_page_id']); ?>' width="510" height="500" frameborder="0" scrolling="no" name="editor" resizeable="true" />

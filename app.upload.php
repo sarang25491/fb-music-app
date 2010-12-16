@@ -56,19 +56,32 @@ if($credit+$config['basicSlots'] <= $usage)
 	} catch (Exception $e) { }
 	$db->Raw("DELETE FROM `userdb_temporary` WHERE `user`='$user' LIMIT 1"); // limit for good coding practice
 	?>
-	<?php if(isset($_GET['fb_page_id'])) { redirect('' . $config['fb']['fburl'] . '?tab=index&display=add&fb_page_id=' . $_GET['fb_page_id'] . ''); } else { redirect('' . $config['fb']['fburl'] . '?tab=index&display=add'); } ?>
+	<?php if(isset($_GET['fb_page_id'])) { redirect('' . $config['fb']['fburl'] . '?tab=index&fb_page_id=' . $_GET['fb_page_id'] . ''); } else { redirect('' . $config['fb']['fburl'] . '?tab=index&display=add'); } ?>
 <?php } elseif($_GET['step'] == 2) { ?>
 	<?php
 	if ($_FILES['upfile']['name'] == NULL) {
 		// just a nasty looking forward to page, differentiating between profiles and pages.
-		if(isset($_GET['fb_page_id'])) {  $facebook->redirect("" . $config['fb']['fburl'] . "?tab=index&display=add&error=no_file&fb_page_id=" . $_GET['fb_page_id'] . ""); } else { $facebook->redirect("" . $config['fb']['fburl'] . "?tab=index&display=add&error=no_file"); }
+      $error_msgs = array(
+                     'no_file' => 'You didn\'t provide us a file for us to process.',
+                     'file_format' => 'You gave us a file we could not understand, please check your file format and try again.',
+                     'file_size' => 'The file you gave us was too big, please give us a smaller file.'
+      );		
+
+      if(isset($_GET['fb_page_id'])) 
+      {  
+         $facebook->redirect("" . $config['fb']['fburl'] . "?tab=index&error=" . urlencode($error_msgs['no_file']) . "&fb_page_id=" . $_GET['fb_page_id'] . ""); 
+      } 
+      else 
+      { 
+         $facebook->redirect("" . $config['fb']['fburl'] . "?tab=index&error=" . urlencode($error_msgs['no_file']) . ""); 
+      }
 		
 	} elseif(!in_array(strtolower(substr($_FILES['upfile']['name'], strrpos($_FILES['upfile']['name'], '.') + 1)), array('mp3','m4a','mp4','aac','flv'))) {
 	
-		if(isset($_GET['fb_page_id'])) {  $facebook->redirect("" . $config['fb']['fburl'] . "?tab=index&display=add&error=file_format&fb_page_id=" . $_GET['fb_page_id'] . ""); } else { $facebook->redirect("" . $config['fb']['fburl'] . "?tab=index&display=add&error=file_format"); }
+		if(isset($_GET['fb_page_id'])) {  $facebook->redirect("" . $config['fb']['fburl'] . "?tab=index&error=" . urlencode($error_msgs['no_file']) . "&fb_page_id=" . $_GET['fb_page_id'] . ""); } else { $facebook->redirect("" . $config['fb']['fburl'] . "?tab=index&error=" . urlencode($error_msgs['no_file') . ""); }
 		
 	} elseif ($_FILES['upfile']['size'] >= 20971520 || !file_exists($_FILES['upfile']['tmp_name'])) { 
-		if(isset($_GET['fb_page_id'])) {  $facebook->redirect("" . $config['fb']['fburl'] . "?tab=index&display=add&error=file_size&fb_page_id=" . $_GET['fb_page_id'] . ""); } else { $facebook->redirect("" . $config['fb']['fburl'] . "?tab=index&display=add&error=file_size"); }
+		if(isset($_GET['fb_page_id'])) {  $facebook->redirect("" . $config['fb']['fburl'] . "?tab=index&error=" . urlencode($error_msgs['file_size']) . "&fb_page_id=" . $_GET['fb_page_id'] . ""); } else { $facebook->redirect("" . $config['fb']['fburl'] . "?tab=index&error=" . urlencode($error_msgs['file_size'] . ""); }
 	?>
 	<?php } else { ?>
 		<?php
