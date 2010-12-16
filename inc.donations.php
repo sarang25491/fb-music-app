@@ -4,7 +4,7 @@ $date_begin = date("Y-m-01");
 $date_end = strtotime("+1 month");
 $date_end = date("Y-m-01", $date_end);
 
-$donations_month = $db->Raw("SELECT *,SUM(`amount`) FROM `userdb_transactions` WHERE date(`time`) > '$date_begin' AND date(`time`) < '$date_end' AND `user` > 0");
+$donations_month = $db->Raw("SELECT SUM(`amount`) FROM `userdb_transactions` WHERE date(`time`) > '$date_begin' AND date(`time`) < '$date_end' AND `user` > 0");
 
 $goal = 400;
 
