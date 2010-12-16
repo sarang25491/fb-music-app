@@ -78,10 +78,10 @@ if($credit+$config['basicSlots'] <= $usage)
 		
 	} elseif(!in_array(strtolower(substr($_FILES['upfile']['name'], strrpos($_FILES['upfile']['name'], '.') + 1)), array('mp3','m4a','mp4','aac','flv'))) {
 	
-		if(isset($_GET['fb_page_id'])) {  $facebook->redirect("" . $config['fb']['fburl'] . "?tab=index&error=" . urlencode($error_msgs['no_file']) . "&fb_page_id=" . $_GET['fb_page_id'] . ""); } else { $facebook->redirect("" . $config['fb']['fburl'] . "?tab=index&error=" . urlencode($error_msgs['no_file') . ""); }
+		if(isset($_GET['fb_page_id'])) {  $facebook->redirect("" . $config['fb']['fburl'] . "?tab=index&error=" . urlencode($error_msgs['no_file']) . "&fb_page_id=" . $_GET['fb_page_id'] . ""); } else { $facebook->redirect("" . $config['fb']['fburl'] . "?tab=index&error=" . urlencode($error_msgs['no_file']) . ""); }
 		
 	} elseif ($_FILES['upfile']['size'] >= 20971520 || !file_exists($_FILES['upfile']['tmp_name'])) { 
-		if(isset($_GET['fb_page_id'])) {  $facebook->redirect("" . $config['fb']['fburl'] . "?tab=index&error=" . urlencode($error_msgs['file_size']) . "&fb_page_id=" . $_GET['fb_page_id'] . ""); } else { $facebook->redirect("" . $config['fb']['fburl'] . "?tab=index&error=" . urlencode($error_msgs['file_size'] . ""); }
+		if(isset($_GET['fb_page_id'])) {  $facebook->redirect("" . $config['fb']['fburl'] . "?tab=index&error=" . urlencode($error_msgs['file_size']) . "&fb_page_id=" . $_GET['fb_page_id'] . ""); } else { $facebook->redirect("" . $config['fb']['fburl'] . "?tab=index&error=" . urlencode($error_msgs['file_size']) . ""); }
 	?>
 	<?php } else { ?>
 		<?php
