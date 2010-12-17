@@ -1,9 +1,9 @@
 <?php
-
 if (isset($_GET['error']))
 {
+   echo '<div style="margin-top: -10px">';
    $message = urldecode($_GET['error']);
-   error($message);
+   error('ERROR: ' . $message . '');
+   echo '</div>';
 }
-
 ?>

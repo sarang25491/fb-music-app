@@ -51,8 +51,7 @@ if($state == 'uploading')
       url: 'uploadprogress.php?update&id=<?php echo $md5; ?>',
       type: 'GET',
       dataType: 'text',
-      multiplier: 0.2,
-      minTimeout: 1000 // 5 seconds
+      minTimeout: 1000 // 1 seconds
    }, 
    
       function (data) {

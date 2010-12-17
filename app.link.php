@@ -35,11 +35,19 @@
 		?>
 	<?php } else { ?>
 		<?php if ($link == NULL || $link == 'http://') { ?>
-			<?php if(isset($_GET['fb_page_id'])) { redirect('index.php?tab=index&display=add&error=no_link_submitted&fb_page_id=' . $_GET['fb_page_id'] . ''); } else { redirect('index.php?tab=index&display=add&error=no_link_submitted'); } ?>
+
+         <?php 
+            $error_msgs = array('no_link' => 'You didn\'t give us a link to process.',
+                           'extension_error' => 'The link you gave us doesn\'t end in a supported file format.',
+                           'invalid_link' => 'We couldn\'t access the link, can you check it and try again?'
+            );
+         ?>
+
+			<?php if(isset($_GET['fb_page_id'])) { redirect('index.php?tab=index&error=' . urlencode($error_msgs['no_link']) . '&fb_page_id=' . $_GET['fb_page_id'] . ''); } else { redirect('index.php?tab=index&error=' . urlencode($error_msgs['no_link']) . ''); } ?>
 		<?php } elseif (!in_array(strtolower(end(explode('.',$link))), array('mp3','m4a','mp4','aac','flv'))) { ?>
-			<?php if(isset($_GET['fb_page_id'])) { redirect('index.php?tab=index&display=add&error=does_not_end_in_mp3&fb_page_id=' . $_GET['fb_page_id'] . ''); } else { redirect('index.php?tab=index&display=add&error=does_not_end_in_mp3'); } ?>
+			<?php if(isset($_GET['fb_page_id'])) { redirect('index.php?tab=index&error=' . urlencode($error_msgs['extension_error']) . '&fb_page_id=' . $_GET['fb_page_id'] . ''); } else { redirect('index.php?tab=index&error=' . urlencode($error_msgs['extension_error']) . ''); } ?>
 		<?php } elseif (!link_available($link)) { ?>
-			<?php if(isset($_GET['fb_page_id'])) { redirect('index.php?tab=index&display=add&error=not_valid_link &fb_page_id=' . $_GET['fb_page_id'] . ''); } else { redirect('index.php?tab=index&display=add&error=not_valid_link'); } ?>
+			<?php if(isset($_GET['fb_page_id'])) { redirect('index.php?tab=index&error=' . urlencode($error_msgs['invalid_link']) . '&fb_page_id=' . $_GET['fb_page_id'] . ''); } else { redirect('index.php?tab=index&error=' . urlencode($error_msgs['invalid_link']) . ''); } ?>
 		<?php } ?>
 		<?php explanation('Input Song Information','I need some information about the song before we can continue.'); ?>
 	<?php } ?>
