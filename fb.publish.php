@@ -1,4 +1,5 @@
 <?php
+include_once('include/config.php');
 
 $pubData = $db->Raw("SELECT  `xid` ,  `title` ,  `artist`  FROM  `userdb_uploads` WHERE  `user`='$user' ORDER BY  `id` DESC LIMIT 1");
 

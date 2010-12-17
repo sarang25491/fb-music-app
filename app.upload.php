@@ -170,12 +170,6 @@ if($credit+$config['basicSlots'] <= $usage)
 							if (isset($_GET['fb_page_id'])) {
 							?>
 							<fb:editor-text label="Buy Link" name="buy_link" value="<?php echo $db_info[0]['buy_link']; ?>" maxlength="100" />
-							<fb:editor-custom label="DL-able?">
-								<select name="dl">
-									<option value="0" <?php if($db_info[0]['dl'] == 0) echo 'selected'; ?>>downloadable to nobody</option>
-									<option value="1" <?php if($db_info[0]['dl'] == 1) echo 'selected'; ?>>downloadable to all</option>
-								</select>
-							</fb:editor-custom>
 							<?php
 							}
 							?>
@@ -214,7 +208,7 @@ if($credit+$config['basicSlots'] <= $usage)
 		
 		$link = '' . $config['server']['streaming'] . '/stream/' . $selDrive[0]['data'] . '/' . $userFolder . '/' . basename($tempData[0]['location']) . '';
 		$drive = $selDrive[0]['data'];
-		$db->Raw("INSERT INTO `userdb_uploads` (`user`,`title`,`artist`,`md5`,`filesize`,`sample_rate`,`fileformat`,`type`,`link`,`playtime`,`buy_link`,`dl`,`server`,`drive`) VALUES ('$user','$title','$artist','$md5','$filesize','$sample_rate','$fileformat','upload','$link','$playtime','$_POST[buy_link]','$_POST[dl]','wdc01','$drive')");
+		$db->Raw("INSERT INTO `userdb_uploads` (`user`,`title`,`artist`,`md5`,`filesize`,`sample_rate`,`fileformat`,`type`,`link`,`playtime`,`buy_link`,`server`,`drive`) VALUES ('$user','$title','$artist','$md5','$filesize','$sample_rate','$fileformat','upload','$link','$playtime','$_POST[buy_link]','wdc01','$drive')");
 		
 		//need to get a STATIC XID from id
 		$id = $db->Raw("SELECT `id` FROM `userdb_uploads` WHERE `user`='$user' ORDER BY `id` DESC LIMIT 1");

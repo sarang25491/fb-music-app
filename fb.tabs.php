@@ -18,9 +18,9 @@ include_once 'include/functions.php';
 	$orderedList = $orderedList[0]['COUNT(*)'];
 	
 	if ($orderedList > 1) {
-		$result = $mysqli->query("SELECT `id`,`title`,`artist`,`count`,`link`,`buy_link`,`dl` FROM `userdb_uploads` WHERE `user` = '$user' ORDER BY `id` DESC");
+		$result = $mysqli->query("SELECT `id`,`title`,`artist`,`count`,`link`,`buy_link` FROM `userdb_uploads` WHERE `user` = '$user' ORDER BY `id` DESC");
 	} else {
-		$result = $mysqli->query("SELECT `id`,`title`,`artist`,`count`,`link`,`buy_link`,`dl` FROM `userdb_uploads` WHERE `user` = '$user' ORDER BY `order` ASC");
+		$result = $mysqli->query("SELECT `id`,`title`,`artist`,`count`,`link`,`buy_link` FROM `userdb_uploads` WHERE `user` = '$user' ORDER BY `order` ASC");
 	}
 	
 	while ($row = $result->fetch_assoc()) {
@@ -62,11 +62,6 @@ include_once 'include/functions.php';
 									<td valign="center" style="text-align: right;">
 										<?php if ($display['buy_link'] !== '') { ?>
 											<a href="<?php echo $display['buy_link']; ?>" target="_blank">Buy Now</a>
-										<?php } ?>
-										
-										<?php if ($display['dl'] == 1) { ?>
-											<?php if ($display['buy_link'] !== '') echo ' - '; ?>
-											<a href="<?php echo $config['fb']['appcallbackurl']; ?>download.php?id=<?php echo $display['id']; ?>" target="_blank">Download</a>
 										<?php } ?>
 										
 										[<?php echo $display['count']; ?> plays]

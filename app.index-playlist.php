@@ -83,8 +83,7 @@ $(document).ready(function() {
 		$("#playlist").sortable({ 
 			opacity: 0.6,
          axis: 'y', 
-
-
+         handle: '.move',
          cursor: 'move', 
 			update: 
 				function() {
