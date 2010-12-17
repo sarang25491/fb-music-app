@@ -114,7 +114,8 @@ else
                      <?php } elseif ($credit+$config['basicSlots'] <= $usage) { ?>
                         <?php error('Not enough slots!','You need more slots to use this feature! <a href="' . $config['fb']['fburl'] . '?tab=offers">Click here to get some!</a>'); // I want this an image overlaying the actual upload system ?>
                      <?php } else { ?>
-                           <form name="form1" enctype="multipart/form-data" method="post" action="<?php echo $config['fb']['appcallbackurl']; ?>?tab=index&display=add&method=upload&step=2<?php echo pages($_GET['fb_page_id']); ?>&X-Progress-ID=<?php echo md5($user); ?>">
+                           <?php $progress_id = '' . $user . '.' . time() . ''; ?>
+                           <form name="form1" enctype="multipart/form-data" method="post" action="<?php echo $config['fb']['appcallbackurl']; ?>?tab=index&display=add&method=upload&step=2<?php echo pages($_GET['fb_page_id']); ?>&X-Progress-ID=<?php echo md5($progress_id); ?>">
                               <table class="editorkit" border="0" cellspacing="0" style="width:425px">
                                  <tr class="width_setter">
                                     <th style="width:75px"></th>
@@ -136,8 +137,8 @@ else
                                     </td>
                                  </tr>
                               </table>
-                              <div style="margin-left: 200px; margin-top: -40px; height: 40px;">
-                                 <fb:iframe src="<?php echo $config['fb']['appcallbackurl']; ?>uploadprogress.php?id=<?php echo md5($user); ?>" width="250" height="45" frameborder="0" scrolling="no"></fb:iframe>
+                              <div style="margin-left: 200px; margin-top: -40px;">
+                                 <fb:iframe src="<?php echo $config['fb']['appcallbackurl']; ?>uploadprogress.php?id=<?php echo md5($progress_id); ?>" width="250" height="45" frameborder="0" scrolling="no"></fb:iframe>
                               </div>
                            </form>
                      <?php } ?>

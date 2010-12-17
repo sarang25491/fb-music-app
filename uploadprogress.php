@@ -11,7 +11,7 @@ http://redmine.lighttpd.net/wiki/1/Docs:ModUploadProgress
 
 <?php if(!isset($_GET['update'])) { ?>
 <script type="text/javascript" src="javascript/jquery.min.js"></script>
-<script type="text/javascript" src="javascript/jquery.periodicalupdater.js"></script>
+<script type="text/javascript" src="javascript/smartupdater.js"></script>
 
 <div id="status">
 <?php } ?>
@@ -47,14 +47,17 @@ if($state == 'uploading')
 <?php if(!isset($_GET['update'])) { ?>
 </div>
 <script type="text/javascript">
-   $(document).ready(function(){
-      $.PeriodicalUpdater({
-         url: 'uploadprogress.php?update&id=<?php echo $md5; ?>'
-      },
-      
-      function(data){
-         $('#status').html(data);
-      });
-   })
+   $("#status").smartupdater({
+      url: 'uploadprogress.php?update&id=<?php echo $md5; ?>',
+      type: 'GET',
+      dataType: 'text',
+      multiplier: 0.2,
+      minTimeout: 1000 // 5 seconds
+   }, 
+   
+      function (data) {
+         $("#status").html(data);
+      }
+   );
 </script>
 <?php } ?>
