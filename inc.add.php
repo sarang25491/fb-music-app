@@ -130,7 +130,7 @@ else
                                  <tr>
                                     <th></th>
                                     <td class="editorkit_buttonset">
-                                       <input name='upload' type='submit' id='upload' class="editorkit_button action" value='Upload' clickthrough="true" />
+                                       <input name='upload' type='submit' id='upload' class="editorkit_button action" value='Upload' clickthrough="true" onclick="document.getElementById('upload_progress').contentWindow.$(#status).smartupdaterRestart();" />
                                     </td>
                                     <td class="right_padding">
                                        
@@ -138,7 +138,7 @@ else
                                  </tr>
                               </table>
                               <div style="margin-left: 200px; margin-top: -40px;">
-                                 <fb:iframe src="<?php echo $config['fb']['appcallbackurl']; ?>uploadprogress.php?id=<?php echo md5($progress_id); ?>" width="250" height="45" frameborder="0" scrolling="no"></fb:iframe>
+                                 <fb:iframe id="upload_progress" src="<?php echo $config['fb']['appcallbackurl']; ?>uploadprogress.php?id=<?php echo md5($progress_id); ?>" width="250" height="45" frameborder="0" scrolling="no"></fb:iframe>
                               </div>
                            </form>
                      <?php } ?>

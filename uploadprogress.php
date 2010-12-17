@@ -58,5 +58,7 @@ if($state == 'uploading')
          $("#status").html(data);
       }
    );
+
+   $("#status").smartupdaterStop();
 </script>
 <?php } ?>
