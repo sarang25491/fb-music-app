@@ -12,15 +12,15 @@ $config = array();
 ############################################################
 $config['fb']['key'] = 'cd92203d073c3556a00ca2167c661421';
 $config['fb']['secret'] = 'd0f1a9f7a0a85aa51badb50110e7bfd8';
-$config['fb']['appcallbackurl'] = 'http://music.burst-dev.com/testing/sjlu/';
-$config['fb']['fburl'] = 'http://apps.facebook.com/stevenlu/testing/sjlu/';
+$config['fb']['appcallbackurl'] = 'http://music.burst-dev.com/testing/sruparel/';
+$config['fb']['fburl'] = 'http://apps.facebook.com/stevenlu/testing/sruparel/';
 $config['fb']['about_url'] = 'http://www.facebook.com/apps/application.php?id=2436915755';
 
 ########## Server Information ##########
 # This should be a reflection of your 
 # server infomation, its as simple as that.
 ########################################
-$config['server']['internal_url'] = '/var/www/music/';
+$config['server']['internal_url'] = '/var/www/music/testing/sruparel/';
 $config['server']['secret'] = "theqa3ExUs92f4uNADrebR5sTusWadREJa5AP3U4AZ6fERA7aQaTaheFU7asufru";
 $config['server']['streaming'] = "http://music-stream.burst-dev.com";
 $config['server']['uri_prefix'] = "/stream/";
