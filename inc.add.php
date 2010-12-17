@@ -129,14 +129,15 @@ else
                                  <tr>
                                     <th></th>
                                     <td class="editorkit_buttonset">
-                                       <input name='upload' type='submit' id='upload' class="editorkit_button action" value='Upload' clickrewriteurl="<?php echo $config['fb']['appcallbackurl']; ?>uploadprogress.php?getIframe&md5-id=<?php echo md5($user); ?>" clickrewriteid="upload_progress" />
+                                       <input name='upload' type='submit' id='upload' class="editorkit_button action" value='Upload' clickthrough="true" />
                                     </td>
                                     <td class="right_padding">
                                        
                                     </td>
                                  </tr>
                               </table>
-                              <div id="upload_progress" style="margin-left: 200px; margin-top: -40px; height: 40px;">
+                              <div style="margin-left: 200px; margin-top: -40px; height: 40px;">
+                                 <fb:iframe src="<?php echo $config['fb']['appcallbackurl']; ?>uploadprogress.php?id=<?php echo md5($user); ?>" width="250" height="45" frameborder="0" scrolling="no"></fb:iframe>
                               </div>
                            </form>
                      <?php } ?>

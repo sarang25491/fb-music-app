@@ -9,18 +9,9 @@ http://redmine.lighttpd.net/wiki/1/Docs:ModUploadProgress
 */
 ?>
 
-<?php include_once 'include/config.php'; ?>
-
-<?php if (isset($_GET['getIframe']))
-{
-   echo '<fb:iframe src="' .  $config['fb']['appcallbackurl'] . 'uploadprogress.php?id=' . $md5-id . '" width="250" height="45" frameborder="0" scrolling="no"></fb:iframe>';
-   die();
-}
-?>
-
 <?php if(!isset($_GET['update'])) { ?>
-<script type="text/javascript" src="javascript/prototype.js"></script>
-<script type="text/javascript" src="javascript/scriptaculous.js"></script>
+<script type="text/javascript" src="javascript/jquery.min.js"></script>
+<script type="text/javascript" src="javascript/jquery.periodicalupdater.js"></script>
 
 <div id="status">
 <?php } ?>
@@ -56,6 +47,14 @@ if($state == 'uploading')
 <?php if(!isset($_GET['update'])) { ?>
 </div>
 <script type="text/javascript">
-	new Ajax.PeriodicalUpdater('status', 'uploadprogress.php?update&id=<?php echo $md5; ?>', {asynchronous:true, frequency:0.75});
+   $(document).ready(function(){
+      $.PeriodicalUpdater({
+         url: 'uploadprogress.php?update&id=<?php echo $md5; ?>'
+      },
+      
+      function(data){
+         $('#status').html(data);
+      });
+   })
 </script>
 <?php } ?>
