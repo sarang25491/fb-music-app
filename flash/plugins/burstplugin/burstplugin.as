@@ -62,7 +62,7 @@ package {
 			loader.dataFormat = URLLoaderDataFormat.VARIABLES;
 			loader.addEventListener(Event.COMPLETE, completeHandler);
 			loader.load(request);
-			
+	
 			function completeHandler(evt:Event):void {
 				var linkType:String = evt.target.data.linkType;
             var link:String;			
@@ -90,7 +90,6 @@ package {
 				}
 				
             api.addEventListener(MediaEvent.JWPLAYER_MEDIA_COMPLETE, logFullPlay)
-            callback("logStart");
 				// Debug.log(link);
             
 				api.load(link);

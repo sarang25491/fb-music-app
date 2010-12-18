@@ -18,6 +18,8 @@ if (isset($_GET['load']))
 	   $t_hex = sprintf("%08x", time());
    }
 
+   $db->logActivity($dbData[0]['user'], 'logStart', $xid);
+
    if ($type == 'upload') {
 	   $link_type = 1;
 	   echo "linkType=" . $link_type . "&t_hex=" . $t_hex . "&drive=" . $drive . "&userFolder=" . $userFolder . "&filename=" . $fileName . "";
@@ -30,11 +32,6 @@ else if (isset($_GET['logFullPlay']))
 {
    $dbData = $db->Raw("SELECT `user` FROM `userdb_uploads` WHERE `xid`='$xid'");
    $db->logActivity($dbData[0]['user'], 'logFullPlay', $xid);
-}
-else if (isset($_GET['logStart']))
-{
-   $dbData = $db->Raw("SELECT `user` FROM `userdb_users` WHERE `xid`='$xid'");
-   $db->logActivity($dbData[0]['user'], 'logStart', $xid);
 }
 
 ?>
