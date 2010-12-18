@@ -38,7 +38,7 @@ function openPlayer(xid) {
 		}
 	);
 	
-	$.post("app.index-playlist-callback.php?grabSongData&id=" + xid,
+	$.post("inc.playlist-callback.php?grabSongData&id=" + xid,
 		function (response) {
 			$("#playerData").html(response);
 		}

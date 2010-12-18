@@ -107,7 +107,7 @@ function savePlaylist() {
 
 	$("#saveBar").fadeOut(250, function () {
 		var order = $("#playlist").sortable("serialize");
-		$.post("app.index-playlist-callback.php?uid=<?php echo $id; ?>&updateList", order, 
+		$.post("inc.playlist-callback.php?uid=<?php echo $id; ?>&updateList", order, 
 			function(response) {
 				$("#status").html(response);
 			}
@@ -142,7 +142,7 @@ function openPlayer(xid) {
 		}
 	);
 	
-	$.post("app.index-playlist-callback.php?grabSongData&id=" + xid,
+	$.post("inc.playlist-callback.php?grabSongData&id=" + xid,
 		function (response) {
 			$("#playerData").html(response);
 		}
@@ -155,7 +155,7 @@ function openPlayer(xid) {
 
 function showInfo(xid) {
 	$("#status").slideUp(50);
-	$.post("app.index-playlist-callback.php?grabInfo&id=" +xid,
+	$.post("inc.playlist-callback.php?grabInfo&id=" +xid,
 		function (response) {
 			$("#status").delay(500).html(response);
 		}
