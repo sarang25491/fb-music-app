@@ -1,7 +1,7 @@
 <?php $pre = 'skip_fbapi'; include 'include/config.php'; ?>
 
-<link rel="stylesheet" type="text/css" href="javascript/colortip-1.0-jquery.css"/>
-<script type="text/javascript" src="javascript/colortip-1.0-jquery.js"></script>
+<link rel="stylesheet" type="text/css" href="css/colortip-1.0-jquery.css"/>
+<script type="text/javascript" src="js/colortip-1.0-jquery.js"></script>
 
 <script type="text/javascript">
 $(document).ready(function(){
