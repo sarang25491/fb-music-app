@@ -71,7 +71,7 @@ if(isset($_GET['search'])) {
 		echo '<fb:editor action="?tab=index&display=add&method=youtube&confirm&videoId=' . $entry['id'] . '' . pages($_GET['fb_page_id']) . '" labelwidth="0" width="10">';
 		echo '<fb:editor-custom><input type="hidden" name="title" value="' . $entry['title'] . '"></fb:editor-custom>';
 		echo '<center><img src="' . $entry['img'] . '" /><br />' . $entry['title'] . '<br /></center>';
-		echo '<fb:editor-buttonset><fb:editor-button value="Select"></fb:editor-buttonset><div style="padding-left: 97px; padding-top: 5px; margin-bottom: -20px;"><a clickrewriteurl="' . $config['fb']['appcallbackurl'] . 'app.youtube-callback.php?vid=' . $entry['id'] . '" clickrewriteid="player" clickrewriteform="dummy_form" clicktoshowdialog="preview">preview</a></div>';
+		echo '<fb:editor-buttonset><fb:editor-button value="Select"></fb:editor-buttonset><div style="padding-left: 97px; padding-top: 5px; margin-bottom: -20px;"><a clickrewriteurl="' . $config['fb']['appcallbackurl'] . 'inc.youtube-callback.php?vid=' . $entry['id'] . '" clickrewriteid="player" clickrewriteform="dummy_form" clicktoshowdialog="preview">preview</a></div>';
 		echo '</fb:editor>';
 
 		echo '</td>';
