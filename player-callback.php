@@ -6,7 +6,7 @@ $xid = $_GET['xid'];
 
 if (isset($_GET['load']))
 {
-   $dbData = $db->Raw("SELECT `link`,`type` FROM `userdb_uploads` WHERE `xid`='$xid'");
+   $dbData = $db->Raw("SELECT `user`,`link`,`type` FROM `userdb_uploads` WHERE `xid`='$xid'");
 
    $type = $dbData[0]['type'];
    if ($type == 'upload')
