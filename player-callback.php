@@ -31,4 +31,10 @@ else if (isset($_GET['logFullPlay']))
    $dbData = $db->Raw("SELECT `user` FROM `userdb_uploads` WHERE `xid`='$xid'");
    $db->logActivity($dbData[0]['user'], 'logFullPlay', $xid);
 }
+else if (isset($_GET['logFullPlay']))
+{
+   $dbData = $db->Raw("SELECT `user` FROM `userdb_users` WHERE `xid`='$xid'");
+   $db->logActivity($dbData[0]['user'], 'logStart', $xid);
+}
+
 ?>

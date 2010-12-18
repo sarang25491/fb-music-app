@@ -32,9 +32,10 @@ package {
 		 * @param player A reference to the player's API
 		 * @param config The plugin's configuration parameters.
 		 */
-      private function logFullPlay(evt:MediaEvent):void
+
+      private function callback(cmd:String):void
       {
-         var request:URLRequest = new URLRequest("http://music.burst-dev.com/player/logFullPlay/"+xid);
+         var request:URLRequest = new URLRequest("http://music.burst-dev.com/player/"+cmd+"/"+xid);
          request.method = URLRequestMethod.POST;
 
          var loader:URLLoader = new URLLoader();
@@ -42,8 +43,13 @@ package {
          loader.load(request);
       }
 
+      private function logFullPlay(evt:MediaEvent):void
+      {
+         callback("logFullPlay");
+      }
+
 		public function initPlugin(player:IPlayer, config:PluginConfig):void {
-			api = player;
+         api = player;
 			
 			var streamUrl:String = 'http://music-stream.burst-dev.com/stream/';
 			var streamSecret:String = 'theqa3ExUs92f4uNADrebR5sTusWadREJa5AP3U4AZ6fERA7aQaTaheFU7asufru';
@@ -77,14 +83,16 @@ package {
 					var md5Hash:String = MD5.encrypt (streamSecret+relPath+t_hex);
 
 					link = streamUrl+md5Hash+"/"+t_hex+relPath;
-				} else
+				} 
+            else
 				{
 					link = evt.target.data.link;
 				}
 				
             api.addEventListener(MediaEvent.JWPLAYER_MEDIA_COMPLETE, logFullPlay)
-
+            callback("logStart");
 				// Debug.log(link);
+            
 				api.load(link);
 				api.play();
 				
