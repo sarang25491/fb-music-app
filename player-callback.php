@@ -1,6 +1,6 @@
 <?php
 $pre = 'skip_fbapi';
-include '../include/config.php';
+include 'include/config.php';
 
 $xid = $_GET['xid'];
 
