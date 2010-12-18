@@ -27,8 +27,8 @@ Below the editor is a button where a user can add a song.
                </div>
             </div>            
 
-            <div style="border: 1px solid #cccccc; padding: 10px; margin-top: 4px; margin-bottom: 5px;">
-            <table border="0" width="100%">
+            <div style="border: 1px solid #cccccc; padding: 0 10px 10px 10px; margin-top: 4px; margin-bottom: 5px;">
+            <table border="0" cellspacing="0" cellpadding="0" width="100%">
                <tr>
                   <td valign="top" style="padding-left: 10px;">
                      <fb:iframe src='<?php echo $config['fb']['appcallbackurl']; ?>app.index-playlist.php?<?php echo pages($_GET['fb_page_id']); ?>' width="510" height="500" frameborder="0" scrolling="no" name="editor" resizeable="true" />
@@ -46,30 +46,9 @@ Below the editor is a button where a user can add a song.
          </td>
 
          <td width="170px" valign="top">
-         <div style="">
             <?php include_once('inc.index-menu.php'); ?>
-            <div style="height: 16px;">
-               <div style="float: left; text-align: center; background-color: #eceff6; padding: 3px 5px 3px 5px; font-weight: bold; border-left: 1px solid #d4dae8; border-right: 1px solid #d4dae8; border-top: 1px solid #d4dae8;">
-               Editor Key
-               </div>
-            </div>
-            <table border="0" style="padding: 10px; border: 1px solid #cccccc;" width="100%">
-               <tr>
-                  <td width="16px" style="border: 1px solid #cccccc; padding: 2px; background-color: #f7f7f7;"></td><td style="padding-left: 5px;">Drag & Drop to <br />Order Playlist</td>
-               </tr>
-               <tr>
-                  <td style="border: 1px solid #cccccc; padding: 2px;"><img src="<?php echo $config['fb']['appcallbackurl']; ?>images/track.gif" align="top" border="0"></td><td style="padding-left: 5px;">Play Song</td>
-               </tr>
-               <tr>  
-                  <td style="border: 1px solid #cccccc; padding: 2px;"><img src="<?php echo $config['fb']['appcallbackurl']; ?>images/tag_blue_edit.png" align="top" border="0"></td><td style="padding-left: 5px;">Edit Info</td>
-               </tr>
-               <tr>  
-                  <td style="border: 1px solid #cccccc; padding: 2px;"><img src="<?php echo $config['fb']['appcallbackurl']; ?>images/delete.png" align="top" border="0"></td><td style="padding-left: 5px;">Delete Song</td>
-
-
-               </tr>
-            </table>
-      </td>
+            <?php // include_once('inc.index-stats.php'); ?>
+         </td>
 
       </tr>
    </table>

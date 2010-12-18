@@ -23,19 +23,18 @@ package {
 		/** Constructor **/
 		public function burstplugin() {
 		}
-		
-		public function resize(wid:Number, hei:Number):void {
-		}
-		
+	
+      public function resize(wid:Number, hei:Number):void { } // Don't know why this is here, but it won't compile without it
+	
 		/**
 		 * Called by the player after the plugin has been created.
 		 *  
 		 * @param player A reference to the player's API
 		 * @param config The plugin's configuration parameters.
 		 */
-      private function logFullPlay(evt:MediaEvent)
+      private function logFullPlay(evt:MediaEvent):void
       {
-         var request:URLRequest = new URLRequest("http://music.burst-dev.com/log/"+xid);
+         var request:URLRequest = new URLRequest("http://music.burst-dev.com/player/logFullPlay/"+xid);
          request.method = URLRequestMethod.POST;
 
          var loader:URLLoader = new URLLoader();
@@ -50,7 +49,7 @@ package {
 			var streamSecret:String = 'theqa3ExUs92f4uNADrebR5sTusWadREJa5AP3U4AZ6fERA7aQaTaheFU7asufru';
 			xid = config['xid'];
 			
-			var request:URLRequest = new URLRequest("http://music.burst-dev.com/load/"+xid);
+			var request:URLRequest = new URLRequest("http://music.burst-dev.com/player/load/"+xid);
 			request.method = URLRequestMethod.POST;
 
 			var loader:URLLoader = new URLLoader();
@@ -58,9 +57,10 @@ package {
 			loader.addEventListener(Event.COMPLETE, completeHandler);
 			loader.load(request);
 			
-			function completeHandler(evt:Event) {
+			function completeHandler(evt:Event):void {
 				var linkType:String = evt.target.data.linkType;
-				
+            var link:String;			
+	
 				// Debug.log(linkType);
 				if (linkType == "1")
 				{
@@ -74,12 +74,12 @@ package {
 					var t_hex:String = evt.target.data.t_hex;
 
 					var relPath:String = "/"+drive+"/"+userFolder+"/"+fileName;
-					var md5Hash = MD5.encrypt (streamSecret+relPath+t_hex);
+					var md5Hash:String = MD5.encrypt (streamSecret+relPath+t_hex);
 
-					var link:String = streamUrl+md5Hash+"/"+t_hex+relPath;
+					link = streamUrl+md5Hash+"/"+t_hex+relPath;
 				} else
 				{
-					var link:String = evt.target.data.link;
+					link = evt.target.data.link;
 				}
 				
             api.addEventListener(MediaEvent.JWPLAYER_MEDIA_COMPLETE, logFullPlay)

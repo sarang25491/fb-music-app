@@ -53,6 +53,22 @@
       return $mReturnData;
     }
 
+   public function logActivity($user, $activity, $data='')
+   {
+      if ($activity == '')
+      {
+         return false;
+      }
+      
+      switch ($activity)
+      {
+         case "play": $activity = 'p'; break;
+         case "logFullPlay": $activity = 'fp'; break;
+      }
+      
+      $this->Raw("INSERT INTO `userdb_activity` (`user`,`action`,`data`) VALUES ('$user','$activity','$data')");
+   }
+
     public function __destruct () {
       foreach ($this->mQueries as $mQuery) {
         if (!@mysql_query ($mQuery, $this->mConnection))

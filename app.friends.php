@@ -51,7 +51,7 @@ function render($user_friends_uploads, $user_friends_info, $rel_url)
             <table border="0" width="100%">
                <tr>
                   <td valign="middle" width="5%">
-                     <div style="padding-right: 5px; padding-left: 5px;"><a clicktoshowdialog="embed_player_friends" clickrewriteurl="' . $rel_url . 'player.php?upload=' . $display['id'] . '&from_friends=1&owner=' . $transverse['uid'] . '" clickrewriteid="player_friends" clickrewriteform="dummy_form_friends" clicktoshow="spinner_friends"><img src="' . $rel_url . 'images/track.gif" align="top" border="0"></a></div>
+                     <div style="padding-right: 5px; padding-left: 5px;"><a clicktoshowdialog="embed_player_friends" clickrewriteurl="' . $rel_url . 'player.php?upload=' . $display['id'] . '&from_friends=1&owner=' . $transverse['uid'] . '" clickrewriteid="player_friends" clickrewriteform="dummy_form_friends" clicktoshow="spinner_friends"><img src="' . $rel_url . 'img/track.gif" align="top" border="0"></a></div>
                   </td>
                   <td valign="middle" width="95%">
                      <a clicktoshowdialog="embed_player_friends" clickrewriteurl="' . $rel_url . 'player.php?upload=' . $display['id'] . '&from_friends=1&owner=' . $transverse['uid'] . '" clickrewriteid="player_friends" clickrewriteform="dummy_form_friends" clicktoshow="spinner">' . htmlspecialchars_decode(utf8_decode($display['title']), ENT_QUOTES) . ' by ' . htmlspecialchars_decode(utf8_decode($display['artist']), ENT_QUOTES) . '</a>
@@ -107,7 +107,7 @@ echo '<fb:dialog id="embed_player_friends">
             <fb:dialog-content>
                <form id="dummy_form_friends"></form>
                <div id="player_friends" style="padding-bottom: 0px;" align="center">
-               <img src="' . $config['fb']['appcallbackurl'] . 'images/spinner.gif" id="spinner_friends" style="display:none; padding-bottom: 5px;"/>
+               <img src="' . $config['fb']['appcallbackurl'] . 'img/spinner.gif" id="spinner_friends" style="display:none; padding-bottom: 5px;"/>
                </div>
             </fb:dialog-content>
          <fb:dialog-button type="button" value="Close" close_dialog=1 />

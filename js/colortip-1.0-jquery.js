@@ -3,7 +3,7 @@
 
 		var defaultSettings = {
 			color		: 'yellow',
-			timeout		: 50
+			timeout		: 5
 		}
 		
 		var supportedColors = ['red','green','blue','white','yellow','black'];

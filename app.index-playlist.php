@@ -4,8 +4,8 @@
 <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
 </head>
 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" type="text/javascript"></script> 
-<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js" type="text/javascript"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js" type="text/javascript"></script> 
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js" type="text/javascript"></script>
 <script src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php" type="text/javascript"></script>
 
 <body>
@@ -163,6 +163,8 @@ function showInfo(xid) {
 	$("#status").delay(500).slideDown(250);
 }
 </script>
+
+<div style="height: 25px;"></div>
 
 <div id="playerData" style="width: 490px; display:none; background-color: #f7f7f7; font-size: 14px; padding: 5px;"></div>
 <div id="player" style="width:500px; display: none;"></div>

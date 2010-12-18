@@ -73,7 +73,7 @@ if(!isset($_GET['tab'])) {
 <?php include_once 'inc.donations.php'; ?>
 
 <div id="header" style="padding-top: 15px; padding-right: 25px; padding-left: 20px; padding-bottom: 50px;">
-	<div style="float: left;"><img src="<?php echo $config['fb']['appcallbackurl']; ?>images/music.png" /></div>
+	<div style="float: left;"><img src="<?php echo $config['fb']['appcallbackurl']; ?>img/music.png" /></div>
 </div>
 
 <fb:tabs>

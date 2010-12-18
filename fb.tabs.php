@@ -6,7 +6,7 @@ include_once 'include/functions.php';
 
 	<form id="dummy_form_tab"></form>
 	<div id="player_Tab" align="center">
-	<img src="<?php echo $config['fb']['appcallbackurl']; ?>/images/spinner.gif" id="spinner_tab" style="display:none; padding-bottom: 5px;"/>
+	<img src="<?php echo $config['fb']['appcallbackurl']; ?>/img/spinner.gif" id="spinner_tab" style="display:none; padding-bottom: 5px;"/>
 	</div>
 	
 	<?php $user = $_POST['fb_sig_profile_user']; ?>
@@ -54,7 +54,7 @@ include_once 'include/functions.php';
 							<table border="0" width="100%">
 								<tr>
 									<td valign="center" width="3%">
-										<div style="padding-right: 5px; padding-left: 5px;"><a clickrewriteurl="<?php echo $config['fb']['appcallbackurl']; ?>player.php?id=<?php echo $display['id']; ?>&from_tab=1" clickrewriteid="player_Tab" clickrewriteform="dummy_form_tab" clicktoshow="spinner_tab"><img src="<?php echo $config['fb']['appcallbackurl']; ?>images/track.gif" align="top" border="0"></a></div>
+										<div style="padding-right: 5px; padding-left: 5px;"><a clickrewriteurl="<?php echo $config['fb']['appcallbackurl']; ?>player.php?id=<?php echo $display['id']; ?>&from_tab=1" clickrewriteid="player_Tab" clickrewriteform="dummy_form_tab" clicktoshow="spinner_tab"><img src="<?php echo $config['fb']['appcallbackurl']; ?>img/track.gif" align="top" border="0"></a></div>
 									</td>
 									<td valign="center">
 										<a clickrewriteurl="<?php echo $config['fb']['appcallbackurl']; ?>player.php?id=<?php echo $display['id']; ?>&from_tab=1" clickrewriteid="player_Tab" clickrewriteform="dummy_form_tab" clicktoshow="spinner_tab"><?php echo htmlspecialchars_decode(utf8_decode($display['title']), ENT_QUOTES); ?> by <?php echo htmlspecialchars_decode(utf8_decode($display['artist']), ENT_QUOTES); ?></a>

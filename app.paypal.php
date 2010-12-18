@@ -39,7 +39,7 @@ switch ($_GET['action']) {
 		
 		echo '
 		<div id="header" style="padding-top: 15px; padding-right: 25px; padding-left: 20px; padding-bottom: 50px;">
-		<div style="float: left;"><img src="' . $config['fb']['appcallbackurl'] . 'images/music.png" /></div>
+		<div style="float: left;"><img src="' . $config['fb']['appcallbackurl'] . 'img/music.png" /></div>
 		<div style="float: right; padding-top: 5px;"><b><font size="2px"><fb:intl>ORDERING SLOTS</fb:intl></font></b></div>
 		</div>
 	  

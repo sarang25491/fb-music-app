@@ -95,7 +95,7 @@ function hide(obj)
 
 <a class="button" clicktoshowdialog="add_music">
 <table border="0" cellspacing="0" cellpadding="0" height="20px"><tr>
-   <td valign="middle" width="25px" style="background-color: #d4dae8; text-align: center;"><img valign="middle" src="<?php echo $config['fb']['appcallbackurl']; ?>images/add.png"></td>
+   <td valign="middle" width="25px" style="background-color: #d4dae8; text-align: center;"><img valign="middle" src="<?php echo $config['fb']['appcallbackurl']; ?>img/add.png"></td>
    <td valign="middle" style="padding-left: 5px;">Add</td>
 </tr></table>
 </a>
@@ -105,7 +105,7 @@ function hide(obj)
 
 <a class="button">
 <table border="0" cellspacing="0" cellpadding="0" height="20px"><tr>
-   <td valign="middle" width="25px" style="background-color: #d4dae8; text-align: center;"><img valign="middle" src="<?php echo $config['fb']['appcallbackurl']; ?>images/layout_add.png"></td>
+   <td valign="middle" width="25px" style="background-color: #d4dae8; text-align: center;"><img valign="middle" src="<?php echo $config['fb']['appcallbackurl']; ?>img/layout_add.png"></td>
    <td valign="middle" style="padding-left: 5px;">Share</td>
 </tr></table>
 </a>
@@ -120,7 +120,7 @@ function hide(obj)
       <a id="nav1" style="margin-bottom: 1px;">
          <center>
          <b>Switch Editor To...</b>
-         <img valign="top" style="margin: 3px 0 0 4px" src="<?=$config['fb']['appcallbackurl']?>images/down.gif">
+         <img valign="top" style="margin: 3px 0 0 4px" src="<?=$config['fb']['appcallbackurl']?>img/down.gif">
          </center>
       </a>
       <div id="navbar1" style="margin-left: -1px; width: 175px; border: 1px solid #d4dae8">

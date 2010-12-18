@@ -10,7 +10,8 @@ http://redmine.lighttpd.net/wiki/1/Docs:ModUploadProgress
 ?>
 
 <?php if(!isset($_GET['update'])) { ?>
-<script type="text/javascript" src="javascript/jquery.min.js"></script>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js" type="text/javascript"></script>
 <script type="text/javascript" src="javascript/smartupdater.js"></script>
 
 <div id="status">
