@@ -278,6 +278,59 @@ class getid3_riff
 					$thisfile_riff['comments']['title'][]  = $thisfile_riff_WAVE_cart_0['title'];
 				}
 
+				if (isset($thisfile_riff_WAVE['SNDM'][0]['data'])) {
+					// SoundMiner metadata
+
+					// shortcuts
+					$thisfile_riff_WAVE_SNDM_0      = &$thisfile_riff_WAVE['SNDM'][0];
+					$thisfile_riff_WAVE_SNDM_0_data = &$thisfile_riff_WAVE_SNDM_0['data'];
+					$SNDM_startoffset = 0;
+					$SNDM_endoffset   = $thisfile_riff_WAVE_SNDM_0['size'];
+
+					while ($SNDM_startoffset < $SNDM_endoffset) {
+						$SNDM_thisTagOffset = 0;
+						$SNDM_thisTagSize      = getid3_lib::BigEndian2Int(substr($thisfile_riff_WAVE_SNDM_0_data, $SNDM_startoffset + $SNDM_thisTagOffset, 4));
+						$SNDM_thisTagOffset += 4;
+						$SNDM_thisTagKey       =                           substr($thisfile_riff_WAVE_SNDM_0_data, $SNDM_startoffset + $SNDM_thisTagOffset, 4);
+						$SNDM_thisTagOffset += 4;
+						$SNDM_thisTagDataSize  = getid3_lib::BigEndian2Int(substr($thisfile_riff_WAVE_SNDM_0_data, $SNDM_startoffset + $SNDM_thisTagOffset, 2));
+						$SNDM_thisTagOffset += 2;
+						$SNDM_thisTagDataFlags = getid3_lib::BigEndian2Int(substr($thisfile_riff_WAVE_SNDM_0_data, $SNDM_startoffset + $SNDM_thisTagOffset, 2));
+						$SNDM_thisTagOffset += 2;
+						$SNDM_thisTagDataText =                            substr($thisfile_riff_WAVE_SNDM_0_data, $SNDM_startoffset + $SNDM_thisTagOffset, $SNDM_thisTagDataSize);
+						$SNDM_thisTagOffset += $SNDM_thisTagDataSize;
+
+						if ($SNDM_thisTagSize != (4 + 4 + 2 + 2 + $SNDM_thisTagDataSize)) {
+							$ThisFileInfo['warning'][] = 'RIFF.WAVE.SNDM.data contains tag not expected length (expected: '.$SNDM_thisTagSize.', found: '.(4 + 4 + 2 + 2 + $SNDM_thisTagDataSize).') at offset '.$SNDM_startoffset.' (file offset '.($thisfile_riff_WAVE_SNDM_0['offset'] + $SNDM_startoffset).')';
+							break;
+						} elseif ($SNDM_thisTagSize <= 0) {
+							$ThisFileInfo['warning'][] = 'RIFF.WAVE.SNDM.data contains zero-size tag at offset '.$SNDM_startoffset.' (file offset '.($thisfile_riff_WAVE_SNDM_0['offset'] + $SNDM_startoffset).')';
+							break;
+						}
+						$SNDM_startoffset += $SNDM_thisTagSize;
+
+						$thisfile_riff_WAVE_SNDM_0['parsed_raw'][$SNDM_thisTagKey] = $SNDM_thisTagDataText;
+						$parsedkey = $this->RIFFwaveSNDMtagLookup($SNDM_thisTagKey);
+						if ($parsedkey) {
+							$thisfile_riff_WAVE_SNDM_0['parsed'][$parsedkey] = $SNDM_thisTagDataText;
+						} else {
+							$ThisFileInfo['warning'][] = 'RIFF.WAVE.SNDM contains unknown tag "'.$SNDM_thisTagKey.'" at offset '.$SNDM_startoffset.' (file offset '.($thisfile_riff_WAVE_SNDM_0['offset'] + $SNDM_startoffset).')';
+						}
+					}
+
+					$tagmapping = array(
+						'tracktitle'=>'title',
+						'category'  =>'genre',
+						'cdtitle'   =>'album',
+						'tracktitle'=>'title',
+					);
+					foreach ($tagmapping as $fromkey => $tokey) {
+						if (isset($thisfile_riff_WAVE_SNDM_0['parsed'][$fromkey])) {
+							$thisfile_riff['comments'][$tokey][] = $thisfile_riff_WAVE_SNDM_0['parsed'][$fromkey];
+						}
+					}
+				}
+
 				if (!isset($thisfile_audio['bitrate']) && isset($thisfile_riff_audio[$streamindex]['bitrate'])) {
 					$thisfile_audio['bitrate'] = $thisfile_riff_audio[$streamindex]['bitrate'];
 					$ThisFileInfo['playtime_seconds'] = (float) ((($thisfile_avdataend - $thisfile_avdataoffset) * 8) / $thisfile_audio['bitrate']);
@@ -1062,7 +1115,7 @@ class getid3_riff
 	}
 
 
-	function RIFFcommentsParse(&$RIFFinfoArray, &$CommentsTargetArray) {
+	static function RIFFcommentsParse(&$RIFFinfoArray, &$CommentsTargetArray) {
 		$RIFFinfoKeyLookup = array(
 			'IARL'=>'archivallocation',
 			'IART'=>'artist',
@@ -1116,7 +1169,7 @@ class getid3_riff
 		return true;
 	}
 
-	function ParseRIFF(&$fd, $startoffset, $maxoffset, &$ThisFileInfo) {
+	static function ParseRIFF(&$fd, $startoffset, $maxoffset, &$ThisFileInfo) {
 		$maxoffset = min($maxoffset, $ThisFileInfo['avdataend']);
 
 		$RIFFchunk = false;
@@ -1148,7 +1201,7 @@ class getid3_riff
 			switch ($chunkname) {
 				case 'LIST':
 					$listname = fread($fd, 4);
-					if (eregi('^(movi|rec )$', $listname)) {
+					if (preg_match('#^(movi|rec )$#i', $listname)) {
 						$RIFFchunk[$listname]['offset'] = ftell($fd) - 4;
 						$RIFFchunk[$listname]['size']   = $chunksize;
 
@@ -1215,7 +1268,7 @@ class getid3_riff
 						}
 						fseek($fd, $chunksize - 4, SEEK_CUR);
 
-					//} elseif (ereg('^[0-9]{2}(wb|pc|dc|db)$', $listname)) {
+					//} elseif (preg_match('#^[0-9]{2}(wb|pc|dc|db)$#i', $listname)) {
                     //
 					//	// data chunk, ignore
                     //
@@ -1234,7 +1287,7 @@ class getid3_riff
 					break;
 
 				default:
-					if (eregi('^[0-9]{2}(wb|pc|dc|db)$', $chunkname)) {
+					if (preg_match('#^[0-9]{2}(wb|pc|dc|db)$#i', $chunkname)) {
 						$nextoffset = ftell($fd) + $chunksize;
 						if (($nextoffset < 0) || ($nextoffset >= pow(2, 31))) {
 							$ThisFileInfo['warning'][] = 'Unable to parse chunk at offset '.$nextoffset.' because beyond 2GB limit of PHP filesystem functions';
@@ -1261,10 +1314,10 @@ class getid3_riff
 								// Probably is MP3 data
 								if (getid3_mp3::MPEGaudioHeaderBytesValid(substr($RIFFdataChunkContentsTest, 0, 4))) {
 
-									// copy info array
-									$dummy = $ThisFileInfo;
-
-									getid3_mp3::getOnlyMPEGaudioInfo($fd, $dummy, $RIFFchunk[$chunkname][$thisindex]['offset'], false);
+									$dummy = $ThisFileInfo; // copy info array, only use if there's no error
+									$getid3_mp3 = new getid3_mp3($fd, $dummy);
+									$dummy = $ThisFileInfo; // copy info array, only use if there's no error
+									$getid3_mp3->getOnlyMPEGaudioInfo($fd, $dummy, $RIFFchunk[$chunkname][$thisindex]['offset'], false);
 
                                     // use dummy array unless error
 									if (empty($dummy['error'])) {
@@ -1368,7 +1421,7 @@ class getid3_riff
 							break;
 
 						default:
-							if (!ereg('^[0-9]{2}(wb|pc|dc|db)$', $chunkname) && !empty($LISTchunkParent) && (($RIFFchunk[$chunkname][$thisindex]['offset'] + $RIFFchunk[$chunkname][$thisindex]['size']) <= $LISTchunkMaxOffset)) {
+							if (!preg_match('#^[0-9]{2}(wb|pc|dc|db)$#', $chunkname) && !empty($LISTchunkParent) && (($RIFFchunk[$chunkname][$thisindex]['offset'] + $RIFFchunk[$chunkname][$thisindex]['size']) <= $LISTchunkMaxOffset)) {
 								$RIFFchunk[$LISTchunkParent][$chunkname][$thisindex]['offset'] = $RIFFchunk[$chunkname][$thisindex]['offset'];
 								$RIFFchunk[$LISTchunkParent][$chunkname][$thisindex]['size']   = $RIFFchunk[$chunkname][$thisindex]['size'];
 								unset($RIFFchunk[$chunkname][$thisindex]['offset']);
@@ -1403,10 +1456,10 @@ class getid3_riff
 	}
 
 
-	function ParseRIFFdata(&$RIFFdata, &$ThisFileInfo) {
+	static function ParseRIFFdata(&$RIFFdata, &$ThisFileInfo) {
 		if ($RIFFdata) {
 
-		    $tempfile = tempnam('*', 'getID3');
+		    $tempfile = tempnam((function_exists('sys_get_temp_dir') ? sys_get_temp_dir() : ini_get('upload_tmp_dir')), 'getID3');
             $fp_temp  = fopen($tempfile, "wb");
 			$RIFFdataLength = strlen($RIFFdata);
 			$NewLengthString = getid3_lib::LittleEndian2String($RIFFdataLength, 4);
@@ -1433,7 +1486,7 @@ class getid3_riff
 	}
 
 
-	function RIFFparseWAVEFORMATex($WaveFormatExData) {
+	static function RIFFparseWAVEFORMATex($WaveFormatExData) {
 		// shortcut
 		$WaveFormatEx['raw'] = array();
 		$WaveFormatEx_raw    = &$WaveFormatEx['raw'];
@@ -1458,7 +1511,7 @@ class getid3_riff
 	}
 
 
-	function RIFFparseWavPackHeader($WavPackChunkData, &$ThisFileInfo) {
+	static function RIFFparseWavPackHeader($WavPackChunkData, &$ThisFileInfo) {
 		// typedef struct {
 		//     char ckID [4];
 		//     long ckSize;
@@ -1518,7 +1571,7 @@ class getid3_riff
 		return true;
 	}
 
-	function ParseBITMAPINFOHEADER($BITMAPINFOHEADER, $littleEndian=true) {
+	static function ParseBITMAPINFOHEADER($BITMAPINFOHEADER, $littleEndian=true) {
 		// yes it's ugly to instantiate a getid3_lib object here, suggested alternative please?
 		$getid3_lib = new getid3_lib();
 		$functionname = ($littleEndian ? 'LittleEndian2Int' : 'BigEndian2Int');
@@ -1536,7 +1589,30 @@ class getid3_riff
 		return $parsed;
 	}
 
-	function RIFFwFormatTagLookup($wFormatTag) {
+	static function RIFFwaveSNDMtagLookup($tagshortname) {
+		$begin = __LINE__;
+
+		/** This is not a comment!
+
+			©kwd	keywords
+			©BPM	bpm
+			©trt	tracktitle
+			©des	description
+			©gen	category
+			©fin	featuredinstrument
+			©LID	longid
+			©bex	bwdescription
+			©pub	publisher
+			©cdt	cdtitle
+			©alb	library
+			©com	composer
+
+		*/
+
+		return getid3_lib::EmbeddedLookup($tagshortname, $begin, __LINE__, __FILE__, 'riff-sndm');
+	}
+
+	static function RIFFwFormatTagLookup($wFormatTag) {
 
 		$begin = __LINE__;
 
@@ -1707,7 +1783,7 @@ class getid3_riff
 	}
 
 
-	function RIFFfourccLookup($fourcc) {
+	static function RIFFfourccLookup($fourcc) {
 
 		$begin = __LINE__;
 
@@ -2098,7 +2174,7 @@ class getid3_riff
 	}
 
 
-	function EitherEndian2Int(&$ThisFileInfo, $byteword, $signed=false) {
+	static function EitherEndian2Int(&$ThisFileInfo, $byteword, $signed=false) {
 		if ($ThisFileInfo['fileformat'] == 'riff') {
 			return getid3_lib::LittleEndian2Int($byteword, $signed);
 		}

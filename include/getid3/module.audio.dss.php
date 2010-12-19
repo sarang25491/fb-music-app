@@ -7,7 +7,7 @@
 // See readme.txt for more details                             //
 /////////////////////////////////////////////////////////////////
 //                                                             //
-// module.audio.au.php                                         //
+// module.audio.dss.php                                        //
 // module for analyzing Digital Speech Standard (DSS) files    //
 // dependencies: NONE                                          //
 //                                                            ///
@@ -40,7 +40,8 @@ class getid3_dss
 
 		$thisfile_dss['date_create']    = $this->DSSdateStringToUnixDate(substr($DSSheader,  38,  12));
 		$thisfile_dss['date_complete']  = $this->DSSdateStringToUnixDate(substr($DSSheader,  50,  12));
-		$thisfile_dss['length']         =                         intval(substr($DSSheader,  62,   6));
+		//$thisfile_dss['length']         =                         intval(substr($DSSheader,  62,   6)); // I thought time was in seconds, it's actually HHMMSS
+		$thisfile_dss['length']         = intval((substr($DSSheader,  62, 2) * 3600) + (substr($DSSheader,  64, 2) * 60) + substr($DSSheader,  66, 2));
 		$thisfile_dss['priority']       =                            ord(substr($DSSheader, 793,   1));
 		$thisfile_dss['comments']       =                           trim(substr($DSSheader, 798, 100));
 

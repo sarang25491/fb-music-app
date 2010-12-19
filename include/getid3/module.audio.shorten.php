@@ -109,7 +109,7 @@ class getid3_shorten
 
 		}
 
-		if ((bool) ini_get('safe_mode')) {
+		if (preg_match('#(1|ON)#i', ini_get('safe_mode'))) {
 			$ThisFileInfo['error'][] = 'PHP running in Safe Mode - backtick operator not available, cannot run shntool to analyze Shorten files';
 			return false;
 		}

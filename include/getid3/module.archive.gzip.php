@@ -133,7 +133,7 @@ class getid3_gzip {
 			//|...original file name, zero-terminated...|
 			//+=========================================+
 			// GZIP files may have only one file, with no filename, so assume original filename is current filename without .gz
-			$thisThisFileInfo['filename'] = eregi_replace('.gz$', '', $ThisFileInfo['filename']);
+			$thisThisFileInfo['filename'] = preg_replace('#\.gz$#i', '', $ThisFileInfo['filename']);
 			if ($thisThisFileInfo['flags']['filename']) {
 				while (true) {
 					if (ord($buff[$fpointer]) == 0) {
@@ -203,7 +203,7 @@ class getid3_gzip {
 	        			case 'tar':
 							// view TAR-file info
 							if (file_exists(GETID3_INCLUDEPATH.$determined_format['include']) && @include_once(GETID3_INCLUDEPATH.$determined_format['include'])) {
-								if (($temp_tar_filename = tempnam('*', 'getID3')) === false) {
+								if (($temp_tar_filename = tempnam((function_exists('sys_get_temp_dir') ? sys_get_temp_dir() : ini_get('upload_tmp_dir')), 'getID3')) === false) {
 									// can't find anywhere to create a temp file, abort
 									$ThisFileInfo['error'][] = 'Unable to create temp file to parse TAR inside GZIP file';
 									break;

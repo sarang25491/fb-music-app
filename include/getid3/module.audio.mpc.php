@@ -30,12 +30,12 @@ class getid3_mpc
 		fseek($fd, $ThisFileInfo['avdataoffset'], SEEK_SET);
 		$MPCheaderData = fread($fd, 4);
 		$ThisFileInfo['mpc']['header']['preamble'] = substr($MPCheaderData, 0, 4); // should be 'MPCK' (SV8) or 'MP+' (SV7), otherwise possible stream data (SV4-SV6)
-		if (ereg('^MPCK', $ThisFileInfo['mpc']['header']['preamble'])) {
+		if (preg_match('#^MPCK#', $ThisFileInfo['mpc']['header']['preamble'])) {
 
 			// this is SV8
 			return $this->ParseMPCsv8($fd, $ThisFileInfo);
 
-		} elseif (ereg('^MP\+', $ThisFileInfo['mpc']['header']['preamble'])) {
+		} elseif (preg_match('#^MP\+#', $ThisFileInfo['mpc']['header']['preamble'])) {
 
 			// this is SV7
 			return $this->ParseMPCsv7($fd, $ThisFileInfo);

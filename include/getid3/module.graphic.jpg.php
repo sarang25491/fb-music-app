@@ -9,7 +9,8 @@
 //                                                             //
 // module.graphic.jpg.php                                      //
 // module for analyzing JPEG Image files                       //
-// dependencies: NONE                                          //
+// dependencies: PHP compiled with --enable-exif (optional)    //
+//               module.tag.xmp.php (optional)                 //
 //                                                            ///
 /////////////////////////////////////////////////////////////////
 
@@ -30,6 +31,7 @@ class getid3_jpg
 		$imageinfo = array();
 		list($width, $height, $type) = getid3_lib::GetDataImageSize(fread($fd, $ThisFileInfo['filesize']), $imageinfo);
 
+
 		if (isset($imageinfo['APP13'])) {
 			// http://php.net/iptcparse
 			// http://www.sno.phy.queensu.ca/~phil/exiftool/TagNames/IPTC.html
@@ -43,9 +45,9 @@ class getid3_jpg
 		        	}
 		        }
 		    }
-//echo '<pre>'.htmlentities(print_r($iptc_parsed, true)).'</pre>';
 		}
 
+		$returnOK = false;
 		switch ($type) {
 			case 2: // JPEG
 				$ThisFileInfo['video']['resolution_x'] = $width;
@@ -54,6 +56,7 @@ class getid3_jpg
 				if (version_compare(phpversion(), '4.2.0', '>=')) {
 
 					if (function_exists('exif_read_data')) {
+					//if (function_exists('exif_read_data') && (strpos($imageinfo['APP1'], 'Exif') === 0)) { // suggested fix: http://www.getid3.org/phpBB3/viewtopic.php?f=4&t=1055
 
 						ob_start();
 						$ThisFileInfo['jpg']['exif'] = exif_read_data($ThisFileInfo['filenamepath'], '', true, false);
@@ -65,26 +68,109 @@ class getid3_jpg
 						ob_end_clean();
 
 					} else {
-
 						$ThisFileInfo['warning'][] = 'EXIF parsing only available when '.(GETID3_OS_ISWINDOWS ? 'php_exif.dll enabled' : 'compiled with --enable-exif');
-
 					}
-
 				} else {
-
 					$ThisFileInfo['warning'][] = 'EXIF parsing only available in PHP v4.2.0 and higher compiled with --enable-exif (or php_exif.dll enabled for Windows). You are using PHP v'.phpversion();
-
 				}
-
-				return true;
+				$returnOK = true;
 				break;
 
 			default:
 				break;
 		}
 
-		unset($ThisFileInfo['fileformat']);
-		return false;
+
+		$cast_as_appropriate_keys = array('EXIF', 'IFD0', 'THUMBNAIL');
+		foreach ($cast_as_appropriate_keys as $exif_key) {
+			if (isset($ThisFileInfo['jpg']['exif'][$exif_key])) {
+				foreach ($ThisFileInfo['jpg']['exif'][$exif_key] as $key => $value) {
+					$ThisFileInfo['jpg']['exif'][$exif_key][$key] = $this->CastAsAppropriate($value);
+				}
+			}
+		}
+
+
+		if (isset($ThisFileInfo['jpg']['exif']['GPS'])) {
+
+			if (isset($ThisFileInfo['jpg']['exif']['GPS']['GPSVersion'])) {
+				for ($i = 0; $i < 4; $i++) {
+					$version_subparts[$i] = ord(substr($ThisFileInfo['jpg']['exif']['GPS']['GPSVersion'], $i, 1));
+				}
+				$ThisFileInfo['jpg']['exif']['GPS']['computed']['version'] = 'v'.implode('.', $version_subparts);
+			}
+
+			if (isset($ThisFileInfo['jpg']['exif']['GPS']['GPSDateStamp'])) {
+				@list($computed_time[5], $computed_time[3], $computed_time[4]) = explode(':', $ThisFileInfo['jpg']['exif']['GPS']['GPSDateStamp']);
+
+				if (function_exists('date_default_timezone_set')) {
+					date_default_timezone_set('UTC');
+				} else {
+					ini_set('date.timezone', 'UTC');
+				}
+
+				if (isset($ThisFileInfo['jpg']['exif']['GPS']['GPSTimeStamp']) && is_array($ThisFileInfo['jpg']['exif']['GPS']['GPSTimeStamp'])) {
+					foreach ($ThisFileInfo['jpg']['exif']['GPS']['GPSTimeStamp'] as $key => $value) {
+						$computed_time[$key] = getid3_lib::DecimalizeFraction($value);
+					}
+				}
+				$ThisFileInfo['jpg']['exif']['GPS']['computed']['timestamp'] = mktime(@$computed_time[0], @$computed_time[1], @$computed_time[2], $computed_time[3], $computed_time[4], $computed_time[5]);
+			}
+
+			if (isset($ThisFileInfo['jpg']['exif']['GPS']['GPSLatitude']) && is_array($ThisFileInfo['jpg']['exif']['GPS']['GPSLatitude'])) {
+				$direction_multiplier = ((@$ThisFileInfo['jpg']['exif']['GPS']['GPSLatitudeRef'] == 'S') ? -1 : 1);
+				foreach ($ThisFileInfo['jpg']['exif']['GPS']['GPSLatitude'] as $key => $value) {
+					$computed_latitude[$key] = getid3_lib::DecimalizeFraction($value);
+				}
+				$ThisFileInfo['jpg']['exif']['GPS']['computed']['latitude'] = $direction_multiplier * ($computed_latitude[0] + ($computed_latitude[1] / 60) + ($computed_latitude[2] / 3600));
+			}
+
+			if (isset($ThisFileInfo['jpg']['exif']['GPS']['GPSLongitude']) && is_array($ThisFileInfo['jpg']['exif']['GPS']['GPSLongitude'])) {
+				$direction_multiplier = ((@$ThisFileInfo['jpg']['exif']['GPS']['GPSLongitudeRef'] == 'W') ? -1 : 1);
+				foreach ($ThisFileInfo['jpg']['exif']['GPS']['GPSLongitude'] as $key => $value) {
+					$computed_longitude[$key] = getid3_lib::DecimalizeFraction($value);
+				}
+				$ThisFileInfo['jpg']['exif']['GPS']['computed']['longitude'] = $direction_multiplier * ($computed_longitude[0] + ($computed_longitude[1] / 60) + ($computed_longitude[2] / 3600));
+			}
+
+			if (isset($ThisFileInfo['jpg']['exif']['GPS']['GPSAltitude'])) {
+				$direction_multiplier = ((@$ThisFileInfo['jpg']['exif']['GPS']['GPSAltitudeRef'] == chr(1)) ? -1 : 1);
+				$ThisFileInfo['jpg']['exif']['GPS']['computed']['altitude'] = $direction_multiplier * getid3_lib::DecimalizeFraction($ThisFileInfo['jpg']['exif']['GPS']['GPSAltitude']);
+			}
+
+		}
+
+
+		if (getid3_lib::IncludeDependency(GETID3_INCLUDEPATH.'module.tag.xmp.php', __FILE__, false)) {
+			if (isset($ThisFileInfo['filenamepath'])) {
+				$image_xmp = new Image_XMP($ThisFileInfo['filenamepath']);
+				$xmp_raw = $image_xmp->getAllTags();
+				foreach ($xmp_raw as $key => $value) {
+					list($subsection, $tagname) = explode(':', $key);
+					$ThisFileInfo['xmp'][$subsection][$tagname] = $this->CastAsAppropriate($value);
+				}
+			}
+		}
+
+		if (!$returnOK) {
+			unset($ThisFileInfo['fileformat']);
+			return false;
+		}
+		return true;
+	}
+
+
+	function CastAsAppropriate($value) {
+		if (is_array($value)) {
+			return $value;
+		} elseif (preg_match('#^[0-9]+/[0-9]+$#', $value)) {
+			return getid3_lib::DecimalizeFraction($value);
+		} elseif (preg_match('#^[0-9]+$#', $value)) {
+			return getid3_lib::CastAsInt($value);
+		} elseif (preg_match('#^[0-9\.]+$#', $value)) {
+			return (float) $value;
+		}
+		return $value;
 	}
 
 

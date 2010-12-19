@@ -334,82 +334,84 @@ class getid3_asf
 						$thisfile_asf_codeclistobject_codecentries_current['information'] = substr($ASFHeaderData, $offset, $CodecInformationLength);
 						$offset += $CodecInformationLength;
 
-						if ($thisfile_asf_codeclistobject_codecentries_current['type_raw'] == 2) {
-							// audio codec
+						if ($thisfile_asf_codeclistobject_codecentries_current['type_raw'] == 2) { // audio codec
+
 							if (strpos($thisfile_asf_codeclistobject_codecentries_current['description'], ',') === false) {
-								$ThisFileInfo['error'][] = '[asf][codec_list_object][codec_entries]['.$CodecEntryCounter.'][description] expected to contain comma-seperated list of parameters: "'.$thisfile_asf_codeclistobject_codecentries_current['description'].'"';
-								return false;
-							}
-							list($AudioCodecBitrate, $AudioCodecFrequency, $AudioCodecChannels) = explode(',', $this->TrimConvert($thisfile_asf_codeclistobject_codecentries_current['description']));
-							$thisfile_audio['codec'] = $this->TrimConvert($thisfile_asf_codeclistobject_codecentries_current['name']);
+								$ThisFileInfo['warning'][] = '[asf][codec_list_object][codec_entries]['.$CodecEntryCounter.'][description] expected to contain comma-seperated list of parameters: "'.$thisfile_asf_codeclistobject_codecentries_current['description'].'"';
+							} else {
 
-							if (!isset($thisfile_audio['bitrate']) && strstr($AudioCodecBitrate, 'kbps')) {
-								$thisfile_audio['bitrate'] = (int) (trim(str_replace('kbps', '', $AudioCodecBitrate)) * 1000);
-							}
-							//if (!isset($thisfile_video['bitrate']) && isset($thisfile_audio['bitrate']) && isset($thisfile_asf['file_properties_object']['max_bitrate']) && ($thisfile_asf_codeclistobject['codec_entries_count'] > 1)) {
-							if (!@$thisfile_video['bitrate'] && @$thisfile_audio['bitrate'] && @$ThisFileInfo['bitrate']) {
-								//$thisfile_video['bitrate'] = $thisfile_asf['file_properties_object']['max_bitrate'] - $thisfile_audio['bitrate'];
-								$thisfile_video['bitrate'] = $ThisFileInfo['bitrate'] - $thisfile_audio['bitrate'];
-							}
+								list($AudioCodecBitrate, $AudioCodecFrequency, $AudioCodecChannels) = explode(',', $this->TrimConvert($thisfile_asf_codeclistobject_codecentries_current['description']));
+								$thisfile_audio['codec'] = $this->TrimConvert($thisfile_asf_codeclistobject_codecentries_current['name']);
 
-							$AudioCodecFrequency = (int) trim(str_replace('kHz', '', $AudioCodecFrequency));
-							switch ($AudioCodecFrequency) {
-								case 8:
-								case 8000:
-									$thisfile_audio['sample_rate'] = 8000;
-									break;
-
-								case 11:
-								case 11025:
-									$thisfile_audio['sample_rate'] = 11025;
-									break;
-
-								case 12:
-								case 12000:
-									$thisfile_audio['sample_rate'] = 12000;
-									break;
-
-								case 16:
-								case 16000:
-									$thisfile_audio['sample_rate'] = 16000;
-									break;
-
-								case 22:
-								case 22050:
-									$thisfile_audio['sample_rate'] = 22050;
-									break;
-
-								case 24:
-								case 24000:
-									$thisfile_audio['sample_rate'] = 24000;
-									break;
-
-								case 32:
-								case 32000:
-									$thisfile_audio['sample_rate'] = 32000;
-									break;
-
-								case 44:
-								case 441000:
-									$thisfile_audio['sample_rate'] = 44100;
-									break;
-
-								case 48:
-								case 48000:
-									$thisfile_audio['sample_rate'] = 48000;
-									break;
-
-								default:
-									$ThisFileInfo['warning'][] = 'unknown frequency: "'.$AudioCodecFrequency.'" ('.$this->TrimConvert($thisfile_asf_codeclistobject_codecentries_current['description']).')';
-									break;
-							}
-
-							if (!isset($thisfile_audio['channels'])) {
-								if (strstr($AudioCodecChannels, 'stereo')) {
-									$thisfile_audio['channels'] = 2;
-								} elseif (strstr($AudioCodecChannels, 'mono')) {
-									$thisfile_audio['channels'] = 1;
+								if (!isset($thisfile_audio['bitrate']) && strstr($AudioCodecBitrate, 'kbps')) {
+									$thisfile_audio['bitrate'] = (int) (trim(str_replace('kbps', '', $AudioCodecBitrate)) * 1000);
 								}
+								//if (!isset($thisfile_video['bitrate']) && isset($thisfile_audio['bitrate']) && isset($thisfile_asf['file_properties_object']['max_bitrate']) && ($thisfile_asf_codeclistobject['codec_entries_count'] > 1)) {
+								if (!@$thisfile_video['bitrate'] && @$thisfile_audio['bitrate'] && @$ThisFileInfo['bitrate']) {
+									//$thisfile_video['bitrate'] = $thisfile_asf['file_properties_object']['max_bitrate'] - $thisfile_audio['bitrate'];
+									$thisfile_video['bitrate'] = $ThisFileInfo['bitrate'] - $thisfile_audio['bitrate'];
+								}
+
+								$AudioCodecFrequency = (int) trim(str_replace('kHz', '', $AudioCodecFrequency));
+								switch ($AudioCodecFrequency) {
+									case 8:
+									case 8000:
+										$thisfile_audio['sample_rate'] = 8000;
+										break;
+
+									case 11:
+									case 11025:
+										$thisfile_audio['sample_rate'] = 11025;
+										break;
+
+									case 12:
+									case 12000:
+										$thisfile_audio['sample_rate'] = 12000;
+										break;
+
+									case 16:
+									case 16000:
+										$thisfile_audio['sample_rate'] = 16000;
+										break;
+
+									case 22:
+									case 22050:
+										$thisfile_audio['sample_rate'] = 22050;
+										break;
+
+									case 24:
+									case 24000:
+										$thisfile_audio['sample_rate'] = 24000;
+										break;
+
+									case 32:
+									case 32000:
+										$thisfile_audio['sample_rate'] = 32000;
+										break;
+
+									case 44:
+									case 441000:
+										$thisfile_audio['sample_rate'] = 44100;
+										break;
+
+									case 48:
+									case 48000:
+										$thisfile_audio['sample_rate'] = 48000;
+										break;
+
+									default:
+										$ThisFileInfo['warning'][] = 'unknown frequency: "'.$AudioCodecFrequency.'" ('.$this->TrimConvert($thisfile_asf_codeclistobject_codecentries_current['description']).')';
+										break;
+								}
+
+								if (!isset($thisfile_audio['channels'])) {
+									if (strstr($AudioCodecChannels, 'stereo')) {
+										$thisfile_audio['channels'] = 2;
+									} elseif (strstr($AudioCodecChannels, 'mono')) {
+										$thisfile_audio['channels'] = 1;
+									}
+								}
+
 							}
 						}
 					}
@@ -749,7 +751,8 @@ class getid3_asf
 
 							case 'wm/albumartist':
 							case 'artist':
-								$thisfile_asf_comments['artist'] = array($this->TrimTerm($thisfile_asf_extendedcontentdescriptionobject_contentdescriptor_current['value']));
+								// Note: not 'artist', that comes from 'author' tag
+								$thisfile_asf_comments['albumartist'] = array($this->TrimTerm($thisfile_asf_extendedcontentdescriptionobject_contentdescriptor_current['value']));
 								break;
 
 							case 'wm/albumtitle':
@@ -762,9 +765,19 @@ class getid3_asf
 								$thisfile_asf_comments['genre'] = array($this->TrimTerm($thisfile_asf_extendedcontentdescriptionobject_contentdescriptor_current['value']));
 								break;
 
+							case 'wm/partofset':
+								$thisfile_asf_comments['partofset'] = array($this->TrimTerm($thisfile_asf_extendedcontentdescriptionobject_contentdescriptor_current['value']));
+								break;
+
 							case 'wm/tracknumber':
 							case 'tracknumber':
-								$thisfile_asf_comments['track'] = array(intval($this->TrimTerm($thisfile_asf_extendedcontentdescriptionobject_contentdescriptor_current['value'])));
+								// be careful casting to int: casting unicode strings to int gives unexpected results (stops parsing at first non-numeric character)
+								$thisfile_asf_comments['track'] = array($this->TrimTerm($thisfile_asf_extendedcontentdescriptionobject_contentdescriptor_current['value']));
+								foreach ($thisfile_asf_comments['track'] as $key => $value) {
+									if (preg_match('/^[0-9\x00]+$/', $value)) {
+										$thisfile_asf_comments['track'][$key] = intval(str_replace("\x00", '', $value));
+									}
+								}
 								break;
 
 							case 'wm/track':
@@ -794,7 +807,7 @@ class getid3_asf
 							case 'id3':
 								// id3v2 module might not be loaded
 								if (class_exists('getid3_id3v2')) {
-								    $tempfile         = tempnam('*', 'getID3');
+								    $tempfile         = tempnam((function_exists('sys_get_temp_dir') ? sys_get_temp_dir() : ini_get('upload_tmp_dir')), 'getID3');
 								    $tempfilehandle   = fopen($tempfile, "wb");
 									$tempThisfileInfo = array('encoding'=>$ThisFileInfo['encoding']);
 									fwrite($tempfilehandle, $thisfile_asf_extendedcontentdescriptionobject_contentdescriptor_current['value']);
@@ -849,7 +862,7 @@ class getid3_asf
 								$thisfile_asf_extendedcontentdescriptionobject_contentdescriptor_current['dataoffset'] = $wm_picture_offset;
 								$thisfile_asf_extendedcontentdescriptionobject_contentdescriptor_current['data'] = substr($thisfile_asf_extendedcontentdescriptionobject_contentdescriptor_current['value'], $wm_picture_offset);
 								unset($thisfile_asf_extendedcontentdescriptionobject_contentdescriptor_current['value']);
-
+								$thisfile_asf_comments['picture'] = array($thisfile_asf_extendedcontentdescriptionobject_contentdescriptor_current['data']);
 								break;
 
 							default:
@@ -1405,7 +1418,7 @@ class getid3_asf
 		return true;
 	}
 
-	function ASFCodecListObjectTypeLookup($CodecListType) {
+	static function ASFCodecListObjectTypeLookup($CodecListType) {
 		static $ASFCodecListObjectTypeLookup = array();
 		if (empty($ASFCodecListObjectTypeLookup)) {
 			$ASFCodecListObjectTypeLookup[0x0001] = 'Video Codec';
@@ -1416,7 +1429,7 @@ class getid3_asf
 		return (isset($ASFCodecListObjectTypeLookup[$CodecListType]) ? $ASFCodecListObjectTypeLookup[$CodecListType] : 'Invalid Codec Type');
 	}
 
-	function KnownGUIDs() {
+	static function KnownGUIDs() {
 		static $GUIDarray = array();
 		if (empty($GUIDarray)) {
 			$GUIDarray['GETID3_ASF_Extended_Stream_Properties_Object']   = '14E6A5CB-C672-4332-8399-A96952065B5A';
@@ -1529,15 +1542,15 @@ class getid3_asf
 		return $GUIDarray;
 	}
 
-	function GUIDname($GUIDstring) {
+	static function GUIDname($GUIDstring) {
 		static $GUIDarray = array();
 		if (empty($GUIDarray)) {
-			$GUIDarray = $this->KnownGUIDs();
+			$GUIDarray = getid3_asf::KnownGUIDs();
 		}
 		return array_search($GUIDstring, $GUIDarray);
 	}
 
-	function ASFIndexObjectIndexTypeLookup($id) {
+	static function ASFIndexObjectIndexTypeLookup($id) {
 		static $ASFIndexObjectIndexTypeLookup = array();
 		if (empty($ASFIndexObjectIndexTypeLookup)) {
 			$ASFIndexObjectIndexTypeLookup[1] = 'Nearest Past Data Packet';
@@ -1547,7 +1560,7 @@ class getid3_asf
 		return (isset($ASFIndexObjectIndexTypeLookup[$id]) ? $ASFIndexObjectIndexTypeLookup[$id] : 'invalid');
 	}
 
-	function GUIDtoBytestring($GUIDstring) {
+	static function GUIDtoBytestring($GUIDstring) {
 		// Microsoft defines these 16-byte (128-bit) GUIDs in the strangest way:
 		// first 4 bytes are in little-endian order
 		// next 2 bytes are appended in little-endian order
@@ -1582,7 +1595,7 @@ class getid3_asf
 		return $hexbytecharstring;
 	}
 
-	function BytestringToGUID($Bytestring) {
+	static function BytestringToGUID($Bytestring) {
 		$GUIDstring  = str_pad(dechex(ord($Bytestring{3})),  2, '0', STR_PAD_LEFT);
 		$GUIDstring .= str_pad(dechex(ord($Bytestring{2})),  2, '0', STR_PAD_LEFT);
 		$GUIDstring .= str_pad(dechex(ord($Bytestring{1})),  2, '0', STR_PAD_LEFT);
@@ -1607,7 +1620,7 @@ class getid3_asf
 		return strtoupper($GUIDstring);
 	}
 
-	function FILETIMEtoUNIXtime($FILETIME, $round=true) {
+	static function FILETIMEtoUNIXtime($FILETIME, $round=true) {
 		// FILETIME is a 64-bit unsigned integer representing
 		// the number of 100-nanosecond intervals since January 1, 1601
 		// UNIX timestamp is number of seconds since January 1, 1970
@@ -1618,7 +1631,7 @@ class getid3_asf
 		return ($FILETIME - 116444736000000000) / 10000000;
 	}
 
-	function WMpictureTypeLookup($WMpictureType) {
+	static function WMpictureTypeLookup($WMpictureType) {
 		static $WMpictureTypeLookup = array();
 		if (empty($WMpictureTypeLookup)) {
 			$WMpictureTypeLookup[0x03] = getid3_lib::iconv_fallback('ISO-8859-1', 'UTF-16LE', 'Front Cover');
@@ -1645,7 +1658,7 @@ class getid3_asf
 
 
 	// Remove terminator 00 00 and convert UNICODE to Latin-1
-	function TrimConvert($string) {
+	static function TrimConvert($string) {
 
 		// remove terminator, only if present (it should be, but...)
 		if (substr($string, strlen($string) - 2, 2) == "\x00\x00") {
@@ -1657,7 +1670,7 @@ class getid3_asf
 	}
 
 
-	function TrimTerm($string) {
+	static function TrimTerm($string) {
 
 		// remove terminator, only if present (it should be, but...)
 		if (substr($string, -2) == "\x00\x00") {

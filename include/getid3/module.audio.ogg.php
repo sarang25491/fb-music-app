@@ -223,7 +223,7 @@ class getid3_ogg
 		return true;
 	}
 
-	function ParseVorbisPageHeader(&$filedata, &$filedataoffset, &$ThisFileInfo, &$oggpageinfo) {
+	static function ParseVorbisPageHeader(&$filedata, &$filedataoffset, &$ThisFileInfo, &$oggpageinfo) {
 		$ThisFileInfo['audio']['dataformat'] = 'vorbis';
 		$ThisFileInfo['audio']['lossless']   = false;
 
@@ -270,7 +270,7 @@ class getid3_ogg
 		return true;
 	}
 
-	function ParseOggPageHeader(&$fd) {
+	static function ParseOggPageHeader(&$fd) {
 		// http://xiph.org/ogg/vorbis/doc/framing.html
 		$oggheader['page_start_offset'] = ftell($fd); // where we started from in the file
 
@@ -322,7 +322,7 @@ class getid3_ogg
 	}
 
 
-	function ParseVorbisCommentsFilepointer(&$fd, &$ThisFileInfo) {
+	static function ParseVorbisCommentsFilepointer(&$fd, &$ThisFileInfo) {
 
 		$OriginalOffset = ftell($fd);
 		$CommentStartOffset = $OriginalOffset;
@@ -394,7 +394,7 @@ class getid3_ogg
 				$commentdata .= fread($fd, getid3_ogg::OggPageSegmentLength($ThisFileInfo['ogg']['pageheader'][$VorbisCommentPage], 1));
 
 			}
-			$ThisFileInfo['ogg']['comments_raw'][$i]['size']       = getid3_lib::LittleEndian2Int(substr($commentdata, $commentdataoffset, 4));
+			$ThisFileInfo['ogg']['comments_raw'][$i]['size'] = getid3_lib::LittleEndian2Int(substr($commentdata, $commentdataoffset, 4));
 
 			// replace avdataoffset with position just after the last vorbiscomment
 			$ThisFileInfo['avdataoffset'] = $ThisFileInfo['ogg']['comments_raw'][$i]['dataoffset'] + $ThisFileInfo['ogg']['comments_raw'][$i]['size'] + 4;
@@ -402,7 +402,7 @@ class getid3_ogg
 			$commentdataoffset += 4;
 			while ((strlen($commentdata) - $commentdataoffset) < $ThisFileInfo['ogg']['comments_raw'][$i]['size']) {
 				if (($ThisFileInfo['ogg']['comments_raw'][$i]['size'] > $ThisFileInfo['avdataend']) || ($ThisFileInfo['ogg']['comments_raw'][$i]['size'] < 0)) {
-					$ThisFileInfo['error'][] = 'Invalid Ogg comment size (comment #'.$i.', claims to be '.number_format($ThisFileInfo['ogg']['comments_raw'][$i]['size']).' bytes) - aborting reading comments';
+					$ThisFileInfo['warning'][] = 'Invalid Ogg comment size (comment #'.$i.', claims to be '.number_format($ThisFileInfo['ogg']['comments_raw'][$i]['size']).' bytes) - aborting reading comments';
 					break 2;
 				}
 
@@ -425,7 +425,16 @@ class getid3_ogg
 				$commentdata .= $AsYetUnusedData;
 
 				//$commentdata .= fread($fd, $ThisFileInfo['ogg']['pageheader'][$oggpageinfo['page_seqno']]['page_length']);
-				$commentdata .= fread($fd, getid3_ogg::OggPageSegmentLength($ThisFileInfo['ogg']['pageheader'][$VorbisCommentPage], 1));
+				if (!isset($ThisFileInfo['ogg']['pageheader'][$VorbisCommentPage])) {
+					$ThisFileInfo['warning'][] = 'undefined Vorbis Comment page "'.$VorbisCommentPage.'" at offset '.ftell($fd);
+					break;
+				}
+				$readlength = getid3_ogg::OggPageSegmentLength($ThisFileInfo['ogg']['pageheader'][$VorbisCommentPage], 1);
+				if ($readlength <= 0) {
+					$ThisFileInfo['warning'][] = 'invalid length Vorbis Comment page "'.$VorbisCommentPage.'" at offset '.ftell($fd);
+					break;
+				}
+				$commentdata .= fread($fd, $readlength);
 
 				//$filebaseoffset += $oggpageinfo['header_end_offset'] - $oggpageinfo['page_start_offset'];
 			}
@@ -503,7 +512,7 @@ class getid3_ogg
 		return true;
 	}
 
-	function SpeexBandModeLookup($mode) {
+	static function SpeexBandModeLookup($mode) {
 		static $SpeexBandModeLookup = array();
 		if (empty($SpeexBandModeLookup)) {
 			$SpeexBandModeLookup[0] = 'narrow';
@@ -514,7 +523,7 @@ class getid3_ogg
 	}
 
 
-	function OggPageSegmentLength($OggInfoArray, $SegmentNumber=1) {
+	static function OggPageSegmentLength($OggInfoArray, $SegmentNumber=1) {
 		for ($i = 0; $i < $SegmentNumber; $i++) {
 			$segmentlength = 0;
 			foreach ($OggInfoArray['segment_table'] as $key => $value) {
@@ -528,7 +537,7 @@ class getid3_ogg
 	}
 
 
-	function get_quality_from_nominal_bitrate($nominal_bitrate) {
+	static function get_quality_from_nominal_bitrate($nominal_bitrate) {
 
 		// decrease precision
 		$nominal_bitrate = $nominal_bitrate / 1000;

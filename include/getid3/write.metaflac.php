@@ -28,10 +28,10 @@ class getid3_write_metaflac
 
 	function WriteMetaFLAC() {
 
-		if (!ini_get('safe_mode')) {
+		if (preg_match('#(1|ON)#i', ini_get('safe_mode'))) {
 
 			// Create file with new comments
-			$tempcommentsfilename = tempnam('*', 'getID3');
+			$tempcommentsfilename = tempnam((function_exists('sys_get_temp_dir') ? sys_get_temp_dir() : ini_get('upload_tmp_dir')), 'getID3');
 			if ($fpcomments = @fopen($tempcommentsfilename, 'wb')) {
 
 				foreach ($this->tag_data as $key => $value) {
@@ -106,7 +106,7 @@ class getid3_write_metaflac
 
 	function DeleteMetaFLAC() {
 
-		if (!ini_get('safe_mode')) {
+		if (preg_match('#(1|ON)#i', ini_get('safe_mode'))) {
 
 			$oldignoreuserabort = ignore_user_abort(true);
 			if (GETID3_OS_ISWINDOWS) {
@@ -157,8 +157,8 @@ class getid3_write_metaflac
 
 		// replace invalid chars with a space, return uppercase text
 		// Thanks Chris Bolt <chris-getid3Øbolt*cx> for improving this function
-		// note: ereg_replace() replaces nulls with empty string (not space)
-		return strtoupper(ereg_replace('[^ -<>-}]', ' ', str_replace("\x00", ' ', $originalcommentname)));
+		// note: *reg_replace() replaces nulls with empty string (not space)
+		return strtoupper(preg_replace('#[^ -<>-}]#', ' ', str_replace("\x00", ' ', $originalcommentname)));
 
 	}
 
