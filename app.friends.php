@@ -7,10 +7,6 @@ It then asks Facebook for their name and their small profile photo.
 
 function render($user_friends_uploads, $user_friends_info, $rel_url)
 {
-   if (count($user_friends_uploads) == 0) {
-      error('Your friends have not added songs to their profile!','Go yell at them, maybe they will snap!');
-   }
-
    foreach ($user_friends_info as $transverse) {
       if (isset($transverse['page_id']))
          $transverse['uid'] = $transverse['page_id'];

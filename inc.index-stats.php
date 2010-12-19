@@ -10,17 +10,17 @@
       <td valign="top" style="padding: 5px;">
          <?php $fullplays = $db->getStats($user, 'fullplay'); ?>
          <?php $clicks = $db->getStats($user, 'start'); ?>         
-         In your lifetime, your songs were played <b><?php echo $clicks; ?></b> times, but were only fully listened to <b><?php if ($fullplays > $clicks) echo $clicks; else echo $fullplays; ?></b> times.
+         In the past year, your songs were played <b><?php echo $clicks; ?></b> times, but were only fully listened to <b><?php if ($fullplays > $clicks) echo $clicks; else echo $fullplays; ?></b> times.
          <br /><br />
          <?php $todayPlays = $db->getStats($user, 'fullplay', '-1 day'); ?>
          <?php $todayClicks = $db->getstats($user, 'start', '-1 day'); ?>
-         <b>Today</b>: <?php echo $todayClicks; ?> Clicks, <?php echo $todayPlays; ?> Plays<br/ >
+         <b>Today</b>: <?php echo $todayClicks; ?> clicks, <?php echo $todayPlays; ?> plays<br/ >
          <?php $pastWeekPlays = $db->getStats($user, 'fullplay', '-1 week'); ?>
          <?php $pastWeekClicks = $db->getstats($user, 'start', '-1 week'); ?>
-         <b>This Week</b>: <?php echo $pastWeekClicks; ?> Clicks, <?php echo $pastWeekPlays; ?> Plays<br/ >
+         <b>This Week</b>: <?php echo $pastWeekClicks; ?> clicks, <?php echo $pastWeekPlays; ?> plays<br/ >
          <?php $pastMonthPlays = $db->getStats($user, 'fullplay', '-1 month'); ?>
          <?php $pastMonthClicks = $db->getstats($user, 'start', '-1 month'); ?>
-         <b>This Month</b>: <?php echo $pastMonthClicks; ?> Clicks, <?php echo $pastMonthPlays; ?> Plays
+         <b>This Month</b>: <?php echo $pastMonthClicks; ?> clicks, <?php echo $pastMonthPlays; ?> plays
       <td>  
    </tr>
 </table>
