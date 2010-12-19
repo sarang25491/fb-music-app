@@ -19,7 +19,7 @@ if(!isset($_GET['id'])) {
 	<center>
 		<embed
 			src="<?php echo $config['fb']['appcallbackurl']; ?>flash/player/player.swf"
-			flashvars="plugins=ltas,<?php echo $config['fb']['appcallbackurl']; ?>flash/plugins/burstplugin.swf&burstplugin.xid=<?php echo $id; ?>&skin=<?php echo $config['fb']['appcallbackurl']; ?>flash/skin/skewd.zip&bufferlength=1"
+			flashvars="plugins=<?php echo $config['fb']['appcallbackurl']; ?>flash/plugins/burstplugin.swf&burstplugin.xid=<?php echo $id; ?>&skin=<?php echo $config['fb']['appcallbackurl']; ?>flash/skin/skewd.zip&bufferlength=1"
 			height="28"
 			width="500"
 		/>
@@ -27,7 +27,7 @@ if(!isset($_GET['id'])) {
 <?php } else if (isset($_GET['from_friends']) || isset($_GET['from_tab'])) { ?>
 	<fb:swf 
 		swfsrc="<?php echo $config['fb']['appcallbackurl']; ?>flash/player/player.swf"
-		flashvars="file=http://music.burst-dev.com/testing/flash/test.mp3&plugins=<?php echo $config['fb']['appcallbackurl']; ?>flash/plugins/burstplugin.swf&burstplugin.xid=<?php echo $id; ?>&skin=<?php echo $config['fb']['appcallbackurl']; ?>flash/skin/skewd.zip&bufferlength=1"
+		flashvars="plugins=<?php echo $config['fb']['appcallbackurl']; ?>flash/plugins/burstplugin.swf&burstplugin.xid=<?php echo $id; ?>&skin=<?php echo $config['fb']['appcallbackurl']; ?>flash/skin/skewd.zip&bufferlength=1"
 		height="28" 
 		width="<?php if(isset($from_friends)) echo "420"; elseif(isset($from_tab)) echo "760"; ?>" 
 	/>
