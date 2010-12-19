@@ -5,7 +5,6 @@ Queries Facebook to get all the user's friends who have added the application.
 It then asks Facebook for their name and their small profile photo.
 */
 
-
 function render($user_friends_uploads, $user_friends_info, $rel_url)
 {
    if (count($user_friends_uploads) == 0) {
@@ -66,13 +65,8 @@ function render($user_friends_uploads, $user_friends_info, $rel_url)
 
       }
 
-      if($transverse['pic_square'] == NULL)
-         $pic_square = "http://static.ak.fbcdn.net/pics/t_silhouette.jpg";
-      else
-         $pic_square = $transverse['pic_square'];
-
       $fbml = '' . $fbml . '</table></div></td>
-      <td style="padding-left: 8px; width: 40px;"><a href="http://hs.facebook.com/profile.php?id=' . $transverse['uid'] . '"><img src="' . $pic_square . '"></a>
+      <td style="padding-left: 8px; width: 40px;"><a href="http://facebook.com/profile.php?id=' . $transverse['uid'] . '"><img src="http://graph.facebook.com/' . $transverse['uid'] . '/picture"></a>
       </td>
       <td style="padding-left: 8px; width: 100px;"><span style="margin-bottom: 2px; color: #aaaaaa; font-size: 10.5px;">Music from:</span><br /><span style="font-weight: bold;"><a href="http://hs.facebook.com/profile.php?id=' . $transverse['uid'] . '">' . $transverse['name'] . '</a></span>
       </td>
@@ -84,7 +78,7 @@ function render($user_friends_uploads, $user_friends_info, $rel_url)
 }
 
 //multiquerying facebook db for the appropriate dataset
-$fb_data = $facebook->api_client->fql_multiquery('{"query1":"SELECT name,pic_square,page_id FROM page WHERE page_id IN (SELECT page_id FROM page_fan WHERE uid=' . $user . ') AND has_added_app", "query2":"SELECT uid,name,pic_square FROM user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1=' . $user . ') AND is_app_user"}');
+$fb_data = $facebook->api_client->fql_multiquery('{"query1":"SELECT name,page_id FROM page WHERE page_id IN (SELECT page_id FROM page_fan WHERE uid=' . $user . ') AND has_added_app", "query2":"SELECT uid,name FROM user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1=' . $user . ') AND is_app_user"}');
 
 /*
 Since MySQL cannot take array format to search,
