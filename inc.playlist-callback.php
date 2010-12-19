@@ -46,20 +46,4 @@ if (isset($_GET['grabApiKey'])) {
 	$md5 = md5($_GET['id']);
 	echo '<b>API HASH KEY</b>: ' . $_GET['id'] . '-' . $md5 . '';
 }
-
-if (isset($_GET['grabInfo'])) {
-	$songData = $db->Raw("SELECT `type`,`count` FROM `userdb_uploads` WHERE `xid`='$_GET[id]'");
-	// types: link, upload
-	if ($songData[0]['type'] == 'link')
-		echo 'Song was <b>given</b>';
-	else if ($songData[0]['type'] == 'upload')
-		echo 'Song was <b>uploaded</b>';
-		
-	echo ' and was played <b>' . $songData[0]['count'] . '</b> times.';
-}
-
-if (isset($_GET['grabPlayerUrl'])) {
-	$encodedId = base64_encode("" . $_GET['id'] . "-" . time() . "");
-	echo '<a style="font-size: 10pt;" target="_parent" href="' . $config['fb']['appcallbackurl'] . 'playlist.php?id=' . $encodedId . '">' . $config['fb']['appcallbackurl'] . 'playlist.php?id=' . $encodedId . '</a>'; 
-}
 ?>

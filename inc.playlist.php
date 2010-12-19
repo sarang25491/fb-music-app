@@ -54,7 +54,6 @@ A:hover {text-decoration: underline; color: red;}
 					<?php if (!isset($userId)) { ?> 
 					<td width="20%">
 						<div align="right" style="margin-top: 2px; padding-right: 4px;">
-                     <a class="blue" valign="middle" title="Song Info" onclick="showInfo(<?php echo $song['xid']; ?>)"><img src="img/info.png" border="0" style="padding-right:2px;"></a>
                      <a class="move" border="0" title="Hold & Drag to Sort"><img src="img/move.png" border="0" style="padding-right: 2px;"></a>
                      <a class="blue" valign="middle" title="Edit Tags" onclick="editTag(<?php echo $song['xid']; ?>)"><img src="img/tag_blue_edit.png" border="0" style="padding-right:2px;"></a>
                      <a class="red" valign="middle" title="Delete" onclick="removeSong(<?php echo $song['xid']; ?>)"><img src="img/delete.png" border="0"></a>

@@ -152,16 +152,6 @@ function openPlayer(xid) {
 	$("#playerBar").delay(500).fadeIn(250);
 	$("#player").delay(1250).slideDown(500);
 }
-
-function showInfo(xid) {
-	$("#status").slideUp(50);
-	$.post("inc.playlist-callback.php?grabInfo&id=" +xid,
-		function (response) {
-			$("#status").delay(500).html(response);
-		}
-	)
-	$("#status").delay(500).slideDown(250);
-}
 </script>
 
 <div style="height: 25px;"></div>
