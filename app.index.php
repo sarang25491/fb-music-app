@@ -37,8 +37,8 @@ Below the editor is a button where a user can add a song.
                </tr>
             </table>
             </div>
-            <div style="height: 16px; margin: -5px 20px 10px 0;">
-               <div style="float: right; padding: 3px 5px 3px 5px; border-left: 1px solid #d4dae8; border-bottom: 1px solid #d4dae8; border-right: 1px solid #d4dae8; background-color: #eceff6;">
+            <div style="height: 16px; margin: -5px 0px 10px 0;">
+               <div style="float: right; padding: 3px 5px; border-left: 1px solid #d4dae8; border-bottom: 1px solid #d4dae8; border-right: 1px solid #d4dae8; background-color: #eceff6;">
                   <b>Playlist Link</b>: <a href="<?php echo $config['fb']['appcallbackurl']; ?>playlist.php?id=<?php echo $user; ?>"><?php echo $config['fb']['appcallbackurl']; ?>playlist.php?id=<?php echo $user; ?></a>
                </div>
             </div> 
@@ -47,7 +47,7 @@ Below the editor is a button where a user can add a song.
 
          <td width="170px" valign="top">
             <?php include_once('inc.index-menu.php'); ?>
-            <?php // include_once('inc.index-stats.php'); ?>
+            <?php include_once('inc.index-stats.php'); ?>
          </td>
 
       </tr>

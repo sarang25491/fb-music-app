@@ -50,6 +50,21 @@ class BurstMySQL {
       return $mReturnData;
    }
 
+   public function getStats($user, $activity, $offset='-1 year')
+   {
+      switch($activity)
+      {
+         case "start": $activity = 'p'; break;
+         case "fullplay": $activity = 'fp'; break;
+         default: return 0;
+      } 
+       
+      $date = date('Y-m-d', strtotime($offset));
+      $dbCall = $this->Raw("SELECT COUNT(*) FROM `userdb_activity` WHERE `user`='$user' AND `time` > '$date' AND `action`='$activity'");  
+      return $dbCall[0]['COUNT(*)'];
+   }
+      
+
    public function logActivity($user, $activity, $data='')
    {
       switch ($activity)
