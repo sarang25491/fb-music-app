@@ -1,5 +1,5 @@
 <?php
-if ($_SERVER['REQUEST_METHOD'] == 'GET') die();
+if (str_pos($_SERVER['HTTP_REFERER'],'http://music.burst-dev.com') === FALSE) die();
 
 $pre = 'skip_fbapi';
 include 'include/config.php';
