@@ -1,4 +1,6 @@
 <?php
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') die();
+
 $pre = 'skip_fbapi';
 include 'include/config.php';
 
