@@ -4,12 +4,9 @@ include 'include/config.php';
 
 $secret_key = '4994a15d0562dc31ae2901c7f61a747a';
 
-if ($_GET['uid'] == 0) die();
-if ($_GET['total'] == 0) die();
-
-if ($_GET['sig'] == md5($_GET['id'] . ':' . $_GET['new'] . ':' . $_GET['uid'] . ':' . $secret_key) {
+if ($_GET['sig'] == md5($_GET['id'] . ':' . $_GET['new'] . ':' . $_GET['uid'] . ':' . $secret_key)) {
 	// sjlu: 12-19-2010 - new implementation of third_party_id is needed
-   if (isset($_GET['custom_fb3phashmode']))
+   if (!is_int($_GET['uid']))
    {
       $db->Raw("UPDATE `userdb_users` SET `credit_new`='$_GET[total]' WHERE `third_party_id`='$_GET[uid]'");
    }
