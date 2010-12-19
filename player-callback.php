@@ -1,5 +1,5 @@
 <?php
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') die();
+if ($_SERVER['REQUEST_METHOD'] == 'GET') die();
 
 $pre = 'skip_fbapi';
 include 'include/config.php';
