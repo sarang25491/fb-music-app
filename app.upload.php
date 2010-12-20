@@ -1,53 +1,3 @@
-<?php
-// checks how many credits the user has available
-// pulls it from the database and sets it to a variable
-// if it is a facebook page, it will also take the owner's available slots
-
-$credit = $db->Raw("SELECT `credit`,`override` FROM `userdb_users` WHERE `user`='$user'");
-$credit = $credit[0]['credit']+$credit[0]['override'];
-
-$usage = $db->Raw("SELECT COUNT(*) FROM `userdb_uploads` WHERE `user`='$user' AND `type`='upload'");
-$usage = $usage[0]['COUNT(*)'];
-
-if (isset($_GET['fb_page_id'])) 
-{
-	$credit_of_owner = $db->Raw("SELECT `credit`,`override` FROM `userdb_users` WHERE `user`='$_POST[fb_sig_user]'");
-	$credit = $credit + $credit_of_owner[0]['credit'] + $credit_of_owner[0]['override'];
-	
-	$usage_of_owner = $db->Raw("SELECT COUNT(*) FROM `userdb_uploads` WHERE `user`='$_POST[fb_sig_user]'");
-	$usage = $usage + $usage_of_owner[0]['COUNT(*)'];
-} else {
-	$users_pages = $db->Raw("SELECT `fb_page_id` FROM `pages` WHERE `owner`=$user");
-	
-	if (count($users_pages) !== 0) {
-		foreach ($users_pages as $page_parse) 
-		{
-			$page_credit = $db->Raw("SELECT `credit`,`override` FROM `userdb_users` WHERE `user`='$page_parse[fb_page_id]'");
-			$credit = $credit + $page_credit[0]['credit'] + $page_credit[0]['override'];
-			
-			$page_usage = $db->Raw("SELECT COUNT(*) FROM `userdb_uploads` WHERE `user`='$page_parse[fb_page_id]'");
-			$usage = $usage + $page_usage[0]['COUNT(*)'];
-		}
-	}
-}
-?>
-
-<?php
-if($credit+$config['basicSlots'] <= $usage)
-{
-	if(isset($_GET['fb_page_id']))
-	{ 
-		redirect('' . $config['fb']['fburl'] . '?tab=index&display=add&fb_page_id=' . $_GET['fb_page_id'] . ''); 
-	} 
-	else
-	{ 
-		redirect('' . $config['fb']['fburl'] . '?tab=index&display=add'); 
-	}
-	
-	die('An error has occured. You should not be able to access this page if you do not have enough available slots.');
-} 
-?>
-
 <?php if($_GET['step'] == 'reset') { ?>
 	<?php 
 	$tempData = $db->Raw("SELECT `location` FROM `userdb_temporary` WHERE `user`='$user'");
@@ -59,82 +9,86 @@ if($credit+$config['basicSlots'] <= $usage)
 	<?php if(isset($_GET['fb_page_id'])) { redirect('' . $config['fb']['fburl'] . '?tab=index&fb_page_id=' . $_GET['fb_page_id'] . ''); } else { redirect('' . $config['fb']['fburl'] . '?tab=index'); } ?>
 <?php } elseif($_GET['step'] == 2) { ?>
 	<?php
-	if ($_FILES['upfile']['name'] == NULL) {
-		// just a nasty looking forward to page, differentiating between profiles and pages.
-      $error_msgs = array(
-                     'no_file' => 'You didn\'t provide us a file for us to process.',
-                     'file_format' => 'You gave us a file we could not understand, please check your file format and try again.',
-                     'file_size' => 'The file you gave us was too big, please give us a smaller file.'
-      );		
+   
+   $error_msgs = array(
+      'no_file' => 'You didn\'t provide us a file for us to process.',
+      'file_format' => 'You gave us a file we could not understand, please check your file format and try again.',
+      'file_size' => 'The file you gave us was too big, please give us a smaller file.',
+      'bad_hash' => 'Couldn\'t authorize your upload, you might have cntl+t\'ed.',
+      'temp_exists' => 'We already have a from you! Please continue or delete that entry.'
+   );
+		
+   if (count($db->Raw("SELECT `user` FROM `userdb_temporary` WHERE `user`='$user'")) > 0)
+      $error = 'temp_exists';
+   else if ($_GET['hash'] !== md5($_GET['credit'] . ':' . $_GET['usage'] . ':' . $user . ':' . $config['fb']['secret']))
+      $error = 'bad_hash';
+   else if ($_FILES['upfile']['name'] == NULL)
+      $error = 'no_file';
+   else if (!in_array(strtolower(substr($_FILES['upfile']['name'], strrpos($_FILES['upfile']['name'], '.') + 1)), array('mp3','m4a','mp4','aac','flv')))
+      $error = 'file_format';
+   else if ($_FILES['upfile']['size'] >= 20971520 || !file_exists($_FILES['upfile']['tmp_name']))
+      $error = 'file_size';
+ 
+   if (isset($error))
+   {
+      $url_append = '';
+      if (isset($_GET['fb_page_id']))
+         $url_append = '&fb_page_id=' . $_GET['fb_page_id'];
 
-      if(isset($_GET['fb_page_id'])) 
-      {  
-         $facebook->redirect("" . $config['fb']['fburl'] . "?tab=index&error=" . urlencode($error_msgs['no_file']) . "&fb_page_id=" . $_GET['fb_page_id'] . ""); 
-      } 
-      else 
-      { 
-         $facebook->redirect("" . $config['fb']['fburl'] . "?tab=index&error=" . urlencode($error_msgs['no_file']) . ""); 
-      }
-		
-	} elseif(!in_array(strtolower(substr($_FILES['upfile']['name'], strrpos($_FILES['upfile']['name'], '.') + 1)), array('mp3','m4a','mp4','aac','flv'))) {
-	
-		if(isset($_GET['fb_page_id'])) {  $facebook->redirect("" . $config['fb']['fburl'] . "?tab=index&error=" . urlencode($error_msgs['no_file']) . "&fb_page_id=" . $_GET['fb_page_id'] . ""); } else { $facebook->redirect("" . $config['fb']['fburl'] . "?tab=index&error=" . urlencode($error_msgs['no_file']) . ""); }
-		
-	} elseif ($_FILES['upfile']['size'] >= 20971520 || !file_exists($_FILES['upfile']['tmp_name'])) { 
-		if(isset($_GET['fb_page_id'])) {  $facebook->redirect("" . $config['fb']['fburl'] . "?tab=index&error=" . urlencode($error_msgs['file_size']) . "&fb_page_id=" . $_GET['fb_page_id'] . ""); } else { $facebook->redirect("" . $config['fb']['fburl'] . "?tab=index&error=" . urlencode($error_msgs['file_size']) . ""); }
-	?>
-	<?php } else { ?>
+      $facebook->redirect($config['fb']['fburl'] . "?tab=index&error=" . urlencode($error_msgs[$error]) . $url_append);
+      die();
+   }
+   ?>
 		<?php
-		
-		// We are first going to check it there's something already our control.
-		// If someone pressed the back button on their browser, they'll have a cache of old page
-		// So we're gonna assume that they want this new song in place
-		// therefore, we're going to replace it with the new data
-		
-		$tempData = $db->Raw("SELECT `location` FROM `userdb_temporary` WHERE `user`='$user'");
-		if (count($tempData) > 0) {
-			try {
-				unlink($tempData[0]['location']);
-			} catch (Exception $e) { }
-			$db->Raw("DELETE FROM `userdb_temporary` WHERE `user`='$user' LIMIT 1"); // limit for good coding practice
-		}
-		
-		require_once('include/getid3/getid3.php');
-		$getid3 = new getID3;
 	
-		try 
-		{
-			$id3data = $getid3->analyze($_FILES['upfile']['tmp_name']);
-			getid3_lib::CopyTagsToComments($id3data);
-			$title = htmlspecialchars(utf8_encode($id3data['comments_html']['title'][0]), ENT_QUOTES);
-			$artist = htmlspecialchars(utf8_encode($id3data['comments_html']['artist'][0]), ENT_QUOTES);
-			$playtime = $id3data['playtime_seconds'];
-			$sample_rate = $id3data['audio']['sample_rate'];
-			$filesize = $id3data['filesize'];
-			$fileformat = $id3data['fileformat'];
-		}
-		catch (Exception $e) 
-		{
-			echo 'ID3tag ERROR: ' .  $e->message;
-		}
+	// We are first going to check it there's something already our control.
+	// If someone pressed the back button on their browser, they'll have a cache of old page
+	// So we're gonna assume that they want this new song in place
+	// therefore, we're going to replace it with the new data
+	
+	$tempData = $db->Raw("SELECT `location` FROM `userdb_temporary` WHERE `user`='$user'");
+	if (count($tempData) > 0) {
+		try {
+			unlink($tempData[0]['location']);
+		} catch (Exception $e) { }
+		$db->Raw("DELETE FROM `userdb_temporary` WHERE `user`='$user' LIMIT 1"); // limit for good coding practice
+	}
+	
+	require_once('include/getid3/getid3.php');
+	$getid3 = new getID3;
 
-		include 'include/class.encryption.php';
-		$encryption = new encryption_class();
-		$md5 = md5_file($_FILES['upfile']['tmp_name']);
-		$secure_file_name = $encryption->encrypt(sha1($user), $md5);
+	try 
+	{
+		$id3data = $getid3->analyze($_FILES['upfile']['tmp_name']);
+		getid3_lib::CopyTagsToComments($id3data);
+		$title = htmlspecialchars(utf8_encode($id3data['comments_html']['title'][0]), ENT_QUOTES);
+		$artist = htmlspecialchars(utf8_encode($id3data['comments_html']['artist'][0]), ENT_QUOTES);
+		$playtime = $id3data['playtime_seconds'];
+		$sample_rate = $id3data['audio']['sample_rate'];
+		$filesize = $id3data['filesize'];
+		$fileformat = $id3data['fileformat'];
+	}
+	catch (Exception $e) 
+	{
+		echo 'ID3tag ERROR: ' .  $e->message;
+	}
 
-		$secure_temporary_location = '' . $config['server']['internal_url'] . 'users/temp/' . $secure_file_name . '.' . strtolower(substr($_FILES['upfile']['name'], strrpos($_FILES['upfile']['name'], '.') + 1)) . '';
-		rename($_FILES['upfile']['tmp_name'], $secure_temporary_location);
+	include 'include/class.encryption.php';
+	$encryption = new encryption_class();
+	$md5 = md5_file($_FILES['upfile']['tmp_name']);
+	$secure_file_name = $encryption->encrypt(sha1($user), $md5);
 
-		$db->Raw("INSERT INTO `userdb_temporary` (`user`,`title`,`artist`,`md5`,`filesize`,`fileformat`,`sample_rate`,`location`,`playtime`) VALUES ('$user','$title','$artist','$md5','$filesize','$fileformat','$sample_rate','$secure_temporary_location','$playtime')"); 
-		?>
-		
-		<div style="border: 1px solid #e2c822; background-color: #fff9d7; padding: 5px;">
-		<b><a href="<?php echo "" . $config['fb']['fburl'] . "?tab=index&display=add&method=upload&step=3" . pages($_GET['fb_page_id']) . ""; ?>">Please click here if you are not automatically redirected within five seconds...</a></b>
-		</div>
-		<?php if(isset($_GET['fb_page_id'])) { $facebook->redirect("" . $config['fb']['fburl'] . "?tab=index&display=add&method=upload&step=3&fb_page_id=" . $_GET['fb_page_id'] . ""); } else { $facebook->redirect("" . $config['fb']['fburl'] . "?tab=index&display=add&method=upload&step=3"); } ?>
+	$secure_temporary_location = '' . $config['server']['internal_url'] . 'users/temp/' . $secure_file_name . '.' . strtolower(substr($_FILES['upfile']['name'], strrpos($_FILES['upfile']['name'], '.') + 1)) . '';
+	rename($_FILES['upfile']['tmp_name'], $secure_temporary_location);
 
-	<?php } ?>
+	$db->Raw("INSERT INTO `userdb_temporary` (`user`,`title`,`artist`,`md5`,`filesize`,`fileformat`,`sample_rate`,`location`,`playtime`) VALUES ('$user','$title','$artist','$md5','$filesize','$fileformat','$sample_rate','$secure_temporary_location','$playtime')"); 
+	?>
+	
+	<div style="border: 1px solid #e2c822; background-color: #fff9d7; padding: 5px;">
+	<b><a href="<?php echo "" . $config['fb']['fburl'] . "?tab=index&display=add&method=upload&step=3" . pages($_GET['fb_page_id']) . ""; ?>">Please click here if you are not automatically redirected within five seconds...</a></b>
+	</div>
+	<?php if(isset($_GET['fb_page_id'])) { $facebook->redirect("" . $config['fb']['fburl'] . "?tab=index&display=add&method=upload&step=3&fb_page_id=" . $_GET['fb_page_id'] . ""); } else { $facebook->redirect("" . $config['fb']['fburl'] . "?tab=index&display=add&method=upload&step=3"); } ?>
+
 <?php } elseif ($_GET['step'] == 3) { ?>
 	<?php if(isset($error)) { ?>
 		<?php if($error == 'missing_information') { ?>

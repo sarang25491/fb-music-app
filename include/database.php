@@ -50,6 +50,50 @@ class BurstMySQL {
       return $mReturnData;
    }
 
+   public function getSlots($user)
+   {
+      $slots = $this->Raw("SELECT `credit`,`credit_new`,`override` FROM `userdb_users` WHERE `user`='$user'");
+      
+      if (count($slots) == 0)
+         return 0;
+
+      $slots = $slots[0]['credit']+$slots[0]['credit_new']+$slots[0]['override'];   
+      return $slots;
+   }
+
+   public function getUsage($input)
+   {
+      if (is_array($input))
+      {
+         $idString = "'";
+         foreach ($input as $user) $idString .= $user . "','";
+         $idString = substr($idString, 0, -2);
+         $usage = $this->Raw("SELECT COUNT(*) FROM `userdb_uploads` WHERE `user` IN ($idString)");
+      }
+      else
+      {
+         $usage = $this->Raw("SELECT COUNT(*) FROM `userdb_uploads` WHERE `user`='$input'");
+      }      
+
+      return $usage[0]['COUNT(*)'];
+   }
+
+   /*
+   checkSlots
+   checks to see if the inputted user has available slots
+   @return: boolean $return
+   @arg: int $user, array() $ids, obj. $facebook
+   */
+   public function checkSlots($user, $ids)
+   {
+      $slots = getSlots();
+      $usage = getUsage();
+      
+      if ($slots-$usage > 0)
+         return true;
+   }
+
+
    public function getStats($user, $activity, $offset='-1 year')
    {
       switch($activity)

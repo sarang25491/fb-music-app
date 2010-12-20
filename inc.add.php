@@ -1,37 +1,21 @@
 <?php
-// checks how many credits the user has available
-// pulls it from the database and sets it to a variable
-// if it is a facebook page, it will also take the owner's available slots
-
-$credit = $db->Raw("SELECT `credit`,`override` FROM `userdb_users` WHERE `user`='$user'");
-$credit = $credit[0]['credit']+$credit[0]['override'];
-
-$usage = $db->Raw("SELECT COUNT(*) FROM `userdb_uploads` WHERE `user`='$user' AND `type`='upload'");
-$usage = $usage[0]['COUNT(*)'];
-
-if (isset($_GET['fb_page_id'])) 
+if (isset($_GET['fb_page_id']))
 {
-   $credit_of_owner = $db->Raw("SELECT `credit`,`override` FROM `userdb_users` WHERE `user`='$_POST[fb_sig_user]'");
-   $credit = $credit + $credit_of_owner[0]['credit'] + $credit_of_owner[0]['override'];
-
-   $usage_of_owner = $db->Raw("SELECT COUNT(*) FROM `userdb_uploads` WHERE `user`='$_POST[fb_sig_user]'");
-   $usage = $usage + $usage_of_owner[0]['COUNT(*)'];
+   $otherids = $facebook->api_client->fql_query("SELECT page_id FROM page WHERE page_id IN (SELECT page_id FROM page_admin WHERE uid=" . $_POST['fb_sig_user'] . ") AND has_added_app=1");
+   $array_otherids = array();
+   foreach ($otherids as $page) $array_otherids[] = $page['page_id'];
 }
 else
 {
-   $users_pages = $db->Raw("SELECT `fb_page_id` FROM `pages` WHERE `owner`=$user");
-   
-   if (count($users_pages) !== 0) {
-      foreach ($users_pages as $page_parse) 
-      {
-         $page_credit = $db->Raw("SELECT `credit`,`override` FROM `userdb_users` WHERE `user`='$page_parse[fb_page_id]'");
-         $credit = $credit + $page_credit[0]['credit'] + $page_credit[0]['override'];
-
-         $page_usage = $db->Raw("SELECT COUNT(*) FROM `userdb_uploads` WHERE `user`='$page_parse[fb_page_id]'");
-         $usage = $usage + $page_usage[0]['COUNT(*)'];
-      }
-   }
+   $otherids = json_decode($_POST['fb_sig_page_id']);
+   $array_otherids = array();
+   foreach ($otherids as $page) $array_otherids[] = $page[0];
 }
+
+$credit = $db->getSlots($_POST['fb_sig_user']);
+$usage = $db->getUsage($array_otherids);
+$postHash = md5($credit . ':' . $usage . ':' . $user . ':' . $config['fb']['secret']);
+
 ?>
 
 <div style="margin: 10px">
@@ -88,7 +72,7 @@ else
                         </td>
                         
                         <td>
-                           <font size="2em"><u><?php echo $credit+2; ?></u> total slots, <u><?php echo ($credit+2)-$usage; ?></u> available for use, <b><a href="<?php echo $config['fb']['fburl']; ?>?tab=offers">get more here</a></b></font>
+                           <font size="2em"><u><?php echo $credit+$config['basicSlots']; ?></u> total slots, <u><?php echo ($credit+$config['basicSlots'])-$usage; ?></u> available for use, <b><a href="<?php echo $config['fb']['fburl']; ?>?tab=offers">get more here</a></b></font>
                         </td>
                      </tr>
                   </table>
@@ -115,7 +99,7 @@ else
                         <?php error('Not enough slots!','You need more slots to use this feature! <a href="' . $config['fb']['fburl'] . '?tab=offers">Click here to get some!</a>'); // I want this an image overlaying the actual upload system ?>
                      <?php } else { ?>
                            <?php $progress_id = '' . $user . '.' . time() . ''; ?>
-                           <form name="form1" enctype="multipart/form-data" method="post" action="<?php echo $config['fb']['appcallbackurl']; ?>?tab=index&display=add&method=upload&step=2<?php echo pages($_GET['fb_page_id']); ?>&X-Progress-ID=<?php echo md5($progress_id); ?>">
+                           <form name="form1" enctype="multipart/form-data" method="post" action="<?php echo $config['fb']['appcallbackurl']; ?>?tab=index&display=add&method=upload&step=2<?php echo pages($_GET['fb_page_id']); ?>&hash=<?php echo $postHash; ?>&credit=<?php echo $credit; ?>&usage=<?php echo $usage; ?>&X-Progress-ID=<?php echo md5($progress_id); ?>">
                               <table class="editorkit" border="0" cellspacing="0" style="width:425px">
                                  <tr class="width_setter">
                                     <th style="width:75px"></th>
