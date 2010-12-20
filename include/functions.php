@@ -1,4 +1,32 @@
 <?php
+// just an easier way to hnadle fql queries
+// this way we can change this up if they method
+// facebook uses changes. this will also handle
+// fql_multiquries if $query is an array()
+function fql_query($query, $facebook)
+{
+	if (is_array($query))
+	{
+		$string = '{';
+		for ($i = 0; $i < count($query); $i++)
+		{
+			$j = $i+1;
+			$string .= '"query' . $j . '":"' . $query[$i] . '",';
+		}
+		
+		$string = substr($string, 0, -1);
+		$string .= '}';
+		
+		return $facebook->api_client->fql_multiquery($string);
+		// $req_array = array('method' => 'fql.multiquery', 'queries' => $string);
+	}
+	else
+	{
+		return $facebook->api_client->fql_query($query);
+		// $req_array = array('method' => 'fql.query', 'query' => $query);
+	}
+}
+
 function pages($fb_page_id) {
 	if($fb_page_id !== 0 AND $fb_page_id !== NULL) { return '&fb_page_id=' . $fb_page_id . ''; }
 }

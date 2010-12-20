@@ -21,7 +21,7 @@
 	<fb:dialog-button type="button" value="Close" close_dialog=1 />
 </fb:dialog>
 
-<?php $announcements = $facebook->api_client->fql_query("SELECT status_id,time,message FROM status WHERE uid='2436915755' ORDER BY time DESC LIMIT 10"); ?>
+<?php $announcements = fql_query("SELECT status_id,time,message FROM status WHERE uid='2436915755' ORDER BY time DESC LIMIT 10", $facebook); ?>
 
 <fb:dialog id="ann" width="500">
    <fb:dialog-title>Announcements</fb:dialog-title>

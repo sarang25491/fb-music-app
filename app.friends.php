@@ -74,7 +74,12 @@ function render($user_friends_uploads, $user_friends_info, $rel_url)
 }
 
 //multiquerying facebook db for the appropriate dataset
-$fb_data = $facebook->api_client->fql_multiquery('{"query1":"SELECT name,page_id FROM page WHERE page_id IN (SELECT page_id FROM page_fan WHERE uid=' . $user . ') AND has_added_app", "query2":"SELECT uid,name FROM user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1=' . $user . ') AND is_app_user"}');
+$queries = array(
+   'SELECT name,page_id FROM page WHERE page_id IN (SELECT page_id FROM page_fan WHERE uid=' . $user . ') AND has_added_app', 
+   'SELECT uid,name FROM user WHERE uid IN (SELECT uid2 FROM friend WHERE uid1=' . $user . ') AND is_app_user'
+);
+
+$fb_data = fql_query($queries, $facebook);
 
 /*
 Since MySQL cannot take array format to search,

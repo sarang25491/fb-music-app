@@ -2,7 +2,7 @@
 //sjlu: 12-19-2010 - third party id's need to be implemented before 1-1-2011
 //we are assuming that the user needs to visit this page to order slots... and that's when we'll index the third party id
 
-$thirdPartyId = $facebook->api_client->fql_query('SELECT third_party_id FROM user WHERE uid=' . $user . '');
+$thirdPartyId = fql_query('SELECT third_party_id FROM user WHERE uid=' . $user . '', $facebook);
 //$thirdPartyId = $facebook->api(array('method' => 'fql.query', query => 'SELECT third_party_id FROM user WHERE uid=' . $user . '')); 
 $thirdPartyId = $thirdPartyId[0]['third_party_id'];
 

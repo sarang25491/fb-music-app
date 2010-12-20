@@ -1,7 +1,7 @@
 <?php
 if (isset($_GET['fb_page_id']))
 {
-   $otherids = $facebook->api_client->fql_query("SELECT page_id FROM page WHERE page_id IN (SELECT page_id FROM page_admin WHERE uid=" . $_POST['fb_sig_user'] . ") AND has_added_app=1");
+   $otherids = fql_query("SELECT page_id FROM page WHERE page_id IN (SELECT page_id FROM page_admin WHERE uid=" . $_POST['fb_sig_user'] . ") AND has_added_app=1", $facebook);
    $array_otherids = array();
    foreach ($otherids as $page) $array_otherids[] = $page['page_id'];
 }
