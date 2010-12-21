@@ -13,7 +13,8 @@ else
 }
 
 $credit = $db->getSlots($_POST['fb_sig_user']);
-$usage = $db->getUsage($array_otherids);
+$usage = $db->getUsage($_POST['fb_sig_user']);
+if (count($otherids) > 0) $usage += $db->getUsage($otherids);
 $postHash = md5($credit . ':' . $usage . ':' . $user . ':' . $config['fb']['secret']);
 
 ?>
