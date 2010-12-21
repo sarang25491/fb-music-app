@@ -65,7 +65,7 @@
 </table>
 
 <center>
-<div style="width: 100%; margin: 10px; background-color: #ffebe8; border-top: 1px solid #dd3c10; border-bottom: 1px solid #dd3c10; font-weight: bold;">
+<div style="margin: 25px; padding: 5px; border: 5px solid #dd3c10; background-color: #eceff6; font-weight: bold;">
 <table border="0" cellspacing="0" cellpadding="0">
 <tr>
    <td>
