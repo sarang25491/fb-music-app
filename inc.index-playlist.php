@@ -27,10 +27,10 @@
 </script>
 
 <?php 
-if(isset($_GET['fb_page_id']))
-	$id = $_GET['fb_page_id'];
+if(isset($_POST['fb_page_id']))
+	$id = $_POST['fb_page_id'];
 else
-	$id = $_GET['fb_sig_user'];
+	$id = $_POST['fb_sig_user'];
 ?>
 
 <style>

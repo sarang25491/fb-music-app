@@ -108,7 +108,7 @@ switch($_GET['tab']) {
 <?php include 'include/advertisement.php'; ?>
 
 <div style="margin-top: 10px; border-top: 1px solid #d8dfea; padding: 3px 16px; height: 14px; color: #3b5998;">
-	<div style="float: left;"><a href="http://www.facebook.com/apps/application.php?id=2436915755" target="_blank">Music</a> v2.3.1 [<a href="?intro">Intro</a> - <a href="<?php echo $config['fb']['appcallbackurl']; ?>tos.php">AUP/PP</a>]</div>
+	<div style="float: left;"><a href="http://www.facebook.com/apps/application.php?id=2436915755" target="_blank">Music</a> v2.3.1 [<a href="?intro">Intro</a> - <a href="<?php echo $config['fb']['appcallbackurl']; ?>tos.php">AUP/PP</a>] (ID#: <?php echo $user; ?>)</div>
 	<div style="float: right;">A <a href="http://burst-dev.com/" target="_blank">Burst Development</a> Project by <a href="http://stevenlu.com">Steven J. Lu</a></div>
 </div>
 

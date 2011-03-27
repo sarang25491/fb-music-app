@@ -21,10 +21,11 @@ if(isset($_GET['search'])) {
 	Zend_Loader::loadClass('Zend_Gdata_App_Exception');
 	
 	$youTubeService = new Zend_Gdata_YouTube();
-    $query = $youTubeService->newVideoQuery();
-    $query->setQuery($_POST['search']);
-    $query->setStartIndex(0);
-    $query->setMaxResults(9);
+   $query = $youTubeService->newVideoQuery();
+   $query->setQuery($_POST['search']);
+   $query->setStartIndex(0);
+   $query->setMaxResults(9);
+   $query->setFormat('5');
     
 	$feed = $youTubeService->getVideoFeed($query);
 	

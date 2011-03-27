@@ -8,7 +8,7 @@ $donations_month = $db->Raw("SELECT SUM(`amount`) FROM `userdb_transactions` WHE
 
 $goal = 400;
 
-$percentage = round(($donations_month[0]['SUM(`amount`)']/$goal)*100);
+$percentage = ceil((($donations_month[0]['SUM(`amount`)']+1)/$goal)*100);
 //$percentage = 100;
 
 ?>
