@@ -47,5 +47,5 @@ $rockyou = '<fb:iframe src="http://burst-dev.com/rockyou.html" width="728" heigh
 
 
 <div style="border-bottom: 0px solid #cccccc; border-top: 0px solid #cccccc; background-color: #F7F7F7; width: 100%; margin-top: 0px;">
-<center><?php echo $rockyou; ?></center>
+<center><?php echo $cubics; ?></center>
 </div>

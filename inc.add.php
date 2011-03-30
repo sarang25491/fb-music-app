@@ -20,7 +20,7 @@ $postHash = md5($credit . ':' . $usage . ':' . $user . ':' . $config['fb']['secr
 ?>
 
 <div style="margin: 10px">
-   <fb:iframe src='http://burst-dev.com/rockyou-2.html' width='468' height='60' frameborder='0' border='0' scrolling='no'></fb:iframe>
+<fb:iframe src='http://social.bidsystem.com/displayAd.aspx?pid=14311&appId=43221&plid=15965&adSize=468x60&channel=' width='468' height='60' frameborder='0' border='0' scrolling='no'></fb:iframe>
    <table border="0" width="100%">
       <tr>
 
