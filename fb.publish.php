@@ -8,9 +8,9 @@ $attachment =  array(
       'caption' => "Availability of this song depends on if it exists in {*actor*}'s playlist.",
       'media' => array(array('type' => 'flash',
                              'swfsrc' => '' . $config['fb']['appcallbackurl'] . 'flash/player/player.swf?plugins=' . $config['fb']['appcallbackurl'] . 'flash/plugins/burstplugin.swf&burstplugin.xid=' . $pubData[0]['xid'] . '&skin=' . $config['fb']['appcallbackurl'] . 'flash/skin/skewd.zip&autostart=true',
-                             'imgsrc' => '' . $config['fb']['appcallbackurl'] . 'img/attach.png',
-                             'width' => '35', 
-                             'height' => '29', 
+                             'imgsrc' => '' . $config['fb']['appcallbackurl'] . 'img/transparent_box.png',
+                             'width' => '40', 
+                             'height' => '32', 
                              'expanded_width' => '360', 
                              'expanded_height' => '28')));                     
 ?>
