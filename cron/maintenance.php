@@ -94,7 +94,7 @@ if($argv[1] == 'fb') {
 
 } else if ($argv[1] == 'accounts') {
 	$ex_day = date('Y-m-d', strtotime('-60 days'));
-	$ex_acc = $db->Raw("DELETE FROM `userdb_users` WHERE `user` IN (SELECT `user` FROM `userdb_users` WHERE `time` <= '$ex_day') AND `type`='upload' AND `time` <= '$ex_day'");
+	$ex_acc = $db->Raw("DELETE FROM `userdb_uploads` WHERE `user` IN (SELECT `user` FROM `userdb_users` WHERE `time` <= '$ex_day') AND `type`='upload' AND `time` <= '$ex_day'");
 	// THIS JUST DELETES DB ENTRIES, YOU NEED TO RUN MAINTENANCE TO COMPLETE THE CLEANUP OF DEAD ACCOUNTS
 }
 ?>

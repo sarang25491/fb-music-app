@@ -56,7 +56,6 @@ $postHash = md5($credit . ':' . $usage . ':' . $user . ':' . $config['fb']['secr
          <table border="0" width="100%">
             <tr>
                <td>
-                  <?php error('Info on Uploads','We will be keeping the current "slot" system intact for now. However, new rules will be implemented into each slot including expiration dates and bandwidth restrictions. Sorry for all this, but it is getting necessary for us to implement it so that we can push for our new "pro" features.'); ?>
                   <table border="0" cellpadding="0" cellspacing="1">
                      <tr>
                         <td>
@@ -132,7 +131,7 @@ $postHash = md5($credit . ':' . $usage . ':' . $user . ':' . $config['fb']['secr
             </tr>
          </table>
          
-         <br />
+         <br /><br /><br />
          
          <table border="0" width="100%">
             <tr>

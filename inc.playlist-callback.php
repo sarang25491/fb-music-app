@@ -1,5 +1,6 @@
 <?php include_once 'include/facebook/facebook.php'; ?>
 <?php $pre = 'skip_login'; include 'include/config.php'; ?>
+<?php include 'include/aws/sdk.class.php'; ?>
 
 <?php
 if (isset($_GET['updateList'])) {
@@ -14,15 +15,24 @@ if (isset($_GET['updateList'])) {
 		if (!in_array($origSong['xid'], $newList)) {
 			$id = $origSong['xid'];
          $deleteData = $db->Raw("SELECT `type`,`link`,`server`,`drive` FROM `userdb_uploads` WHERE `id`='$id' LIMIT 1");
+			$server = $deleteData[0]['server'];
 			if ($deleteData[0]['type'] == 'upload') { 
-				$server = $deleteData[0]['server'];
-				$serverData = $db->Raw("SELECT `internal_uri` FROM `servers` WHERE `name`='$server'");
-				$userFolder = array_sum(str_split($_GET['id']));
+				if ($server == 's3')
+            {
+               $s3 = new AmazonS3();
+               $s3->delete_object('fb-music', $deleteData[0]['link']);
+            }
+            else
+            {               
+               $serverData = $db->Raw("SELECT `internal_uri` FROM `servers` WHERE `name`='$server'");
+				   $userFolder = array_sum(str_split($_GET['id']));
 				
-				if(file_exists('' . $serverData[0]['internal_uri'] . 'users/' . $deleteData[0]['drive'] . '/' . $userFolder . '/' . baseName($deleteData[0]['link']) . ''))
-					unlink('' . $serverData[0]['internal_uri'] . 'users/' . $deleteData[0]['drive'] . '/' . $userFolder . '/' . baseName($deleteData[0]['link']) . '');
-			}
+				   if(file_exists('' . $serverData[0]['internal_uri'] . 'users/' . $deleteData[0]['drive'] . '/' . $userFolder . '/' . baseName($deleteData[0]['link']) . ''))
+					   unlink('' . $serverData[0]['internal_uri'] . 'users/' . $deleteData[0]['drive'] . '/' . $userFolder . '/' . baseName($deleteData[0]['link']) . '');
+			   }
+         }
 
+//         $db->Raw("INSERT INTO `delete_queue` (`xid`,`file`) VALUES ('$id','$deleteData[0][link]')");
 			$db->Raw("DELETE FROM `userdb_uploads` WHERE `id`='$id'"); 
 		}
 	}

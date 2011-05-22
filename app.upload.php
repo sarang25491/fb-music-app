@@ -150,26 +150,43 @@
 		<?php $tempData = $db->Raw("SELECT `md5`,`filesize`,`fileformat`,`playtime`,`sample_rate`,`location` FROM `userdb_temporary` WHERE `user`='$user'"); ?>
 		<?php $filesize = $tempData[0]['filesize']; $sample_rate = $tempData[0]['sample_rate']; $fileformat = $tempData[0]['fileformat']; $md5 = $tempData[0]['md5']; $playtime = $tempData[0]['playtime']; ?>
 
-		<?php
-		$selDrive = $db->Raw("SELECT `data` FROM `system` WHERE `var`='drive'");
+		<?php		
+      include 'include/aws/sdk.class.php';
+      $s3 = new AmazonS3();
+
+      $s3->create_object('fb-music', basename($tempData[0]['location']), array(
+         'fileUpload' => $tempData[0]['location'],
+         'acl' => AmazonS3::ACL_AUTH_READ,
+         'storage' => AmazonS3::STORAGE_REDUCED,
+      ));
+
+      /*
+      $selDrive = $db->Raw("SELECT `data` FROM `system` WHERE `var`='drive'");
 		$userFolder = array_sum(str_split($user));
 		
 		if(!file_exists('users/' . $selDrive[0]['data'] . '/' . $userFolder . '/'))
 			mkdir('users/' . $selDrive[0]['data'] . '/' . $userFolder . '/');
 		rename($tempData[0]['location'], 'users/' . $selDrive[0]['data'] . '/' . $userFolder . '/' . basename($tempData[0]['location']) . '');
-		
+		*/
 		$db->Raw("DELETE FROM `userdb_temporary` WHERE `user`='$user' LIMIT 1");
 		
+      /*
 		$link = '' . $config['server']['streaming'] . '/stream/' . $selDrive[0]['data'] . '/' . $userFolder . '/' . basename($tempData[0]['location']) . '';
 		$drive = $selDrive[0]['data'];
-		$db->Raw("INSERT INTO `userdb_uploads` (`user`,`title`,`artist`,`md5`,`filesize`,`sample_rate`,`fileformat`,`type`,`link`,`playtime`,`buy_link`,`server`,`drive`) VALUES ('$user','$title','$artist','$md5','$filesize','$sample_rate','$fileformat','upload','$link','$playtime','$_POST[buy_link]','wdc01','$drive')");
+		*/
+
+      $link = basename($tempData[0]['location']);
+      
+
+      $db->Raw("INSERT INTO `userdb_uploads` (`user`,`title`,`artist`,`md5`,`filesize`,`sample_rate`,`fileformat`,`type`,`link`,`playtime`,`buy_link`,`server`,`drive`) VALUES ('$user','$title','$artist','$md5','$filesize','$sample_rate','$fileformat','upload','$link','$playtime','$_POST[buy_link]','s3','s3')");
 		
 		//need to get a STATIC XID from id
 		$id = $db->Raw("SELECT `id` FROM `userdb_uploads` WHERE `user`='$user' ORDER BY `id` DESC LIMIT 1");
 		$id = $id[0]['id'];
 		$db->Raw("UPDATE `userdb_uploads` SET `xid`=`id` WHERE `id`='$id'");
 		?>	
-		
+
+	
 		<?php // if(!isset($_GET['fb_page_id'])) { include 'fb.feed.php'; } ?>
 		
 		<?php 
