@@ -55,7 +55,6 @@ A:hover {text-decoration: underline; color: red;}
 					<td width="20%">
 						<div align="right" style="margin-top: 2px; padding-right: 4px;">
                      <a class="move" border="0" title="Hold & Drag to Sort"><img src="img/move.png" border="0" style="padding-right: 2px;"></a>
-                     <a class="blue" valign="middle" title="Edit Tags" onclick="openEditor(<?php echo $song['xid']; ?>)"><img src="img/tag_blue_edit.png" border="0" style="padding-right:2px;"></a>
                      <a class="red" valign="middle" title="Delete" onclick="removeSong(<?php echo $song['xid']; ?>)"><img src="img/delete.png" border="0"></a>
                   </div>
 					</td>
