@@ -1,6 +1,6 @@
 <?php
 
-include 'include/aws/sdk.class.php';
+include '../include/aws/sdk.class.php';
 
 $s3 = new AmazonS3();
 

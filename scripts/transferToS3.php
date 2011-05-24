@@ -2,8 +2,8 @@
 ini_set('memory_limit', '1G');
 
 $pre = 'skip_fbapi';
-include 'include/config.php';
-include 'include/aws/sdk.class.php';
+include '../include/config.php';
+include '../include/aws/sdk.class.php';
 
 $s3 = new AmazonS3();
 
