@@ -78,7 +78,7 @@
 	$md5 = md5_file($_FILES['upfile']['tmp_name']);
 	$secure_file_name = $encryption->encrypt(sha1($user), $md5);
 
-	$secure_temporary_location = '' . $config['server']['internal_url'] . 'users/temp/' . $secure_file_name . '.' . strtolower(substr($_FILES['upfile']['name'], strrpos($_FILES['upfile']['name'], '.') + 1)) . '';
+	$secure_temporary_location = '' . $config['server']['internal_url'] . 'temp/' . $secure_file_name . '.' . strtolower(substr($_FILES['upfile']['name'], strrpos($_FILES['upfile']['name'], '.') + 1)) . '';
 	rename($_FILES['upfile']['tmp_name'], $secure_temporary_location);
 
 	$db->Raw("INSERT INTO `userdb_temporary` (`user`,`title`,`artist`,`md5`,`filesize`,`fileformat`,`sample_rate`,`location`,`playtime`) VALUES ('$user','$title','$artist','$md5','$filesize','$fileformat','$sample_rate','$secure_temporary_location','$playtime')"); 
