@@ -1,6 +1,11 @@
 <?php
 include 'database.php';
 ini_set('register_globals', 'Off');
+ini_set('max_execution_time', '600');
+ini_set('max_input_time', '1200');
+ini_set('memory_limit', '64M');
+ini_set('upload_max_filesize', '32M');
+ini_set('post_max_size', '40M');
 
 $config = array();
 $testing = '';
@@ -21,7 +26,7 @@ $config['fb']['about_url'] = 'http://www.facebook.com/apps/application.php?id=24
 # server infomation, its as simple as that.
 ########################################
 $config['server']['internal_url'] = '/var/www/music/' . $testing . '';
-$config['server']['secret'] = "";
+$config['server']['secret'] = '';
 $config['server']['streaming'] = "http://music-stream.burst-dev.com";
 $config['server']['uri_prefix'] = "/stream/";
 
