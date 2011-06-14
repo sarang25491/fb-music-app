@@ -2,9 +2,9 @@
 $pre = 'skip_fbapi';
 include '../include/config.php';
 
-$day = date('Y-m-d H:i:s', strtotime('-1 day'));
+$exp = date('Y-m-d H:i:s', strtotime('-1 hour'));
 
-$temp = $db->Raw("SELECT user,location FROM userdb_temporary WHERE time < '$day'");
+$temp = $db->Raw("SELECT user,location FROM userdb_temporary WHERE time < '$exp'");
 
 echo 'Clearing about ' . count($temp) . ' files...';
 

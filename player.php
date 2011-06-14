@@ -13,9 +13,14 @@ if(!isset($_GET['id'])) {
 	elseif (isset($_GET['from_feed']))
 		$id = $_GET['from_feed'];
 }
+else
+{
+   $id = $_GET['id'];
+}
 ?>
 
-<?php if($_GET['caller'] == 'editor') { ?>	
+
+<?php if(isset($_GET['caller']) && $_GET['caller'] == 'editor') { ?>	
 	<center>
 		<embed
 			src="<?php echo $config['fb']['appcallbackurl']; ?>flash/player/player.swf"

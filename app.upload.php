@@ -169,7 +169,7 @@
 		rename($tempData[0]['location'], 'users/' . $selDrive[0]['data'] . '/' . $userFolder . '/' . basename($tempData[0]['location']) . '');
 		*/
 		$db->Raw("DELETE FROM `userdb_temporary` WHERE `user`='$user' LIMIT 1");
-		
+	   unlink($tempData[0]['location']);	
       /*
 		$link = '' . $config['server']['streaming'] . '/stream/' . $selDrive[0]['data'] . '/' . $userFolder . '/' . basename($tempData[0]['location']) . '';
 		$drive = $selDrive[0]['data'];

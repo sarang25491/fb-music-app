@@ -14,7 +14,7 @@ include_once 'include/functions.php';
 	<center>
 	<?php 
 	
-	$orderedList = $db->Raw("SELECT * FROM `userdb_uploads` WHERE `user` = '$user'");
+	$orderedList = $db->Raw("SELECT COUNT(*) FROM `userdb_uploads` WHERE `user` = '$user'");
 	$orderedList = $orderedList[0]['COUNT(*)'];
 	
 	if ($orderedList > 1) {
