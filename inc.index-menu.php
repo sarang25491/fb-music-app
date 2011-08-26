@@ -120,7 +120,7 @@ function hide(obj)
       <a id="nav1" style="margin-bottom: 1px;">
          <center>
          <b>Switch Editor To...</b>
-         <img valign="top" style="margin: 3px 0 0 4px" src="<?=$config['fb']['appcallbackurl']?>img/down.gif">
+         <img valign="top" style="margin: 3px 0 0 4px" src="<?php echo $config['fb']['appcallbackurl']; ?>img/down.gif">
          </center>
       </a>
       <div id="navbar1" style="margin-left: -1px; width: 175px; border: 1px solid #d4dae8">
