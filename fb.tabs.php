@@ -12,22 +12,11 @@ include_once 'include/functions.php';
 	<?php $user = $_POST['fb_sig_profile_user']; ?>
 	
 	<center>
-	<?php 
-	
-	$orderedList = $db->Raw("SELECT COUNT(*) FROM `userdb_uploads` WHERE `user` = '$user'");
-	$orderedList = $orderedList[0]['COUNT(*)'];
-	
-	if ($orderedList > 1) {
-		$result = $mysqli->query("SELECT `id`,`title`,`artist`,`count`,`link`,`buy_link` FROM `userdb_uploads` WHERE `user` = '$user' ORDER BY `id` DESC");
-	} else {
-		$result = $mysqli->query("SELECT `id`,`title`,`artist`,`count`,`link`,`buy_link` FROM `userdb_uploads` WHERE `user` = '$user' ORDER BY `order` ASC");
-	}
+	<?php $result = $mysqli->query("SELECT `id`,`title`,`artist`,`count`,`link`,`buy_link` FROM `userdb_uploads` WHERE `user` = '$user' ORDER BY `order` ASC");
 	
 	while ($row = $result->fetch_assoc()) {
 		$uploads[] = $row;
 	}
-
-	
 	
 	$i=0;
 	$uploads_count = count($uploads);
