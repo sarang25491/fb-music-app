@@ -45,7 +45,9 @@ $marimedia = '<fb:iframe src="http://ad.yieldmanager.com/st?ad_type=iframe&ad_si
 $rockyou = '<fb:iframe src="http://burst-dev.com/rockyou.html" width="728" height="90" scrolling="no" marginheight="0" marginwidth="0" frameborder="0" vspace="0" hspace="0" />';
 ?>
 
-
+<?php $pro = $db->Raw("SELECT `pro` FROM `userdb_users` WHERE `user`='$_POST[fb_sig_user]'"); ?>
+<?php if ($pro[0]['pro'] !== 1) { ?>
 <div style="border-bottom: 0px solid #cccccc; border-top: 0px solid #cccccc; background-color: #F7F7F7; width: 100%; margin-top: 0px;">
 <center><?php echo $cubics; ?></center>
 </div>
+<?php } ?>
