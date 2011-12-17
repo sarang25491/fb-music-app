@@ -1,0 +1,8 @@
+The Facebook Music App
+http://apps.facebook.com/stevenlu
+
+Because Facebook has removed FBML (deprecated), around 12/11. The application was forced to be shutdown. Because of the huge profile changes, a lot of the application just became useless.
+
+The app runs in theory like this. It uses Amazon S3 to store all the music files. It then uses "expiring links" to protect against hot-linking and distribution, which is all determined by a Action Script. This app can run behind EC2 and a load-balancer as long as the application is linked to a single MySQL database.
+
+Note that there is no support available for this product and is shown AS IS. This was developed in 2008 with little and no funding support or development (only miniscule fixes to keep it operational).
